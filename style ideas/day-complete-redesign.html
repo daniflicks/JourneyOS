@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1 Complete</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #FFFFFF;
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+            color: #3A3A3A;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        
+        /* Success Icon with Animation */
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 32px;
+            background: rgba(134, 239, 172, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: scaleIn 0.5s ease-out;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .checkmark {
+            width: 40px;
+            height: 40px;
+            stroke: #10B981;
+            stroke-width: 3;
+            fill: none;
+            stroke-dasharray: 60;
+            stroke-dashoffset: 60;
+            animation: drawCheck 0.8s ease-out 0.3s forwards;
+        }
+        
+        @keyframes drawCheck {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 36px;
+            color: #2D2D2D;
+            text-align: center;
+            margin-bottom: 16px;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+        
+        .subtitle {
+            font-size: 17px;
+            color: #6B7280;
+            text-align: center;
+            margin-bottom: 48px;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+        
+        /* Achievement Card - Warm Design */
+        .achievement-card {
+            background: linear-gradient(135deg, rgba(255, 245, 243, 0.7) 0%, rgba(255, 234, 236, 0.7) 100%);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+            border: 1px solid rgba(255, 181, 167, 0.2);
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+        }
+        
+        .achievement-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #E07B67;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        
+        .achievement-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            opacity: 0;
+            animation: slideIn 0.5s ease-out forwards;
+        }
+        
+        .achievement-item:nth-child(2) { animation-delay: 0.6s; }
+        .achievement-item:nth-child(3) { animation-delay: 0.7s; }
+        .achievement-item:nth-child(4) { animation-delay: 0.8s; }
+        .achievement-item:nth-child(5) { animation-delay: 0.9s; }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .achievement-check {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #10B981;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .achievement-check svg {
+            width: 12px;
+            height: 12px;
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
+        }
+        
+        .achievement-text {
+            font-size: 16px;
+            color: #4B5563;
+            line-height: 1.4;
+        }
+        
+        /* Quote Card - Enhanced Warm Design */
+        .quote-card {
+            background: linear-gradient(135deg, #FFF0ED 0%, #FFE4E1 100%);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 32px;
+            border-left: 4px solid #E07B67;
+            box-shadow: 0 2px 12px rgba(224, 123, 103, 0.08);
+            animation: fadeInUp 0.6s ease-out 0.5s both;
+        }
+        
+        .quote-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: #E07B67;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+        
+        .quote-text {
+            font-size: 17px;
+            color: #6B7280;
+            font-style: italic;
+            line-height: 1.7;
+        }
+        
+        /* Tomorrow's Preview Card - Soft Shadow Design */
+        .preview-card {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 24px rgba(224, 123, 103, 0.08);
+            border: 1px solid rgba(255, 181, 167, 0.15);
+            animation: fadeInUp 0.6s ease-out 0.6s both;
+        }
+        
+        .preview-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #E07B67;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+        
+        .preview-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #2D2D2D;
+            margin-bottom: 12px;
+        }
+        
+        .preview-description {
+            font-size: 16px;
+            color: #6B7280;
+            line-height: 1.6;
+        }
+        
+        /* Schedule Section */
+        .schedule-section {
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease-out 0.7s both;
+        }
+        
+        .schedule-prompt {
+            text-align: center;
+            font-size: 16px;
+            color: #6B7280;
+            margin-bottom: 20px;
+        }
+        
+        .time-options {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .time-option {
+            flex: 1;
+            background: #FFFFFF;
+            border: 2px solid rgba(255, 181, 167, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+        
+        .time-option:hover {
+            border-color: #FFB5A7;
+            background: rgba(255, 245, 243, 0.5);
+        }
+        
+        .time-option.selected {
+            border-color: #E07B67;
+            background: rgba(255, 234, 236, 0.5);
+        }
+        
+        .time-option .time {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            color: #2D2D2D;
+            margin-bottom: 4px;
+        }
+        
+        .time-option .label {
+            display: block;
+            font-size: 13px;
+            color: #9CA3AF;
+        }
+        
+        .schedule-button {
+            width: 100%;
+            background: #E07B67;
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .schedule-button:hover {
+            background: #D56552;
+            transform: translateY(-1px);
+        }
+        
+        .schedule-or {
+            text-align: center;
+            color: #9CA3AF;
+            font-size: 14px;
+            margin: 20px 0;
+        }
+        
+        .primary-button {
+            width: 100%;
+            background: linear-gradient(135deg, #E07B67 0%, #FFB5A7 100%);
+            color: white;
+            border: none;
+            padding: 18px 32px;
+            font-size: 17px;
+            font-weight: 500;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(224, 123, 103, 0.25);
+        }
+        
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(224, 123, 103, 0.35);
+        }
+        
+        .custom-time {
+            width: 100%;
+            background: transparent;
+            color: #9CA3AF;
+            border: none;
+            padding: 12px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            margin-top: 12px;
+        }
+        
+        .custom-time:hover {
+            color: #E07B67;
+            text-decoration: underline;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            animation: fadeInUp 0.6s ease-out 0.8s both;
+        }
+        
+        .back-link {
+            text-decoration: none;
+            color: #9CA3AF;
+            font-size: 15px;
+            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-link:hover {
+            color: #E07B67;
+        }
+        
+        .support-text {
+            font-size: 14px;
+            color: #9CA3AF;
+            margin-top: 32px;
+            text-align: center;
+        }
+        
+        .support-text a {
+            color: #E07B67;
+            text-decoration: none;
+        }
+        
+        .support-text a:hover {
+            text-decoration: underline;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <script>
+        function selectTime(button) {
+            // Remove selected class from all buttons
+            document.querySelectorAll('.time-option').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked button
+            button.classList.add('selected');
+            
+            // Show schedule button
+            const scheduleBtn = document.querySelector('.schedule-button');
+            scheduleBtn.style.display = 'flex';
+            
+            // Update schedule button text
+            const time = button.querySelector('.time').textContent;
+            scheduleBtn.innerHTML = `<span>📅</span> Schedule for ${time}`;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <!-- Success Icon -->
+        <div class="success-icon">
+            <svg class="checkmark" viewBox="0 0 24 24">
+                <path d="M5 13l4 4L19 7" />
+            </svg>
+        </div>
+        
+        <!-- Main Title -->
+        <h1>Day 1 Complete!</h1>
+        <p class="subtitle">You've taken the first step in transforming your relationship with fear.</p>
+        
+        <!-- Achievements -->
+        <div class="achievement-card">
+            <h3 class="achievement-title">Today's Achievements</h3>
+            
+            <div class="achievement-item">
+                <div class="achievement-check">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 13l4 4L10 7" />
+                    </svg>
+                </div>
+                <span class="achievement-text">Completed Morning Pattern Check-In</span>
+            </div>
+            
+            <div class="achievement-item">
+                <div class="achievement-check">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 13l4 4L10 7" />
+                    </svg>
+                </div>
+                <span class="achievement-text">Identified and mapped your fears</span>
+            </div>
+            
+            <div class="achievement-item">
+                <div class="achievement-check">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 13l4 4L10 7" />
+                    </svg>
+                </div>
+                <span class="achievement-text">Received AI pattern analysis</span>
+            </div>
+            
+            <div class="achievement-item">
+                <div class="achievement-check">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 13l4 4L10 7" />
+                    </svg>
+                </div>
+                <span class="achievement-text">Captured your final reflection</span>
+            </div>
+        </div>
+        
+        <!-- Quote -->
+        <div class="quote-card">
+            <p class="quote-label">Remember</p>
+            <p class="quote-text">
+                You've shown great courage today in acknowledging these thoughts. Mapping your fears isn't about making them disappear — it's about understanding them as companions on your journey, each with its own wisdom to share.
+            </p>
+        </div>
+        
+        <!-- Tomorrow's Preview -->
+        <div class="preview-card">
+            <p class="preview-label">Tomorrow's Preview</p>
+            <h2 class="preview-title">Day 2: Root Cause Excavation</h2>
+            <p class="preview-description">
+                Tomorrow we'll explore where these fears originated. Your fear map will be a valuable reference as we dig deeper into understanding the roots of what holds you back.
+            </p>
+        </div>
+        
+        <!-- Quick Schedule Section -->
+        <div class="schedule-section">
+            <p class="schedule-prompt">When would you like to continue?</p>
+            
+            <div class="time-options">
+                <button class="time-option" onclick="selectTime(this)">
+                    <span class="time">9:00 AM</span>
+                    <span class="label">Tomorrow</span>
+                </button>
+                <button class="time-option" onclick="selectTime(this)">
+                    <span class="time">2:00 PM</span>
+                    <span class="label">Tomorrow</span>
+                </button>
+                <button class="time-option" onclick="selectTime(this)">
+                    <span class="time">7:00 PM</span>
+                    <span class="label">Tomorrow</span>
+                </button>
+            </div>
+            
+            <button class="schedule-button" style="display: none;">
+                <span>📅</span> Schedule Day 2
+            </button>
+            
+            <div class="schedule-or">
+                <span>or</span>
+            </div>
+            
+            <button class="primary-button">Start Day 2 Now →</button>
+            
+            <button class="custom-time">Choose different time</button>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <a href="#" class="back-link">
+                <span>←</span>
+                Back to Dashboard
+            </a>
+            
+            <p class="support-text">
+                Remember: You can access your Emergency Support Box anytime between sessions.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

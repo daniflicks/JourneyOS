@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Full-Screen Loading Designs</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #f5f5f5;
+        }
+        
+        .option-container {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            scroll-snap-align: start;
+        }
+        
+        .demo-area {
+            flex: 1;
+            background: linear-gradient(135deg, #FFF5F3 0%, #FFEAEC 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .description {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            max-width: 300px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .option-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2D2D2D;
+            margin-bottom: 8px;
+        }
+        
+        .option-desc {
+            font-size: 14px;
+            color: #6B7280;
+        }
+        
+        /* Option 1: Blooming Flower */
+        .flower-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+        
+        .petal {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #E07B67 0%, #FFB5A7 100%);
+            border-radius: 0 100% 0 100%;
+            opacity: 0.8;
+            transform-origin: bottom right;
+            animation: bloom 3s ease-in-out infinite;
+        }
+        
+        .petal:nth-child(1) { transform: rotate(0deg); animation-delay: 0s; }
+        .petal:nth-child(2) { transform: rotate(45deg); animation-delay: 0.2s; }
+        .petal:nth-child(3) { transform: rotate(90deg); animation-delay: 0.4s; }
+        .petal:nth-child(4) { transform: rotate(135deg); animation-delay: 0.6s; }
+        .petal:nth-child(5) { transform: rotate(180deg); animation-delay: 0.8s; }
+        .petal:nth-child(6) { transform: rotate(225deg); animation-delay: 1s; }
+        .petal:nth-child(7) { transform: rotate(270deg); animation-delay: 1.2s; }
+        .petal:nth-child(8) { transform: rotate(315deg); animation-delay: 1.4s; }
+        
+        @keyframes bloom {
+            0%, 100% { 
+                transform: scale(0.8) rotate(var(--rotation));
+                opacity: 0.6;
+            }
+            50% { 
+                transform: scale(1.2) rotate(var(--rotation));
+                opacity: 1;
+            }
+        }
+        
+        /* Option 2: Breathing Circle */
+        .breathing-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .breath-circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+        
+        .breath-circle:nth-child(1) {
+            width: 150px;
+            height: 150px;
+            background: #E07B67;
+            animation: breathe 4s ease-in-out infinite;
+        }
+        
+        .breath-circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            background: #FFB5A7;
+            animation: breathe 4s ease-in-out infinite 0.5s;
+        }
+        
+        .breath-circle:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            background: #FFC9A7;
+            animation: breathe 4s ease-in-out infinite 1s;
+        }
+        
+        @keyframes breathe {
+            0%, 100% { transform: scale(0.8); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 0.6; }
+        }
+        
+        .breath-text {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: #6B7280;
+        }
+        
+        /* Option 3: Thought Bubbles */
+        .thought-container {
+            position: relative;
+            width: 400px;
+            height: 300px;
+        }
+        
+        .thought-bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .bubble1 {
+            width: 80px;
+            height: 80px;
+            left: 50%;
+            bottom: 0;
+            animation-delay: 0s;
+        }
+        
+        .bubble2 {
+            width: 100px;
+            height: 100px;
+            left: 45%;
+            bottom: 80px;
+            animation-delay: 0.5s;
+        }
+        
+        .bubble3 {
+            width: 140px;
+            height: 140px;
+            left: 40%;
+            bottom: 180px;
+            animation-delay: 1s;
+        }
+        
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0) translateX(-50%);
+                opacity: 0.5;
+            }
+            50% { 
+                transform: translateY(-20px) translateX(-50%);
+                opacity: 1;
+            }
+        }
+        
+        /* Option 4: Fear to Fuel Transformation */
+        .transform-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fear-fuel-icon {
+            font-size: 80px;
+            animation: transform-icon 3s ease-in-out infinite;
+        }
+        
+        @keyframes transform-icon {
+            0% { 
+                transform: scale(1) rotate(0deg);
+                filter: grayscale(100%);
+                opacity: 0.5;
+            }
+            50% { 
+                transform: scale(1.2) rotate(180deg);
+                filter: grayscale(0%);
+                opacity: 1;
+            }
+            100% { 
+                transform: scale(1) rotate(360deg);
+                filter: grayscale(0%);
+                opacity: 1;
+            }
+        }
+        
+        /* Option 5: Mindful Mandala */
+        .mandala-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+        
+        .mandala-ring {
+            position: absolute;
+            border: 3px solid;
+            border-radius: 50%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .ring1 {
+            width: 100px;
+            height: 100px;
+            border-color: #E07B67;
+            animation: rotate-right 8s linear infinite;
+        }
+        
+        .ring2 {
+            width: 150px;
+            height: 150px;
+            border-color: #FFB5A7;
+            animation: rotate-left 10s linear infinite;
+            border-style: dashed;
+        }
+        
+        .ring3 {
+            width: 200px;
+            height: 200px;
+            border-color: #FFC9A7;
+            animation: rotate-right 12s linear infinite;
+            border-style: dotted;
+        }
+        
+        @keyframes rotate-right {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes rotate-left {
+            from { transform: translate(-50%, -50%) rotate(360deg); }
+            to { transform: translate(-50%, -50%) rotate(0deg); }
+        }
+        
+        /* Option 6: Growing Tree */
+        .tree-container {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        
+        .tree-trunk {
+            width: 40px;
+            height: 0;
+            background: linear-gradient(to top, #8B6B61 0%, #A0826D 100%);
+            animation: grow-trunk 2s ease-out forwards;
+            position: relative;
+        }
+        
+        @keyframes grow-trunk {
+            to { height: 150px; }
+        }
+        
+        .branch {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #E07B67 0%, #FFB5A7 100%);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0);
+        }
+        
+        .branch1 {
+            top: -40px;
+            left: -20px;
+            animation: grow-branch 1s ease-out 1.5s forwards;
+        }
+        
+        .branch2 {
+            top: -60px;
+            right: -20px;
+            animation: grow-branch 1s ease-out 2s forwards;
+        }
+        
+        .branch3 {
+            top: -100px;
+            left: -30px;
+            animation: grow-branch 1s ease-out 2.5s forwards;
+        }
+        
+        @keyframes grow-branch {
+            to { 
+                opacity: 0.8;
+                transform: scale(1);
+            }
+        }
+        
+        /* Loading text styling */
+        .loading-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 48px;
+            color: #2D2D2D;
+            margin-bottom: 16px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.5s forwards;
+        }
+        
+        .loading-subtitle {
+            font-size: 18px;
+            color: #6B7280;
+            text-align: center;
+            max-width: 500px;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1s forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        /* Navigation */
+        .nav {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+        
+        .nav-btn {
+            padding: 12px 24px;
+            background: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <!-- Option 1: Blooming Flower -->
+    <div class="option-container">
+        <div class="demo-area">
+            <div class="description">
+                <h3 class="option-title">Option 1: Blooming Flower</h3>
+                <p class="option-desc">Represents growth and transformation - your fears blooming into fuel</p>
+            </div>
+            
+            <div class="flower-container" style="margin-bottom: 60px;">
+                <div class="petal" style="--rotation: 0deg"></div>
+                <div class="petal" style="--rotation: 45deg"></div>
+                <div class="petal" style="--rotation: 90deg"></div>
+                <div class="petal" style="--rotation: 135deg"></div>
+                <div class="petal" style="--rotation: 180deg"></div>
+                <div class="petal" style="--rotation: 225deg"></div>
+                <div class="petal" style="--rotation: 270deg"></div>
+                <div class="petal" style="--rotation: 315deg"></div>
+            </div>
+            
+            <h1 class="loading-title">Analyzing Your Fears</h1>
+            <p class="loading-subtitle">We're processing your fears to create a meaningful fear map. This will help us understand patterns in your thinking.</p>
+        </div>
+    </div>
+    
+    <!-- Option 2: Breathing Circle -->
+    <div class="option-container">
+        <div class="demo-area">
+            <div class="description">
+                <h3 class="option-title">Option 2: Breathing Circles</h3>
+                <p class="option-desc">Calming, meditative animation that reduces anxiety while waiting</p>
+            </div>
+            
+            <div class="breathing-container" style="margin-bottom: 60px;">
+                <div class="breath-circle"></div>
+                <div class="breath-circle"></div>
+                <div class="breath-circle"></div>
+                <div class="breath-text">
+                    <div style="font-size: 48px; margin-bottom: 8px;">🧘‍♀️</div>
+                    <div>Breathe</div>
+                </div>
+            </div>
+            
+            <h1 class="loading-title">Analyzing Your Fears</h1>
+            <p class="loading-subtitle">We're processing your fears to create a meaningful fear map. This will help us understand patterns in your thinking.</p>
+        </div>
+    </div>
+    
+    <!-- Option 3: Thought Transformation -->
+    <div class="option-container">
+        <div class="demo-area">
+            <div class="description">
+                <h3 class="option-title">Option 3: Rising Thoughts</h3>
+                <p class="option-desc">Thoughts bubbling up and transforming, representing mental processing</p>
+            </div>
+            
+            <div class="thought-container" style="margin-bottom: 60px;">
+                <div class="thought-bubble bubble1">💭</div>
+                <div class="thought-bubble bubble2">🤔</div>
+                <div class="thought-bubble bubble3">💡</div>
+            </div>
+            
+            <h1 class="loading-title">Analyzing Your Fears</h1>
+            <p class="loading-subtitle">We're processing your fears to create a meaningful fear map. This will help us understand patterns in your thinking.</p>
+        </div>
+    </div>
+    
+    <!-- Option 4: Fear to Fuel -->
+    <div class="option-container">
+        <div class="demo-area">
+            <div class="description">
+                <h3 class="option-title">Option 4: Fear to Fuel</h3>
+                <p class="option-desc">Visual metaphor of transformation - from grey/fear to colorful/fuel</p>
+            </div>
+            
+            <div class="transform-container" style="margin-bottom: 60px;">
+                <div class="fear-fuel-icon">🔥</div>
+            </div>
+            
+            <h1 class="loading-title">Analyzing Your Fears</h1>
+            <p class="loading-subtitle">We're processing your fears to create a meaningful fear map. This will help us understand patterns in your thinking.</p>
+        </div>
+    </div>
+    
+    <!-- Option 5: Mindful Mandala -->
+    <div class="option-container">
+        <div class="demo-area">
+            <div class="description">
+                <h3 class="option-title">Option 5: Mindful Mandala</h3>
+                <p class="option-desc">Rotating rings create a meditative, centering effect</p>
+            </div>
+            
+            <div class="mandala-container" style="margin-bottom: 60px;">
+                <div class="mandala-ring ring1"></div>
+                <div class="mandala-ring ring2"></div>
+                <div class="mandala-ring ring3"></div>
+            </div>
+            
+            <h1 class="loading-title">Analyzing Your Fears</h1>
+            <p class="loading-subtitle">We're processing your fears to create a meaningful fear map. This will help us understand patterns in your thinking.</p>
+        </div>
+    </div>
+    
+    <!-- Option 6: Growing Tree -->
+    <div class="option-container">
+        <div class="demo-area">
+            <div class="description">
+                <h3 class="option-title">Option 6: Growing Tree</h3>
+                <p class="option-desc">Represents growth from foundation - fears becoming the roots of strength</p>
+            </div>
+            
+            <div class="tree-container" style="margin-bottom: 60px;">
+                <div class="tree-trunk">
+                    <div class="branch branch1"></div>
+                    <div class="branch branch2"></div>
+                    <div class="branch branch3"></div>
+                </div>
+            </div>
+            
+            <h1 class="loading-title">Analyzing Your Fears</h1>
+            <p class="loading-subtitle">We're processing your fears to create a meaningful fear map. This will help us understand patterns in your thinking.</p>
+        </div>
+    </div>
+    
+    <div class="nav">
+        <button class="nav-btn" onclick="alert('Use scroll or implement navigation')">← Previous</button>
+        <button class="nav-btn" onclick="alert('Use scroll or implement navigation')">Next →</button>
+    </div>
+</body>
+</html>

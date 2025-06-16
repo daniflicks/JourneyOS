@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Fear to Fuel</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #FFFFFF;
+            min-height: 100vh;
+            color: #3A3A3A;
+            display: flex;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, #FFF5F3 0%, #FFEAEC 100%);
+            padding: 32px 20px;
+            border-right: 1px solid rgba(255, 181, 167, 0.2);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .logo-section {
+            margin-bottom: 48px;
+        }
+        
+        .logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 24px;
+            color: #E07B67;
+            margin-bottom: 8px;
+        }
+        
+        .tagline {
+            font-size: 13px;
+            color: #9CA3AF;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 14px 20px;
+            margin-bottom: 8px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #6B7280;
+            transition: all 0.2s ease;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.5);
+            color: #E07B67;
+        }
+        
+        .nav-item.active {
+            background: linear-gradient(135deg, #E07B67 0%, #FFB5A7 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(224, 123, 103, 0.25);
+        }
+        
+        .nav-item svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+        }
+        
+        .account-section {
+            position: absolute;
+            bottom: 32px;
+            left: 20px;
+            right: 20px;
+        }
+        
+        .account-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .account-item:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #E07B67;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 40px;
+            max-width: 1200px;
+        }
+        
+        .welcome-section {
+            margin-bottom: 48px;
+        }
+        
+        .welcome-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 36px;
+            color: #2D2D2D;
+            margin-bottom: 8px;
+        }
+        
+        .date-text {
+            font-size: 15px;
+            color: #9CA3AF;
+        }
+        
+        /* Journey Card */
+        .journey-card {
+            background: linear-gradient(135deg, rgba(255, 245, 243, 1) 0%, rgba(255, 234, 236, 1) 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 24px rgba(224, 123, 103, 0.08);
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .journey-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 32px;
+        }
+        
+        .journey-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 32px;
+            color: #2D2D2D;
+            margin-bottom: 8px;
+        }
+        
+        .progress-text {
+            font-size: 16px;
+            color: #6B7280;
+        }
+        
+        .streak-badge {
+            background: linear-gradient(135deg, #E07B67 0%, #FFB5A7 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Progress Bar */
+        .progress-section {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 32px;
+        }
+        
+        .progress-bar-container {
+            height: 8px;
+            background: rgba(224, 123, 103, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #E07B67 0%, #FFB5A7 100%);
+            border-radius: 4px;
+            width: 33%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #6B7280;
+        }
+        
+        /* Today's Focus */
+        .focus-section {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 181, 167, 0.15);
+        }
+        
+        .focus-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2D2D2D;
+            margin-bottom: 12px;
+        }
+        
+        .focus-description {
+            font-size: 16px;
+            color: #6B7280;
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+        
+        .task-list {
+            margin-bottom: 32px;
+        }
+        
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            margin-bottom: 12px;
+            background: rgba(255, 245, 243, 0.3);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 181, 167, 0.15);
+            transition: all 0.2s ease;
+        }
+        
+        .task-item:hover {
+            background: rgba(255, 245, 243, 0.5);
+            transform: translateX(4px);
+        }
+        
+        .task-check {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #10B981;
+            margin-right: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .task-check svg {
+            width: 14px;
+            height: 14px;
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
+        }
+        
+        .task-text {
+            font-size: 16px;
+            color: #4B5563;
+        }
+        
+        .continue-button {
+            width: 100%;
+            background: linear-gradient(135deg, #E07B67 0%, #FFB5A7 100%);
+            color: white;
+            border: none;
+            padding: 18px 32px;
+            font-size: 17px;
+            font-weight: 500;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(224, 123, 103, 0.25);
+        }
+        
+        .continue-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(224, 123, 103, 0.35);
+        }
+        
+        /* Quick Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 32px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid rgba(255, 181, 167, 0.15);
+            transition: all 0.2s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(224, 123, 103, 0.1);
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #E07B67;
+            margin-bottom: 4px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #9CA3AF;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-section">
+            <div class="logo">Fear to Fuel</div>
+            <div class="tagline">Transform fear into action</div>
+        </div>
+        
+        <nav>
+            <a href="#" class="nav-item active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7" rx="1"/>
+                    <rect x="14" y="3" width="7" height="7" rx="1"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1"/>
+                    <rect x="14" y="14" width="7" height="7" rx="1"/>
+                </svg>
+                Dashboard
+            </a>
+            
+            <a href="#" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 2L9 22M15 2L15 22M3 6L21 6M3 12L21 12M3 18L21 18"/>
+                </svg>
+                Journey Overview
+            </a>
+            
+            <a href="#" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M8 12H16M12 8L12 16M4 16C4 18.21 5.79 20 8 20H16C18.21 20 20 18.21 20 16V8C20 5.79 18.21 4 16 4H8C5.79 4 4 5.79 4 8V16Z"/>
+                </svg>
+                Chat
+            </a>
+            
+            <a href="#" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 8L3 18C3 19.1 3.9 20 5 20H19C20.1 20 21 19.1 21 18V8M3 8L12 13L21 8M3 8L12 3L21 8"/>
+                </svg>
+                Entries
+            </a>
+            
+            <a href="#" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+                Calendar
+            </a>
+        </nav>
+        
+        <div class="account-section">
+            <div class="account-item">
+                <div class="avatar">N</div>
+                <div>
+                    <div style="font-weight: 500; color: #2D2D2D;">Account</div>
+                    <div style="font-size: 13px; color: #9CA3AF;">Settings</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="welcome-section">
+            <h1 class="welcome-title">Welcome back, Alya!</h1>
+            <p class="date-text">Friday, June 6, 2025</p>
+        </div>
+        
+        <!-- Journey Card -->
+        <div class="journey-card">
+            <div class="journey-header">
+                <div>
+                    <h2 class="journey-title">Fear to Fuel Journey</h2>
+                    <p class="progress-text">Progress: Day 1/30</p>
+                </div>
+                <div class="streak-badge">
+                    🔥 1 day streak
+                </div>
+            </div>
+            
+            <div class="progress-section">
+                <div class="progress-bar-container">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="progress-stats">
+                    <span>3% Complete</span>
+                    <span>29 days remaining</span>
+                </div>
+            </div>
+            
+            <div class="focus-section">
+                <h3 class="focus-title">Today's Focus</h3>
+                <p class="focus-description">
+                    Continue your journey of transforming fear into fuel for your project.
+                </p>
+                
+                <div class="task-list">
+                    <div class="task-item">
+                        <div class="task-check">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <span class="task-text">Power-Up Exercise</span>
+                    </div>
+                    
+                    <div class="task-item">
+                        <div class="task-check">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <span class="task-text">Main Exercise</span>
+                    </div>
+                    
+                    <div class="task-item">
+                        <div class="task-check">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" />
+                            </svg>
+                        </div>
+                        <span class="task-text">Reflection</span>
+                    </div>
+                </div>
+                
+                <button class="continue-button">Continue Your Journey</button>
+            </div>
+        </div>
+        
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">1</div>
+                <div class="stat-label">Days Completed</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-value">3</div>
+                <div class="stat-label">Exercises Done</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-value">2</div>
+                <div class="stat-label">Insights Gained</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "name": "journeyos",
+  "version": "1.0.0",
+  "description": "JourneyOS - Personal Journal Application",
+  "scripts": {
+    "dev": "cd journalwebsite && npm run dev",
+    "build": "cd journalwebsite && npm run build",
+    "start": "cd journalwebsite && npm run start",
+    "lint": "cd journalwebsite && npm run lint",
+    "install-frontend": "cd journalwebsite && npm install",
+    "install-backend": "cd journalbackend && npm install",
+    "install-all": "npm run install-frontend && npm run install-backend",
+    "deploy-backend": "cd journalbackend && firebase deploy",
+    "serve-backend": "cd journalbackend && firebase serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daniflicks/JourneyOS.git"
+  },
+  "keywords": [
+    "journal",
+    "nextjs",
+    "firebase",
+    "personal",
+    "diary"
+  ],
+  "author": "Dani Flicks",
+  "license": "MIT"
+} 

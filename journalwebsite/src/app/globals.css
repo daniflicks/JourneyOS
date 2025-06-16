@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background-color: #F8F7FF;
+  --primary-purple: #8B7FD0;
+  --button-radius: 0.6rem;
+  
+  /* New coral theme variables */
+  --primary-coral: #E07B67;
+  --secondary-coral: #FFB5A7;
+  --background-gradient-start: #FFF5F3;
+  --background-gradient-end: #FFEAEC;
+  --text-primary: #2D2D2D;
+  --text-secondary: #4B5563;
+  --text-muted: #6B7280;
+  --white-translucent: rgba(255, 255, 255, 0.7);
+  --coral-light: #FFF0ED;
+}
+
+body {
+  background-color: var(--coral-light);
+  min-height: 100vh;
+}
+
+/* Global Button Styles */
+@layer components {
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--primary-purple);
+    color: white;
+    border-radius: var(--button-radius);
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .btn-primary:hover {
+    background-color: #7a6db8;
+    transform: translateY(-1px);
+  }
+}

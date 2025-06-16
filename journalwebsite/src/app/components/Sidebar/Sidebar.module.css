@@ -1,0 +1,102 @@
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: white;
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding: 1.5rem 1rem;
+  transition: width 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar.collapsed .menuLabel {
+  display: none;
+}
+
+.nav {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.logo {
+  padding: 0rem 0 1.5rem 0;
+}
+
+.logo h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #E07B67;
+  text-align: center;
+}
+
+.menuSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: #4b5563;
+  text-decoration: none;
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.menuItem:hover {
+  background-color: rgba(255, 245, 243, 0.5);
+  color: #1a1a1a;
+}
+
+.menuItem.active {
+  background-color: transparent;
+  color: #E07B67;
+}
+
+.menuItem.active:hover {
+  background-color: rgba(255, 245, 243, 0.5);
+  color: #E07B67;
+}
+
+.bottomSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: auto;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 1rem;
+}
+
+.collapseButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  color: #4b5563;
+  background: none;
+  border: none;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.collapseButton:hover {
+  background-color: var(--background-color);
+  color: #1a1a1a;
+}
+
+.collapsed .collapseButton svg {
+  transform: rotate(180deg);
+} 

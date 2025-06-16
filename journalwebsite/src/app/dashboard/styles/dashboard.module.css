@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap');
+
+/* Dashboard Container */
+.container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 32px;
+  background: linear-gradient(135deg, var(--background-gradient-start) 0%, var(--background-gradient-end) 100%);
+  box-sizing: border-box;
+}
+
+/* Welcome Section */
+.welcomeSection {
+  margin-left: 6px;
+  margin-bottom: 46px;
+  width: 100%;
+}
+
+.welcomeTitle {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  color: #2D2D2D;
+  margin-bottom: 4px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.dateText {
+  font-size: 15px;
+  color: #9CA3AF;
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* Journey Card */
+.journeyCard {
+  background: transparent;
+  border-radius: 20px;
+  padding: 0;
+  margin-bottom: 32px;
+  box-shadow: none;
+  animation: fadeInUp 0.6s ease-out;
+  width: 100%;
+  max-width: 32rem;
+}
+
+.focusSection {
+  background: white;
+  border-radius: 26px;
+  padding: 36px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(255, 181, 167, 0.15);
+}
+
+.journeyTitle {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  color: #2D2D2D;
+  margin-bottom: 0px;
+  font-weight: 700;
+}
+
+.progressText {
+  font-size: 14px;
+  color: #6B7280;
+  margin-bottom: 26px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.focusTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2D2D2D;
+  margin-bottom: 8px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.focusDescription {
+  font-size: 14px;
+  color: #6B7280;
+  margin-bottom: 20px;
+  line-height: 1.6;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* Task List */
+.taskList {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.taskItem {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background: rgba(255, 245, 243, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 181, 167, 0.15);
+  transition: all 0.2s ease;
+}
+
+.taskItem:hover {
+  background: rgba(255, 245, 243, 0.5);
+  transform: translateX(4px);
+}
+
+.taskCheck {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #E07B67;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.taskCheck:empty {
+  background: transparent;
+  border: 2px solid #E07B67;
+}
+
+.taskCheck svg {
+  width: 12px;
+  height: 12px;
+  stroke: white;
+  stroke-width: 3;
+  fill: none;
+}
+
+.taskText {
+  font-size: 14px;
+  color: #4B5563;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* Continue Button */
+.continueButton {
+  width: 100%;
+  background: linear-gradient(135deg, #E07B67 0%, #FFB5A7 100%);
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(224, 123, 103, 0.25);
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.continueButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(224, 123, 103, 0.35);
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} 

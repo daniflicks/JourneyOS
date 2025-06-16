@@ -1,0 +1,78 @@
+'use client';
+
+import React, { useCallback } from 'react';
+import styles from '../../../app/feartofuel/styles/fear_to_fuel.module.css';
+import { ArrowRight, MessageSquare } from 'lucide-react';
+
+/**
+ * Day 1 Main Exercise – Display Project Vision with AI feedback
+ * Uses EXERCISE_PROMPTS[1][1] ("Project Vision: Write your project idea in its simplest form.")
+ */
+
+export default function Day1Main2({
+  answers,
+  onContinue,
+  aiResponse,
+  aiLoading,
+  aiError,
+}) {
+  const projectVision = answers.projectVision || '';
+  const handleNext    = useCallback(() => onContinue(), [onContinue]);
+
+  return (
+    <div className={styles.mainContent}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Project Vision</h1>
+        <p className={styles.introduction}>
+          Thanks for sharing your idea. Here's some AI-powered insight on your vision:
+        </p>
+      </div>
+
+      <div className={styles.calloutBox}>
+        <p className="whitespace-pre-wrap">
+          {projectVision || 'No vision provided.'}
+        </p>
+      </div>
+
+      {aiLoading && (
+        <div className={styles.aiLoading}>
+          <span>Coco is reflecting on your response</span>
+          <div className={styles.loadingDots}>
+            <div className={styles.loadingDot}></div>
+            <div className={styles.loadingDot}></div>
+            <div className={styles.loadingDot}></div>
+          </div>
+        </div>
+      )}
+      {aiError && (
+        <p className="text-red-500 mt-4">{aiError}</p>
+      )}
+      {!aiLoading && !aiError && aiResponse && (
+        <div className={styles.aiAnalysisCard}>
+          <div className={styles.aiHeader}>
+            <div className={styles.aiIconContainer}>
+              <MessageSquare className={styles.aiIcon} />
+            </div>
+            <div className={styles.aiInfo}>
+              <h2 className={styles.aiName}>From Coco, your guide</h2>
+              <p className={styles.aiRole}>AI support companion</p>
+            </div>
+          </div>
+          <div className={styles.aiMessage}>
+            <p className="whitespace-pre-wrap">{aiResponse}</p>
+          </div>
+        </div>
+      )}
+
+      <div className={styles.actionButtons}>
+        <button
+          className={`${styles.primaryButton} ${styles.withIcon}`}
+          onClick={handleNext}
+          disabled={aiLoading}
+        >
+          Continue to Next Question <ArrowRight size={20} />
+        </button>
+      </div>
+    </div>
+  );
+}
