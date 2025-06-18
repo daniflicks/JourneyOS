@@ -30,6 +30,11 @@ export default function StepPage() {
         })
       : { response: '', loading: false, error: '' };
 
+  // Preload additional prompts
+  pageMeta.ai?.preload?.forEach(promptIndex => {
+    useClaudeFeedback({ day: dayNum, section, promptIndex, userText });
+  });
+
   // Dynamically import the correct step component (including 'complete')
   const StepUI = useMemo(
     () => dynamic(

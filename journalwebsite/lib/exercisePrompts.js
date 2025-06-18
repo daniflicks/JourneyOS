@@ -37,43 +37,211 @@ export const EXERCISE_PROMPTS = {
     
     /* 1 */ `The user has shared their earliest memories about failure and what they learned about failure as a child: {userText}
 
-    Respond with: 1) A gentle acknowledgment of their courage in exploring these early experiences. 2) Identify 1-2 key patterns you notice in how failure was treated in their early environment. 3) One insight about how these early messages might be influencing their current relationship with risk and failure. Keep your response warm, non-judgmental, and under 4 sentences. Do not ask questions.`,
+    Respond with deep validation of their courage in exploring these tender early experiences. These memories shaped so much. If there's one powerful insight that stands out from what they've shared, mention it briefly. Otherwise, focus on acknowledging the weight of these early lessons. Keep it warm and under 2 sentences. Do not ask questions.`,
 
     /* 2 */ `The user has reflected on how the adults around them (parents, family) dealt with their own failures or mistakes: {userText}
 
-    Respond with: 1) A compassionate acknowledgment of their observations about the adult models in their life. 2) Identify the underlying "story" about failure that existed in their family/community - what failure meant and how it should be handled based on these patterns. 3) One insight about how this family story about failure might be influencing their current relationship with risk and setbacks. Keep your response understanding and under 4 sentences. Do not ask questions.`,
+    Acknowledge how deeply these adult models affected them. Children absorb everything. If there's one particularly striking pattern in what they've observed, name it gently. Focus on validating how formative these moments were. Keep it compassionate and under 2 sentences. Do not ask questions.`,
 
     /* 3 */ `The user has shared a significant career failure experience. Story: {userText} | Age when it happened: {userAge}
 
-    Respond with: 1) A gentle acknowledgment of their courage in revisiting this difficult memory. 2) Identify key patterns in how this experience shaped their relationship with professional risk-taking (considering their age and career stage when it happened). 3) One insight about how this specific failure might be connected to their current fears about their project. Keep your response supportive and under 4 sentences. Do not ask questions.`,
+    Honor their courage in sharing this painful memory. That takes real strength. If something particularly strikes you about the timing or impact, acknowledge it briefly. Otherwise, focus on witnessing their experience. Keep it supportive and under 2 sentences. Do not ask questions.`,
 
     /* 4 */ `The user has reflected on how others reacted to their career failure: {userText}
 
-    Respond with: 1) A compassionate acknowledgment of how others' reactions can deeply impact our relationship with failure. 2) Identify key patterns in the type of support or criticism they received and what this reveals about their social environment during vulnerability. 3) One insight about how these external reactions might be influencing their current hesitation to take risks or share struggles. Keep your response supportive and under 4 sentences. Do not ask questions.`,
+    Validate how much others' reactions matter when we're already vulnerable. Those responses can cut so deep or lift us up. Focus on acknowledging the impact these reactions had on them. Keep it understanding and under 2 sentences. Do not ask questions.`,
 
     /* 5 */ `The user has reflected on what they decided about themselves after their career failure: {userText}
 
-    Respond with: 1) A gentle acknowledgment of how powerful our self-narratives can be, especially after difficult experiences. 2) Identify the core self-limiting beliefs or identity shifts that emerged from this experience and how they might have become protective mechanisms. 3) One insight about how these internalized decisions about themselves might be creating invisible barriers to pursuing their current project. Keep your response compassionate and under 4 sentences. Do not ask questions.`,
+    Acknowledge how powerful the stories we tell ourselves can be, especially when we're hurting. These beliefs became protection. If there's something particularly striking about what they decided about themselves, reflect it back gently. Keep it compassionate and under 2 sentences. Do not ask questions.`,
 
     /* 6 */ `The user has shared their most painful career failure: {userText}
 
-    Respond with: 1) A deeply compassionate acknowledgment of the courage it takes to revisit such a painful experience. 2) Identify what made this failure particularly devastating - the deeper values, dreams, or aspects of identity that were threatened or lost. 3) One insight about how the emotional intensity of this experience might be creating a protective fear response that's now influencing their current project decisions. Keep your response tender and under 4 sentences. Do not ask questions.`,
+    Honor the immense courage it takes to share something this painful. This clearly meant everything to them. Focus on witnessing their experience with deep compassion. Keep it tender and under 2 sentences. Do not ask questions.`,
 
     /* 7 */ `The user has reflected on what was at stake when they made the decision that led to their most painful failure: {userText}
 
-    Respond with: 1) A compassionate acknowledgment of how high the stakes felt and how much courage it took to risk something so meaningful to them. 2) Identify the core values, dreams, or aspects of identity that were on the line, and how this reveals what matters most deeply to them. 3) One insight about how the fear of losing something equally precious might be influencing their hesitation with their current project. Keep your response understanding and under 4 sentences. Do not ask questions.`,
+    Acknowledge the immense courage it took to risk something so precious to them. That's what makes this so hard - it mattered deeply. Focus on honoring what was at stake for them. Keep it understanding and under 2 sentences. Do not ask questions.`,
 
     /* 8 */ `The user has reflected on how they coped in the weeks or months after their most painful failure: {userText}
 
-    Respond with: 1) A gentle acknowledgment of their resilience and the various ways they tried to heal from this difficult experience. 2) Identify patterns in their coping strategies - whether they tended to withdraw or connect, avoid or process, and what this reveals about their natural responses to vulnerability. 3) One insight about how these same coping patterns might be influencing how they're approaching (or avoiding) their current project. Keep your response supportive and under 4 sentences. Do not ask questions.`,
+    Honor their resilience and the ways they found to survive such a difficult time. We all do what we need to do to heal. Focus on acknowledging their strength during vulnerability. Keep it supportive and under 2 sentences. Do not ask questions.`,
 
     /* 9 */ `The user has shared their most recent career setback: {userText}
 
-    Respond with: 1) A supportive acknowledgment that setbacks are part of every career journey and recognize their willingness to examine recent experiences. 2) Identify how their response to this recent failure shows growth or persistence of patterns from earlier experiences they've shared. 3) One insight about how this recent experience might be either reinforcing old fears or offering new evidence of their resilience as they consider their current project. Keep your response encouraging and under 4 sentences. Do not ask questions.`,
+    Acknowledge their openness in examining recent challenges. These experiences are still fresh and can sting. Focus on validating their willingness to look at difficult recent experiences. Keep it encouraging and under 2 sentences. Do not ask questions.`,
 
-    /* 10 */ `PLACEHOLDER FOR COMPREHENSIVE ANALYSIS - This will analyze all Day 2 inputs collectively focusing on patterns and echoes from past experiences. Context memory system will be built before finalizing this prompt.`,
+    /* 10 */ `Based on all our conversations throughout Day 2 where we explored your relationship with failure and how it originated, provide a comprehensive pattern analysis focused on Day 2 experiences.
+
+    Analyze and present in this structure:
+
+    **Core Pattern Recognition**: Identify 2-3 significant patterns recurring across their failure experiences discussed today.
+
+    **Root Failure Fears**: Based on Day 2 stories and reflections, identify the deepest failure fears driving their relationship with risk.
+
+    **Protective Strategies**: How they protect themselves from failure vulnerability, based on patterns from Day 2 reflections.
+
+    **Growth Opportunities**: Greatest potential for transformation based on Day 2 patterns identified.
+
+    Keep your tone warm and insightful. Be specific about patterns from Day 2 conversations. This should feel like a meaningful breakthrough moment. Do not ask follow-up questions or provide lengthy encouragement.
+
+    Current reflection prompt: {userText}`,
+
+    /* 11 */ `Create a very brief, neutral summary phrase of this career experience: {userText}
+
+    Return ONLY a short phrase that captures the essence of the experience itself. Focus on what they were doing, not what went wrong. Examples:
+    - "photoshoot at 20"
+    - "startup experience in college" 
+    - "presentation at work"
+    - "business launch attempt"
+    - "Starbucks job interview"
+    - "first client project"
+
+    CRITICAL RULES:
+    - Do NOT include any negative words like "failed," "disaster," "rejected," "disappointment," "mistake," "failure," "client-rejected," "botched," "unsuccessful"
+    - Do NOT mention outcomes, results, or consequences
+    - Focus purely on the activity or situation
+    - Keep it under 4 words, natural, and specific to their story
+    - Do not include quotes or extra text
+    - Think of it as describing what they were doing, not what happened`,
+
+    /* 12 */ `The user has reflected on what they learned from their career experience: {userText}
+
+    Acknowledge their courage in finding wisdom in difficult experiences. That's real growth. If there's a particularly powerful insight about resilience, skill development, or self-awareness, highlight it briefly. Focus on validating their ability to transform pain into learning. Keep it encouraging and under 2 sentences. Do not ask questions.`,
+
+    /* 13 */ `The user has reflected on what they learned from their most painful career experience: {userText}
+
+    Acknowledge their courage in finding wisdom in such a deeply painful experience. That's extraordinary growth. If there's a particularly powerful insight about resilience, skill development, or self-awareness, highlight it briefly. Focus on validating their ability to transform deep pain into meaningful learning. Keep it encouraging and under 2 sentences. Do not ask questions.`,
+
+    /* 14 */ `Based on all the wisdom the user has discovered from transforming their three key failure experiences into learning opportunities, provide a comprehensive positive reframing analysis focused on their growth and resilience.
+
+    Analyze and present in this structure:
+
+    **Wisdom Integration**: Identify 2-3 powerful themes of resilience, skill development, or self-awareness that emerge across all three lessons learned.
+
+    **Growth Transformation**: How they've demonstrated the ability to transform pain into wisdom, based on patterns from their lessons learned.
+
+    **Future Foundation**: The solid foundation of wisdom and resilience they've built for future challenges.
+
+    **Encouragement**: Celebrate their courage and growth mindset in finding meaning in difficult experiences.
+
+    Keep your tone extremely positive, encouraging, and celebratory. This should feel like a breakthrough moment where they recognize their own strength and wisdom. Focus on their growth and transformation. Do not ask follow-up questions or provide lengthy analysis.
+
+    Current lessons learned: {userText}`,
+
+    /* 15 */ `The user has reflected on a new way they could think about their failures: {userText}
+
+    Acknowledge their openness to shifting their perspective on failure. This kind of mindset change is powerful and shows real growth. If there's something particularly insightful about their new perspective, highlight it briefly. Focus on validating their willingness to see failure differently and how this new mindset will serve them moving forward. Keep it encouraging and under 2 sentences. Do not ask questions.`,
 
     // Add more Day 2 prompts here as needed...
+  ],
+
+  3: [
+    /* 0 */ `You're guiding the user through Day 3: Root Cause Excavation. Your job is to help them explore where their fears originated. Be supportive without asking follow-up questions.`,
+    
+    /* 1 */ `The user has shared their earliest memories about failure and what they learned about failure as a child: {userText}
+
+    Respond with deep validation of their courage in exploring these tender early experiences. These memories shaped so much. If there's one powerful insight that stands out from what they've shared, mention it briefly. Otherwise, focus on acknowledging the weight of these early lessons. Keep it warm and under 2 sentences. Do not ask questions.`,
+
+    /* 2 */ `The user has reflected on how the adults around them (parents, family) dealt with their own failures or mistakes: {userText}
+
+    Acknowledge how deeply these adult models affected them. Children absorb everything. If there's one particularly striking pattern in what they've observed, name it gently. Focus on validating how formative these moments were. Keep it compassionate and under 2 sentences. Do not ask questions.`,
+
+    /* 3 */ `The user has shared a significant career failure experience. Story: {userText} | Age when it happened: {userAge}
+
+    Honor their courage in sharing this painful memory. That takes real strength. If something particularly strikes you about the timing or impact, acknowledge it briefly. Otherwise, focus on witnessing their experience. Keep it supportive and under 2 sentences. Do not ask questions.`,
+
+    /* 4 */ `The user has reflected on how others reacted to their career failure: {userText}
+
+    Validate how much others' reactions matter when we're already vulnerable. Those responses can cut so deep or lift us up. Focus on acknowledging the impact these reactions had on them. Keep it understanding and under 2 sentences. Do not ask questions.`,
+
+    /* 5 */ `The user has reflected on what they decided about themselves after their career failure: {userText}
+
+    Acknowledge how powerful the stories we tell ourselves can be, especially when we're hurting. These beliefs became protection. If there's something particularly striking about what they decided about themselves, reflect it back gently. Keep it compassionate and under 2 sentences. Do not ask questions.`,
+
+    /* 6 */ `The user has shared their most painful career failure: {userText}
+
+    Honor the immense courage it takes to share something this painful. This clearly meant everything to them. Focus on witnessing their experience with deep compassion. Keep it tender and under 2 sentences. Do not ask questions.`,
+
+    /* 7 */ `The user has reflected on what was at stake when they made the decision that led to their most painful failure: {userText}
+
+    Acknowledge the immense courage it took to risk something so precious to them. That's what makes this so hard - it mattered deeply. Focus on honoring what was at stake for them. Keep it understanding and under 2 sentences. Do not ask questions.`,
+
+    /* 8 */ `The user has reflected on how they coped in the weeks or months after their most painful failure: {userText}
+
+    Honor their resilience and the ways they found to survive such a difficult time. We all do what we need to do to heal. Focus on acknowledging their strength during vulnerability. Keep it supportive and under 2 sentences. Do not ask questions.`,
+
+    /* 9 */ `The user has shared their most recent career setback: {userText}
+
+    Acknowledge their openness in examining recent challenges. These experiences are still fresh and can sting. Focus on validating their willingness to look at difficult recent experiences. Keep it encouraging and under 2 sentences. Do not ask questions.`,
+
+    /* 10 */ `Based on all our conversations throughout Day 3 where we explored your relationship with failure and how it originated, provide a comprehensive pattern analysis focused on Day 3 experiences.
+
+    Analyze and present in this structure:
+
+    **Core Pattern Recognition**: Identify 2-3 significant patterns recurring across their failure experiences discussed today.
+
+    **Root Failure Fears**: Based on Day 3 stories and reflections, identify the deepest failure fears driving their relationship with risk.
+
+    **Protective Strategies**: How they protect themselves from failure vulnerability, based on patterns from Day 3 reflections.
+
+    **Growth Opportunities**: Greatest potential for transformation based on Day 3 patterns identified.
+
+    Keep your tone warm and insightful. Be specific about patterns from Day 3 conversations. This should feel like a meaningful breakthrough moment. Do not ask follow-up questions or provide lengthy encouragement.
+
+    Current reflection prompt: {userText}`,
+
+    /* 11 */ `Create a very brief, neutral summary phrase of this career experience: {userText}
+
+    Return ONLY a short phrase that captures the essence of the experience itself. Focus on what they were doing, not what went wrong. Examples:
+    - "photoshoot at 20"
+    - "startup experience in college" 
+    - "presentation at work"
+    - "business launch attempt"
+    - "Starbucks job interview"
+    - "first client project"
+
+    CRITICAL RULES:
+    - Do NOT include any negative words like "failed," "disaster," "rejected," "disappointment," "mistake," "failure," "client-rejected," "botched," "unsuccessful"
+    - Do NOT mention outcomes, results, or consequences
+    - Focus purely on the activity or situation
+    - Keep it under 4 words, natural, and specific to their story
+    - Do not include quotes or extra text
+    - Think of it as describing what they were doing, not what happened`,
+
+    /* 12 */ `The user has reflected on what they learned from their career experience: {userText}
+
+    Acknowledge their courage in finding wisdom in difficult experiences. That's real growth. If there's a particularly powerful insight about resilience, skill development, or self-awareness, highlight it briefly. Focus on validating their ability to transform pain into learning. Keep it encouraging and under 2 sentences. Do not ask questions.`,
+
+    /* 13 */ `The user has reflected on what they learned from their most painful career experience: {userText}
+
+    Acknowledge their courage in finding wisdom in such a deeply painful experience. That's extraordinary growth. If there's a particularly powerful insight about resilience, skill development, or self-awareness, highlight it briefly. Focus on validating their ability to transform deep pain into meaningful learning. Keep it encouraging and under 2 sentences. Do not ask questions.`,
+
+    /* 14 */ `The user has reflected on what they learned from their most recent career experience: {userText}
+
+    Acknowledge their courage in finding wisdom in recent difficult experiences. That's real growth. If there's a particularly powerful insight about resilience, skill development, or self-awareness, highlight it briefly. Focus on validating their ability to transform recent challenges into learning. Keep it encouraging and under 2 sentences. Do not ask questions.`,
+
+    /* 15 */ `Based on all the wisdom the user has discovered from transforming their three key failure experiences into learning opportunities, provide a comprehensive positive reframing analysis focused on their growth and resilience.
+
+    Analyze and present in this structure:
+
+    **Wisdom Integration**: Identify 2-3 powerful themes of resilience, skill development, or self-awareness that emerge across all three lessons learned.
+
+    **Growth Transformation**: How they've demonstrated the ability to transform pain into wisdom, based on patterns from their lessons learned.
+
+    **Future Foundation**: The solid foundation of wisdom and resilience they've built for future challenges.
+
+    **Encouragement**: Celebrate their courage and growth mindset in finding meaning in difficult experiences.
+
+    Keep your tone extremely positive, encouraging, and celebratory. This should feel like a breakthrough moment where they recognize their own strength and wisdom. Focus on their growth and transformation. Do not ask follow-up questions or provide lengthy analysis.
+
+    Current lessons learned: {userText}`,
+
+    /* 16 */ `The user has reflected on a new way they could think about their failures: {userText}
+
+    Acknowledge their openness to shifting their perspective on failure. This kind of mindset change is powerful and shows real growth. If there's something particularly insightful about their new perspective, highlight it briefly. Focus on validating their willingness to see failure differently and how this new mindset will serve them moving forward. Keep it encouraging and under 2 sentences. Do not ask questions.`,
+
+    // Add more Day 3 prompts here as needed...
   ],
 
   // Additional days following the 30-day structure

@@ -279,23 +279,27 @@
 }
 
 .secondaryButton {
-  background: transparent;
-  color: var(--primary-coral);
-  border: none;
-  padding: 12px 24px;
+  background: #fff;
+  border: 2px solid rgba(255, 181, 167, 0.3);
   border-radius: 12px;
-  font-weight: 500;
-  font-size: 16px;
-  transition: all 0.2s ease;
+  padding: 16px;
   cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s ease;
   text-align: center;
+  color: #6B7280;
+  font-size: 16px;
+  font-weight: 400;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .secondaryButton:hover {
-  color: #D56552;
-  text-decoration: underline;
-  background-color: transparent;
+  border-color: #FFB5A7;
+  background: rgba(255, 245, 243, 0.5);
+  color: #E07B67;
 }
 
 .secondaryButton:disabled {

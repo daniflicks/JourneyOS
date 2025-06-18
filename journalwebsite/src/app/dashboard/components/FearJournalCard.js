@@ -10,9 +10,21 @@ import styles from '../styles/dashboard.module.css';
 /**
  * Dashboard card showing current journey progress and resume link
  */
-export default function FearJournalCard() {
+export default function FearJournalCard({ hydrated = false }) {
   const { currentDay, resumePage, sectionsStatus } = useDashboardData();
   const { checkIn, mainExercise, reflection } = sectionsStatus;
+
+  // Don't render dynamic content until hydrated to prevent hydration mismatches
+  if (!hydrated) {
+    return (
+      <div className={styles.journeyCard}>
+        <div className={styles.focusSection}>
+          <h2 className={styles.journeyTitle}>Fear to Fuel Journey</h2>
+          <p className={styles.progressText}>Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   // Build list of steps for today
   const pages = PAGE_MAP[currentDay] || [];

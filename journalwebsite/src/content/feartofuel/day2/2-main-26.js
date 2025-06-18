@@ -4,7 +4,7 @@ import React, { useCallback, useEffect } from 'react';
 import styles from '../../../app/feartofuel/styles/fear_to_fuel.module.css';
 import { ArrowRight, MessageSquare, Sparkles } from 'lucide-react';
 
-export default function Day2Main20({
+export default function Day2Main26({
   answers,
   onChange,
   onContinue,
@@ -14,35 +14,23 @@ export default function Day2Main20({
 }) {
   const handleNext = useCallback(() => onContinue(), [onContinue]);
 
-  // Aggregate all Day 2 answers to trigger comprehensive analysis
+  // Aggregate the 3 lessons learned inputs to trigger positive reframing analysis
   useEffect(() => {
-    const day2Answers = [
-      answers.earlyMessagesReflection,
-      answers.adultFailureReflection,
-      answers.careerFailureStory,
-      answers.othersReactionReflection,
-      answers.selfDecisionReflection,
-      answers.mostPainfulFailureReflection,
-      answers.whatWasAtStakeReflection,
-      answers.copingMechanismsReflection,
-      answers.mostRecentFailureReflection,
+    const lessonsLearned = [
+      answers.lessonsFromFirstMemory,
+      answers.lessonsFromMostPainfulMemory,
+      answers.lessonsFromMostRecentMemory,
     ].filter(Boolean).join('\n\n---\n\n');
 
     // Only trigger if we have substantial content and it's different from current trigger
-    if (day2Answers.length > 50 && day2Answers !== answers.triggerAnalysis) {
-      onChange('triggerAnalysis', day2Answers);
+    if (lessonsLearned.length > 50 && lessonsLearned !== answers.lessonsReframingAnalysis) {
+      onChange('lessonsReframingAnalysis', lessonsLearned);
     }
   }, [
-    answers.earlyMessagesReflection,
-    answers.adultFailureReflection,
-    answers.careerFailureStory,
-    answers.othersReactionReflection,
-    answers.selfDecisionReflection,
-    answers.mostPainfulFailureReflection,
-    answers.whatWasAtStakeReflection,
-    answers.copingMechanismsReflection,
-    answers.mostRecentFailureReflection,
-    answers.triggerAnalysis,
+    answers.lessonsFromFirstMemory,
+    answers.lessonsFromMostPainfulMemory,
+    answers.lessonsFromMostRecentMemory,
+    answers.lessonsReframingAnalysis,
     onChange,
   ]);
 
@@ -50,9 +38,9 @@ export default function Day2Main20({
     <div className={styles.mainContent}>
       {!aiLoading && (
         <div className={styles.header}>
-          <h1 className={styles.title}>Pattern Recognition</h1>
+          <h1 className={styles.title}>Wisdom Integration</h1>
           <p className={styles.introductionMargin}>
-            Let's look at the deeper patterns that emerge from your failure history.
+            Let's celebrate the incredible wisdom you've discovered from transforming your experiences.
           </p>
         </div>
       )}
@@ -69,9 +57,9 @@ export default function Day2Main20({
             <div className={styles.petal} style={{ '--rotation': '270deg' }}></div>
             <div className={styles.petal} style={{ '--rotation': '315deg' }}></div>
           </div>
-          <h2 className={styles.title}>Analyzing Patterns</h2>
+          <h2 className={styles.title}>Integrating Your Wisdom</h2>
           <p className={styles.introduction}>
-            Coco is analyzing the patterns across all your experiences to provide deep insights.
+            Coco is weaving together all the wisdom you've discovered to create a powerful foundation for your future.
           </p>
         </div>
       )}
@@ -86,10 +74,10 @@ export default function Day2Main20({
         <div className={styles.aiAnalysisCard}>
           <div className={styles.aiHeader}>
             <div className={styles.aiIconContainer}>
-              <MessageSquare className={styles.aiIcon} />
+              <Sparkles className={styles.aiIcon} />
             </div>
             <div className={styles.aiInfo}>
-              <h2 className={styles.aiName}>Deep Pattern Analysis</h2>
+              <h2 className={styles.aiName}>Your Wisdom Foundation</h2>
               <p className={styles.aiRole}>From Coco, your guide</p>
             </div>
           </div>
@@ -106,7 +94,7 @@ export default function Day2Main20({
             onClick={handleNext}
             disabled={aiLoading}
           >
-            Continue <ArrowRight size={20} />
+            Continue to Reflection <ArrowRight size={20} />
           </button>
         </div>
       )}

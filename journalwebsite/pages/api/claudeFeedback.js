@@ -1,14 +1,15 @@
 // pages/api/claudeFeedback.js
 
 import Anthropic, { HUMAN_PROMPT, AI_PROMPT } from "@anthropic-ai/sdk";
-import { EXERCISE_PROMPTS }            from "../../lib/exercisePrompts";
+import { EXERCISE_PROMPTS } from "../../lib/exercisePrompts";
+import { COCO_PERSONALITY } from "../../lib/cocoPersonality";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).end("Method Not Allowed");
   }
 
-  const { day, promptIndex, userText } = req.body;
+  const { day, promptIndex, userText, userMemory = '' } = req.body;
   if (
     typeof day !== "number" ||
     typeof promptIndex !== "number" ||
@@ -25,11 +26,22 @@ export default async function handler(req, res) {
       .json({ error: `No prompt for day ${day}, index ${promptIndex}` });
   }
 
+  // Build prompt with optional memory context
+  const memoryContext = userMemory 
+    ? `\n\nUser Memory Context: ${userMemory}`
+    : '';
+
   const fullPrompt = [
     HUMAN_PROMPT,
-    "You're a warm, encouraging coach guiding a user through a 30-day journaling program.",
-    `Day ${day}, Step ${promptIndex + 1} prompt: "${promptText}"`,
-    `User's response: "${userText}"`,
+    COCO_PERSONALITY,
+    "",
+    `Day ${day}, Step ${promptIndex + 1} exercise: ${promptText}`,
+    `User's response: "${userText}"${memoryContext}`,
+    "",
+    "Please provide your response and update the user memory with any new insights about them.",
+    "Format your response as:",
+    "Response: [your main response]",
+    "Memory: [updated memory profile - key insights about who this user is, their situation, patterns, fears, values, etc.]",
     AI_PROMPT,
   ].join("\n");
 
@@ -54,12 +66,14 @@ export default async function handler(req, res) {
     }
 
     // join text blocks
-    let aiText = blocks.map(b => b.text).join("\n");
+    let fullResponse = blocks.map(b => b.text).join("\n");
 
-    // strip any leading "# Heading" line
-    aiText = aiText.replace(/^#.*\r?\n+/, "").trim();
+    // Parse structured response
+    const responseParts = fullResponse.split(/Memory:\s*/);
+    let aiText = responseParts[0].replace(/^Response:\s*/, '').replace(/^#.*\r?\n+/, '').trim();
+    let updatedMemory = responseParts[1]?.trim() || userMemory;
 
-    return res.status(200).json({ aiText });
+    return res.status(200).json({ aiText, updatedMemory });
   } catch (err) {
     console.error("Claude API error:", err);
     return res

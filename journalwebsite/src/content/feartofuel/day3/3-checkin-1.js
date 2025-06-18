@@ -3,7 +3,7 @@
 import CheckInList from '../../../app/feartofuel/components/CheckInList';
 import styles from '../../../app/feartofuel/styles/fear_to_fuel.module.css';
 
-// Static content data for Day 2 check‑in
+// Static content data for Day 3 check‑in
 const checkInItems = [
   { id: 'resistance', label: 'Resistance to looking at past failures' },
   { id: 'defensive', label: 'Feeling defensive about past choices' },
@@ -13,10 +13,10 @@ const checkInItems = [
 ];
 
 /**
- * Day 2 Check‑In Step
+ * Day 3 Check‑In Step
  * Props injected via DayLayout: answers, onChange, onContinue
  */
-export default function Day2Page1({ answers, onChange, onContinue }) {
+export default function Day3Page1({ answers, onChange, onContinue }) {
   const selectedItems = answers.selectedItems || [];
 
   return (
@@ -50,7 +50,7 @@ export default function Day2Page1({ answers, onChange, onContinue }) {
       <div className={styles.actionButtons}>
         <button
           type="button"
-          onClick={() => onContinue('2-checkin-2')}
+          onClick={() => onContinue('3-checkin-2')}
           className={styles.primaryButton}
           style={{ marginBottom: '24px' }}
         >
@@ -58,7 +58,7 @@ export default function Day2Page1({ answers, onChange, onContinue }) {
         </button>
         <button
           type="button"
-          onClick={() => onContinue('2-main-1')}
+          onClick={() => onContinue('3-main-1')}
           className={styles.secondaryButton}
         >
           Skip to Main Exercise
@@ -66,4 +66,4 @@ export default function Day2Page1({ answers, onChange, onContinue }) {
       </div>
     </div>
   );
-}
+} 

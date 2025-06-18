@@ -4,7 +4,7 @@ import React, { useCallback, useEffect } from 'react';
 import styles from '../../../app/feartofuel/styles/fear_to_fuel.module.css';
 import { ArrowRight, MessageSquare, Sparkles } from 'lucide-react';
 
-export default function Day2Main20({
+export default function Day3Main11({
   answers,
   onChange,
   onContinue,
@@ -14,35 +14,35 @@ export default function Day2Main20({
 }) {
   const handleNext = useCallback(() => onContinue(), [onContinue]);
 
-  // Aggregate all Day 2 answers to trigger comprehensive analysis
+  // Aggregate all Day 3 answers to trigger comprehensive analysis
   useEffect(() => {
-    const day2Answers = [
-      answers.earlyMessagesReflection,
-      answers.adultFailureReflection,
-      answers.careerFailureStory,
-      answers.othersReactionReflection,
-      answers.selfDecisionReflection,
-      answers.mostPainfulFailureReflection,
-      answers.whatWasAtStakeReflection,
-      answers.copingMechanismsReflection,
-      answers.mostRecentFailureReflection,
+    const day3Answers = [
+      answers.day3EarlyMessagesReflection,
+      answers.day3AdultFailureReflection,
+      answers.day3CareerFailureStory,
+      answers.day3OthersReactionReflection,
+      answers.day3SelfDecisionReflection,
+      answers.day3MostPainfulFailureReflection,
+      answers.day3WhatWasAtStakeReflection,
+      answers.day3CopingMechanismsReflection,
+      answers.day3MostRecentFailureReflection,
     ].filter(Boolean).join('\n\n---\n\n');
 
     // Only trigger if we have substantial content and it's different from current trigger
-    if (day2Answers.length > 50 && day2Answers !== answers.triggerAnalysis) {
-      onChange('triggerAnalysis', day2Answers);
+    if (day3Answers.length > 50 && day3Answers !== answers.day3TriggerAnalysis) {
+      onChange('day3TriggerAnalysis', day3Answers);
     }
   }, [
-    answers.earlyMessagesReflection,
-    answers.adultFailureReflection,
-    answers.careerFailureStory,
-    answers.othersReactionReflection,
-    answers.selfDecisionReflection,
-    answers.mostPainfulFailureReflection,
-    answers.whatWasAtStakeReflection,
-    answers.copingMechanismsReflection,
-    answers.mostRecentFailureReflection,
-    answers.triggerAnalysis,
+    answers.day3EarlyMessagesReflection,
+    answers.day3AdultFailureReflection,
+    answers.day3CareerFailureStory,
+    answers.day3OthersReactionReflection,
+    answers.day3SelfDecisionReflection,
+    answers.day3MostPainfulFailureReflection,
+    answers.day3WhatWasAtStakeReflection,
+    answers.day3CopingMechanismsReflection,
+    answers.day3MostRecentFailureReflection,
+    answers.day3TriggerAnalysis,
     onChange,
   ]);
 
@@ -106,7 +106,7 @@ export default function Day2Main20({
             onClick={handleNext}
             disabled={aiLoading}
           >
-            Continue <ArrowRight size={20} />
+            Continue to Reflection <ArrowRight size={20} />
           </button>
         </div>
       )}

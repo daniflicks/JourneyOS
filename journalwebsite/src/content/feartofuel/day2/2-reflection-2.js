@@ -4,8 +4,7 @@ import { useCallback } from 'react';
 import styles from '../../../app/feartofuel/styles/fear_to_fuel.module.css';
 import { ArrowRight, MessageSquare } from 'lucide-react';
 
- 
-export default function Day1Reflection2({ answers, onContinue, aiResponse, aiLoading, aiError }) {
+export default function Day2Reflection2({ answers, onContinue, aiResponse, aiLoading, aiError }) {
   const reflection = answers.reflectionResponse || 'No reflection provided.';
   const handleNext = useCallback(
     () => onContinue(),
@@ -59,9 +58,9 @@ export default function Day1Reflection2({ answers, onContinue, aiResponse, aiLoa
           onClick={handleNext}
           disabled={aiLoading}
         >
-          Continue to Complete Day 1 <ArrowRight size={20} />
+          Continue to Complete Day 2 <ArrowRight size={20} />
         </button>
       </div>
     </div>
   );
-}
+} 

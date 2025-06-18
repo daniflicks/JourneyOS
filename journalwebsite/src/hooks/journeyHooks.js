@@ -197,6 +197,10 @@ export function useClaudeFeedback({ day, section, promptIndex, userText }) {
   const [error,    setError]    = useState('');
   const prevTextRef = useRef('');
 
+  // Get memory from store
+  const userMemory = useJourneyStore((s) => s.userMemory);
+  const updateUserMemory = useJourneyStore((s) => s.updateUserMemory);
+
   useEffect(() => {
     // 1) No input? Clear and exit.
     if (!userText) {
@@ -205,48 +209,55 @@ export function useClaudeFeedback({ day, section, promptIndex, userText }) {
     }
 
     // 2) Only run when userText actually changes.
-    if (prevTextRef.current !== userText) {
-      prevTextRef.current = userText;
-      setResponse('');
-      setError('');
-
-      const key = `claude-${day}-${section}-${promptIndex}-${encodeURIComponent(
-        userText
-      )}`;
-
-      // 3) Check localStorage first. If we have it, use it and skip the fetch.
-      const cached = localStorage.getItem(key);
-      if (cached) {
-        setResponse(cached);
-        return;
-      }
-
-      // 4) Otherwise, call the API.
-      setLoading(true);
-      fetch('/api/claudeFeedback', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ day, promptIndex, userText }),
-      })
-        .then(res => {
-          if (!res.ok) throw new Error(`Server error ${res.status}`);
-          return res.json();
-        })
-        .then(data => {
-          const aiText = data.aiText ?? data.feedback ?? '';
-          // Save for future reloads
-          localStorage.setItem(key, aiText);
-          setResponse(aiText);
-        })
-        .catch(err => {
-          console.error(err);
-          setError(err.message || 'Unknown error');
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+    if (prevTextRef.current === userText) {
+      return; // No change, don't re-run
     }
-  }, [day, section, promptIndex, userText]);
+    prevTextRef.current = userText;
+    setResponse('');
+    setError('');
+
+    // 3) Create cache key (exclude memory length to avoid invalidation after memory updates)
+    const key = `claude-${day}-${section}-${promptIndex}-${encodeURIComponent(
+      userText
+    )}`;
+
+    // 4) Check localStorage first. If we have it, use it and skip the fetch.
+    const cached = localStorage.getItem(key);
+    if (cached) {
+      setResponse(cached);
+      return;
+    }
+
+    // 5) Otherwise, call the API with memory included.
+    setLoading(true);
+    fetch('/api/claudeFeedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ day, promptIndex, userText, userMemory }),
+    })
+      .then(res => {
+        if (!res.ok) throw new Error(`Server error ${res.status}`);
+        return res.json();
+      })
+      .then(data => {
+        const aiText = data.aiText ?? data.feedback ?? '';
+        // Save for future reloads
+        localStorage.setItem(key, aiText);
+        setResponse(aiText);
+        
+        // Update memory if AI provided an update
+        if (data.updatedMemory) {
+          updateUserMemory(data.updatedMemory);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        setError(err.message || 'Unknown error');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [day, section, promptIndex, userText, userMemory.length, updateUserMemory]);
 
   return { response, loading, error };
 }

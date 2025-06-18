@@ -52,6 +52,7 @@ export default function Day1Page1({ answers, onChange, onContinue }) {
           type="button"
           onClick={() => onContinue('1-checkin-2')}
           className={styles.primaryButton}
+          style={{ marginBottom: '24px' }}
         >
           Start Guided Breathing Exercise → (45 seconds)
         </button>

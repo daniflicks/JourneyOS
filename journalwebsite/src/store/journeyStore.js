@@ -41,6 +41,7 @@ const initialState = {
   pageStatus: generatePageStatus(allPageIds),
   streak: 0,
   lastCompletedDate: null,
+  userMemory: '',
 };
 
 export const useJourneyStore = create(
@@ -52,6 +53,9 @@ export const useJourneyStore = create(
         /** Navigation Actions **/
         setCurrentDay: (day) => set({ currentDay: day }),
         setCurrentPage: (pageId) => set({ currentPage: pageId }),
+
+        /** Memory Actions **/
+        updateUserMemory: (memory) => set({ userMemory: memory }),
 
         /** User Input **/
         saveUserInput: (day, section, data) =>
