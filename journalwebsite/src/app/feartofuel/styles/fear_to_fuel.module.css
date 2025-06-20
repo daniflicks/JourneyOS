@@ -154,7 +154,7 @@
   font-size: 16px;
   font-weight: 400;
   color: var(--text-muted);
-  margin-bottom: 32px;
+  margin-bottom: 12px;
 }
 
 .checkInGrid {
@@ -1443,4 +1443,96 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Fear Mapping Page Styles */
+.fearMappingContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 32px 40px;
+  min-height: 80vh;
+}
+
+.titleSection {
+  text-align: center;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+
+
+  .welcomeCard {
+    background: linear-gradient(135deg, var(--background-gradient-start) 0%, var(--background-gradient-end) 100%);
+    border-radius: 20px;
+    padding: 40px 40px 20px 40px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 30px rgba(224, 123, 103, 0.06);
+    position: relative;
+    overflow: hidden;
+  }
+
+.welcomeCard::after {
+  content: '✦';
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  font-size: 20px;
+  color: var(--primary-coral);
+  opacity: 0.3;
+}
+
+.quoteContainer {
+  margin: 50px 0;
+  text-align: center;
+}
+
+.quoteText {
+  font-size: 24px;
+  font-style: italic;
+  color: var(--text-muted);
+  position: relative;
+  display: inline-block;
+  padding: 0 40px;
+  margin: 0;
+}
+
+.quoteText::before,
+.quoteText::after {
+  position: absolute;
+  font-size: 45px;
+  color: var(--primary-coral);
+  font-family: 'DM Serif Display', serif;
+}
+
+.quoteText::before {
+  content: '"';
+  left: -20px;
+  top: -20px;
+}
+
+.quoteText::after {
+  content: '"';
+  right: 0px;
+  bottom: -30px;
+}
+
+.explanationCard {
+  position: relative;
+  padding-left: 24px;
+  margin-bottom: 60px;
+}
+
+.explanationCard::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: linear-gradient(180deg, var(--primary-coral) 0%, transparent 100%);
+  border-radius: 3px;
 } 
