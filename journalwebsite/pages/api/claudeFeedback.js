@@ -70,7 +70,21 @@ export default async function handler(req, res) {
 
     // Parse structured response
     const responseParts = fullResponse.split(/Memory:\s*/);
-    let aiText = responseParts[0].replace(/^Response:\s*/, '').replace(/^#.*\r?\n+/, '').trim();
+    let responseText = responseParts[0].trim();
+    
+    // Handle cases where Claude provides both natural response and structured format
+    // Look for "Response:" anywhere in the text and extract what comes after it
+    const responseMatch = responseText.match(/Response:\s*([\s\S]*?)$/);
+    let aiText;
+    
+    if (responseMatch) {
+      // If "Response:" format is found, use only what comes after it
+      aiText = responseMatch[1].trim();
+    } else {
+      // If no "Response:" format, use the entire response (removing any leading headers)
+      aiText = responseText.replace(/^#.*\r?\n+/, '').trim();
+    }
+    
     let updatedMemory = responseParts[1]?.trim() || userMemory;
 
     return res.status(200).json({ aiText, updatedMemory });

@@ -27,9 +27,9 @@ export function normalizePageId(day, rawPageId) {
 export function getPrevPageId(day, pageId) {
   const pages = getDayPages(day);
 
-  // Unique exception: always back from main-1 → checkin-1
+  // Unique exception: always back from main-1 → checkin-2
   if (pageId === `${day}-main-1`) {
-    return `${day}-checkin-1`;
+    return `${day}-checkin-2`;
   }
 
   const idx = pages.indexOf(pageId);

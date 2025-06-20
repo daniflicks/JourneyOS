@@ -27,9 +27,6 @@ export default function CheckInList({
 
   return (
     <div className={styles.checkInSection}>
-      <h2 className={styles.checkInTitle}>Mini Pattern Check-In</h2>
-      <p className={styles.checkInQuestion}>{questionText}</p>
-      
       <div className={styles.checkInGrid}>
         {items.map(item => (
           <div 

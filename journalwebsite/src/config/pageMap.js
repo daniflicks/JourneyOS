@@ -5,6 +5,7 @@ const PAGE_MAP = {
     // Check-in
     { id: '1-checkin-1',  section: SECTION_TYPES.CHECK_IN },
     { id: '1-checkin-2',  section: SECTION_TYPES.CHECK_IN },
+    { id: '1-checkin-3',  section: SECTION_TYPES.CHECK_IN },
 
     // Main exercise
     { id: '1-main-1',      section: SECTION_TYPES.MAIN_EXERCISE },

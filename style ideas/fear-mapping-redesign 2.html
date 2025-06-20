@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fear Mapping - Day 1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #FDF8F6;
+            color: #2C2C2C;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            padding: 24px 32px 0;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background-color: #F0E8E4;
+            border-radius: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            position: absolute;
+            height: 100%;
+            width: 10%;
+            background-color: #C17862;
+            border-radius: 2px;
+        }
+        
+        /* Main Content */
+        .content {
+            flex: 1;
+            padding: 60px 32px 40px;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        /* Title Section */
+        .title-section {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+        
+        .title {
+            font-size: 48px;
+            font-weight: 300;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background-color: #C17862;
+            opacity: 0.5;
+        }
+        
+        /* Welcome Section */
+        .welcome-section {
+            background: linear-gradient(135deg, #FFF8F5 0%, #FFF0EB 100%);
+            border-radius: 20px;
+            padding: 40px 48px;
+            margin-bottom: 48px;
+            box-shadow: 0 2px 30px rgba(193, 120, 98, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(193, 120, 98, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        
+        .welcome-section::after {
+            content: '✦';
+            position: absolute;
+            top: 20px;
+            left: 24px;
+            font-size: 20px;
+            color: #C17862;
+            opacity: 0.3;
+        }
+        
+        .welcome-text {
+            font-size: 17px;
+            line-height: 1.7;
+            color: #4A4A4A;
+            text-align: center;
+        }
+        
+        /* Quote Section */
+        .quote-container {
+            position: relative;
+            margin: 60px 0;
+            text-align: center;
+        }
+        
+        .quote {
+            font-size: 24px;
+            font-style: italic;
+            font-weight: 300;
+            color: #666;
+            line-height: 1.5;
+            position: relative;
+            display: inline-block;
+            padding: 0 40px;
+        }
+        
+        .quote::before,
+        .quote::after {
+            position: absolute;
+            font-size: 60px;
+            color: #C17862;
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+        
+        .quote::before {
+            content: '"';
+            left: -10px;
+            top: -20px;
+        }
+        
+        .quote::after {
+            content: '"';
+            right: -10px;
+            bottom: -40px;
+        }
+        
+        /* Explanation Section */
+        .explanation-section {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 60px;
+        }
+        
+        .explanation-section::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: linear-gradient(180deg, #C17862 0%, transparent 100%);
+            border-radius: 3px;
+        }
+        
+        .explanation-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #555;
+        }
+        
+        /* CTA Button */
+        .cta-container {
+            text-align: center;
+            margin-top: auto;
+            padding-top: 40px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 18px 48px;
+            background-color: #C17862;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(193, 120, 98, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(193, 120, 98, 0.4);
+        }
+        
+        /* Footer */
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 32px;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .back-link {
+            display: flex;
+            align-items: center;
+            color: #666;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.2s ease;
+        }
+        
+        .back-link:hover {
+            color: #C17862;
+        }
+        
+        .back-link::before {
+            content: '←';
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .support-link {
+            color: #666;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.2s ease;
+        }
+        
+        .support-link:hover {
+            color: #C17862;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 640px) {
+            .content {
+                padding: 40px 20px;
+            }
+            
+            .title {
+                font-size: 36px;
+            }
+            
+            .welcome-section {
+                padding: 28px 24px;
+            }
+            
+            .quote {
+                font-size: 20px;
+                padding: 0 20px;
+            }
+            
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-labels">
+            <span>Power-Up</span>
+            <span>Main Exercise</span>
+            <span>Reflection</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="content">
+        <!-- Title -->
+        <div class="title-section">
+            <h1 class="title">Fear Mapping</h1>
+        </div>
+        
+        <!-- Welcome Message -->
+        <div class="welcome-section">
+            <p class="welcome-text">
+                Hey there, brave soul! I'm so glad you're here and ready to take this first step. I want you to know that just by showing up today, you're already proving that you're stronger than your fears.
+            </p>
+        </div>
+        
+        <!-- Quote -->
+        <div class="quote-container">
+            <p class="quote">Every fear you face is a doorway to freedom.</p>
+        </div>
+        
+        <!-- Explanation -->
+        <div class="explanation-section">
+            <p class="explanation-text">
+                Today we're going to get real about what's holding you back. Fair warning – this might stir up some feelings, but that means it's working. When our fears stay vague and undefined, they feel huge and impossible. By mapping them out clearly, we turn overwhelming anxieties into specific challenges we can tackle one by one.
+            </p>
+        </div>
+        
+        <!-- CTA Button -->
+        <div class="cta-container">
+            <a href="#" class="cta-button">Begin the Exercise</a>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <a href="#" class="back-link">Back</a>
+        <a href="#" class="support-link">Need Support?</a>
+    </div>
+</body>
+</html>
