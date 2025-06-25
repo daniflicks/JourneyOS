@@ -19,21 +19,16 @@ export default function StepPage() {
     ? rawText.filter(Boolean).join('\n')
     : rawText || '';
 
-  // Fetch AI response when necessary
-  const { response: aiResponse, loading: aiLoading, error: aiError } =
-    pageMeta.ai
-      ? useClaudeFeedback({
-          day: dayNum,
-          section,
-          promptIndex: pageMeta.ai.promptIndex,
-          userText,
-        })
-      : { response: '', loading: false, error: '' };
-
-  // Preload additional prompts
-  pageMeta.ai?.preload?.forEach(promptIndex => {
-    useClaudeFeedback({ day: dayNum, section, promptIndex, userText });
+  // Fetch AI response when necessary (always call the hook to avoid conditional calls)
+  const { response: aiResponse, loading: aiLoading, error: aiError } = useClaudeFeedback({
+    day: dayNum,
+    section,
+    promptIndex: pageMeta.ai?.promptIndex || 0,
+    userText: pageMeta.ai ? userText : '', // Only pass userText if AI is needed
   });
+
+  // Preload additional prompts (removed forEach to avoid hook calls in callbacks)
+  // TODO: Handle preload prompts properly without violating hooks rules
 
   // Dynamically import the correct step component (including 'complete')
   const StepUI = useMemo(

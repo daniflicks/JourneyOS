@@ -1,172 +1,86 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { ArrowRight, MessageSquare, HelpCircle } from 'lucide-react';
+import { ZoomIn, TrendingUp } from 'lucide-react';
 import styles from '../../../app/feartofuel/styles/fear_to_fuel.module.css';
 
-// Component for guided reflection on Day 3
-export default function Day3Main1({
-  answers,
-  onChange,
-  onContinue,
-  aiResponse,
-  aiLoading,
-  aiError
-}) {
-  const [showPrompts, setShowPrompts] = useState(false);
-  const [showAIResponse, setShowAIResponse] = useState(false);
-
-  // Local buffer for user input, separate from committed answer
-  const [localReflection, setLocalReflection] = useState(
-    answers?.day3EarlyMessagesReflection || ''
-  );
-
-  // Show existing AI response on mount or when aiResponse changes
-  useEffect(() => {
-    if (aiResponse) {
-      setShowAIResponse(true);
-    }
-  }, [aiResponse]);
-
-  // Sync local buffer if external answers prop resets (but only before first AI shows)
-  useEffect(() => {
-    if (
-      answers?.day3EarlyMessagesReflection !== undefined &&
-      !showAIResponse
-    ) {
-      setLocalReflection(answers.day3EarlyMessagesReflection);
-    }
-  }, [answers?.day3EarlyMessagesReflection, showAIResponse]);
-
-  // Track whether user has unsaved edits
-  const committed = answers?.day3EarlyMessagesReflection || '';
-  const hasUnsavedChanges = localReflection !== committed;
-
-  const isUpdate = Boolean(aiResponse);
-  const buttonLabel = isUpdate ? "Update Coco's Insight" : "Get Coco's Insight";
-
-  const handleGetInsight = () => {
-    if (!localReflection.trim() || aiLoading) return;
-    // Commit the final reflection and trigger AI
-    onChange('day3EarlyMessagesReflection', localReflection);
-    setShowAIResponse(true);
-  };
-
-  const handleContinue = () => {
-    onContinue();
-  };
-
+/**
+ * Day 3 Main Exercise Step 1 - Understanding Mind's Magnification
+ * Props injected via DayLayout: answers, onChange, onContinue
+ */
+export default function Day3Main1({ answers, onChange, onContinue }) {
   return (
     <div className={styles.mainContent}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>Guided Reflection</h1>
-        <p className={styles.introductionMargin}>
-          Find a quiet space. Take three deep breaths.
+      <div className={styles.header} style={{ marginBottom: '30px' }}>
+        <h1 className={styles.title} style={{ fontSize: '32px' }}>Understanding Your Mind's Magnification</h1>
+      </div>
+      
+      {/* Main Content */}
+      <div>
+        <p className={styles.introduction} style={{ textAlign: 'center', marginBottom: '30px' }}>
+          When we experience something painful, our protective brain does three things:
         </p>
-      </div>
-
-      <div className={styles.reflectionSection}>
-        <h2 className={styles.subTitle}>Part 1: Early Messages</h2>
-
-        <div>
-          <label htmlFor="earlyMessages" className={styles.formLabel}>
-            Think back to your earliest memories about failure:<br />
-            What did you learn about failure as a child?
-          </label>
-
-          <textarea
-            id="earlyMessages"
-            className={styles.textInput}
-            style={{
-              marginBottom: (showAIResponse && !hasUnsavedChanges) ? '0px' : '24px'
-            }}
-            value={localReflection}
-            onChange={e => setLocalReflection(e.target.value)}
-            placeholder="Take your time to reflect on your earliest memories..."
-            rows={6}
-            disabled={aiLoading}
-          />
-        </div>
-      </div>
-
-      {/* Prompt button & callout: only when no AI shown yet, or when editing */}
-      {(!showAIResponse || hasUnsavedChanges) && (
-        <>
-          <div className={styles.helperButtons}>
-            <button
-              type="button"
-              className={styles.textButton}
-              onClick={() => setShowPrompts(prev => !prev)}
-            >
-              <HelpCircle size={16} /> Need a prompt?
-            </button>
+        
+        {/* Concept Circles */}
+        <div className={styles.conceptList}>
+          {/* Amplifies */}
+          <div className={styles.conceptItem}>
+            <div className={styles.conceptCircle}>
+              <div className={styles.circleOuter}></div>
+              <div className={styles.circleInner}>
+                <ZoomIn size={44} color="white" />
+              </div>
+            </div>
+            <div className={styles.conceptContent}>
+              <div className={styles.conceptTitle}>Amplifies</div>
+              <div className={styles.conceptDescription}>Makes it seem bigger than it was</div>
+            </div>
           </div>
 
-          {showPrompts && (
-            <div className={styles.calloutBox} style={{ marginBottom: '20px' }}>
-              <h3 className={styles.promptsTitle}>Think about:</h3>
-              <p>
-                Was it okay to mess up in your house?<br />
-                Did adults get angry or disappointed when you failed?<br />
-                Was failure shameful or a learning moment?<br />
-                How did adults handle failure?<br /><br />
-                Just write whatever comes to mind. No perfect answers needed.
-              </p>
-            </div>
-          )}
-        </>
-      )}
-
-      {/* Primary button: only when not loading, and either before AI or after unsaved edits */}
-      {!aiLoading && (!showAIResponse || hasUnsavedChanges) && (
-        <div className={styles.actionButtons}>
-          <button
-            type="button"
-            onClick={handleGetInsight}
-            disabled={!localReflection.trim()}
-            className={`${styles.primaryButton} ${styles.withIcon}`}
-          >
-            {buttonLabel} <ArrowRight size={20} />
-          </button>
-        </div>
-      )}
-
-      {/* AI Response Section */}
-      {showAIResponse && (
-       <div id="ai-response" style={{ marginTop: (!showAIResponse || hasUnsavedChanges) ? '40px' : '20px' }}>
-          {aiLoading && (
-            <div className={styles.aiLoading}>
-              <span>Coco is reflecting on your response</span>
-              <div className={styles.loadingDots}>
-                <div className={styles.loadingDot}></div>
-                <div className={styles.loadingDot}></div>
-                <div className={styles.loadingDot}></div>
+          {/* Generalizes */}
+          <div className={styles.conceptItem}>
+            <div className={styles.conceptCircle}>
+              <div className={styles.circleOuter}></div>
+              <div className={styles.circleInner}>
+                ⋯
               </div>
             </div>
-          )}
+            <div className={styles.conceptContent}>
+              <div className={styles.conceptTitle}>Generalizes</div>
+              <div className={styles.conceptDescription}>Assumes it will happen everywhere</div>
+            </div>
+          </div>
 
-          {aiError && <p className="text-red-500 mt-4">{aiError}</p>}
-
-          {!aiLoading && !aiError && aiResponse && (
-            <>
-              <div className={styles.calloutBox} style={{
-              marginBottom: '24px'}}>
-                <p className="whitespace-pre-wrap">{aiResponse}</p>
+          {/* Projects */}
+          <div className={styles.conceptItem}>
+            <div className={styles.conceptCircle}>
+              <div className={styles.circleOuter}></div>
+              <div className={styles.circleInner}>
+                <TrendingUp size={44} color="white" />
               </div>
-
-              <div className={styles.actionButtons}>
-                <button
-                  type="button"
-                  onClick={handleContinue}
-                  className={`${hasUnsavedChanges ? styles.secondaryButton : styles.primaryButton} ${styles.withIcon}`}
-                >
-                  Continue to Next Question <ArrowRight size={20} />
-                </button>
-              </div>
-            </>
-          )}
+            </div>
+            <div className={styles.conceptContent}>
+              <div className={styles.conceptTitle}>Projects</div>
+              <div className={styles.conceptDescription}>Creates an even worse future version</div>
+            </div>
+          </div>
         </div>
-      )}
+        
+        {/* Reassurance Box */}
+        <div style={{textAlign: 'center', marginBottom: '40px'}}>
+          <strong style={{ color: '#E07B67', fontWeight: '500' }}>This is normal.</strong> Your brain is trying to protect you.
+        </div>
+      </div>
+
+      {/* Continue Button */}
+      <div className={styles.actionButtons}>
+        <button
+          type="button"
+          onClick={() => onContinue()}
+          className={styles.primaryButton}
+        >
+          Continue →
+        </button>
+      </div>
     </div>
   );
-}
+} 

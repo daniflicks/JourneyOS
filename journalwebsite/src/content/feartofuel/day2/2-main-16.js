@@ -1,66 +1,77 @@
 'use client';
 
-import React, { useCallback } from 'react';
+import React, { useState } from 'react';
 import styles from '../../../app/feartofuel/styles/fear_to_fuel.module.css';
-import { ArrowRight, MessageSquare } from 'lucide-react';
+import { ArrowRight, HelpCircle } from 'lucide-react';
 
-export default function Day2Main16({
-  answers,
-  onContinue,
+export default function Day2Main16({ 
+  answers, 
+  onChange, 
+  onContinue, 
   aiResponse,
   aiLoading,
-  aiError,
+  aiError 
 }) {
-  const copingMechanismsReflection = answers.copingMechanismsReflection || '';
-  const handleNext = useCallback(() => onContinue(), [onContinue]);
+  const lessonsLearned = answers?.lessonsFromMostPainfulMemory || '';
+  const [showPrompts, setShowPrompts] = useState(false);
+
+  // Use the aiResponse from pageMap (preloaded most painful failure summary)
+  const mostPainfulSummary = aiResponse || '';
+  
+  const handleNext = () => {
+    onContinue();
+  };
 
   return (
     <div className={styles.mainContent}>
-   
-
-      <div className={styles.calloutBox}>
-        <p className="whitespace-pre-wrap">
-          {copingMechanismsReflection || 'No reflection provided.'}
+      <div className={styles.header}>
+        <h1 className={styles.title}>Finding the Lessons</h1>
+        <p className={styles.introductionMargin}>
+          Now let's look at these experiences through a different lens <br/> by taking each memory and finding the strength and wisdom you gained.
         </p>
       </div>
 
-      {aiLoading && (
-        <div className={styles.aiLoading}>
-          <span>Coco is reflecting on your response</span>
-          <div className={styles.loadingDots}>
-            <div className={styles.loadingDot}></div>
-            <div className={styles.loadingDot}></div>
-            <div className={styles.loadingDot}></div>
-          </div>
-        </div>
-      )}
-      {aiError && (
-        <p className="text-red-500 mt-4">{aiError}</p>
-      )}
-      {!aiLoading && !aiError && aiResponse && (
-        <div className={styles.aiAnalysisCard}>
-          <div className={styles.aiHeader}>
-            <div className={styles.aiIconContainer}>
-              <MessageSquare className={styles.aiIcon} />
-            </div>
-            <div className={styles.aiInfo}>
-              <h2 className={styles.aiName}>From Coco, your guide</h2>
-              <p className={styles.aiRole}>AI support companion</p>
-            </div>
-          </div>
-          <div className={styles.aiMessage}>
-            <p className="whitespace-pre-wrap">{aiResponse}</p>
-          </div>
+      <div className={styles.formSection}>
+        <label htmlFor="lessonsLearned" className={styles.formLabel}>
+          Now what did you learn from {mostPainfulSummary || 'your most painful experience'}?
+        </label>
+        <textarea
+          id="lessonsLearned"
+          className={styles.textInput}
+          value={lessonsLearned}
+          onChange={(e) => onChange('lessonsFromMostPainfulMemory', e.target.value)}
+          placeholder="Think about the strength, resilience, or wisdom you gained from this experience. What did it teach you about yourself, others, or life?"
+          rows={6}
+        />
+      </div>
+
+      <div className={styles.helperButtons}>
+        <button
+          className={styles.textButton}
+          onClick={() => setShowPrompts(!showPrompts)}
+        >
+          <HelpCircle size={16} /> Need a prompt?
+        </button>
+      </div>
+
+      {showPrompts && (
+        <div className={`${styles.calloutBox} `} style={{ marginBottom: '20px' }}>
+          <h3 className={styles.promptsTitle}>Think beyond just "I'm not as good as I thought." What practical skills, awareness, or resilience did you develop from this? For example:</h3>
+          <p>
+            How to handle difficult client feedback<br/>
+            The importance of setting clear expectations<br/>
+            That you could survive professional disappointment
+          </p>
         </div>
       )}
 
       <div className={styles.actionButtons}>
-        <button
+        <button 
           className={`${styles.primaryButton} ${styles.withIcon}`}
           onClick={handleNext}
-          disabled={aiLoading}
+          disabled={!lessonsLearned.trim()}
         >
-          Continue to Next Question <ArrowRight size={20} />
+          Continue <ArrowRight size={20} />
         </button>
       </div>
     </div>

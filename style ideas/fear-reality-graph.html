@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fear Reality Check</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #FFF5F3 0%, #FFEAEC 100%);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+            color: #3A3A3A;
+        }
+        
+        /* Progress Header */
+        .progress-header {
+            padding: 40px 40px 24px;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+        
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .progress-label {
+            font-size: 14px;
+            color: #9CA3AF;
+            transition: color 0.3s ease;
+        }
+        
+        .progress-label.active {
+            color: #E07B67;
+            font-weight: 500;
+        }
+        
+        .progress-bar-container {
+            height: 6px;
+            background: #F3F4F6;
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #E07B67 0%, #FFB5A7 100%);
+            border-radius: 3px;
+            width: 66.66%;
+            transition: width 0.5s ease;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        
+        .content-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 48px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+        
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 36px;
+            color: #2D2D2D;
+            margin-bottom: 16px;
+            line-height: 1.2;
+            text-align: center;
+        }
+        
+        .intro-text {
+            font-size: 17px;
+            line-height: 1.8;
+            color: #4B5563;
+            margin-bottom: 48px;
+            text-align: center;
+        }
+        
+        /* Table Headers */
+        .table-headers {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 1.5fr;
+            gap: 24px;
+            padding: 0 0 20px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 181, 167, 0.2);
+        }
+        
+        .header-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6B7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Fear Rows */
+        .fear-table {
+            margin-bottom: 40px;
+        }
+        
+        .fear-row {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 1.5fr;
+            gap: 24px;
+            padding: 24px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            align-items: center;
+            opacity: 0;
+            animation: fadeInRow 0.5s ease-out forwards;
+        }
+        
+        .fear-row:last-child {
+            border-bottom: none;
+        }
+        
+        .fear-row.example {
+            background: rgba(255, 245, 243, 0.5);
+            margin: 0 -24px;
+            padding-left: 24px;
+            padding-right: 24px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 181, 167, 0.2);
+        }
+        
+        .fear-text {
+            font-size: 16px;
+            color: #2D2D2D;
+            line-height: 1.5;
+        }
+        
+        .example .fear-text {
+            color: #6B7280;
+            font-style: italic;
+        }
+        
+        /* Reality Scale Dots */
+        .reality-scale {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .scale-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #F3F4F6;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .scale-dot:hover {
+            background: rgba(255, 181, 167, 0.3);
+            transform: scale(1.2);
+        }
+        
+        .scale-dot.active {
+            background: linear-gradient(135deg, #E07B67 0%, #FFB5A7 100%);
+            transform: scale(1.1);
+        }
+        
+        .scale-dot.active::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            font-weight: 600;
+            color: #E07B67;
+        }
+        
+        /* Survival Percentage Slider */
+        .survival-container {
+            position: relative;
+        }
+        
+        .survival-display {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .survival-bar {
+            flex: 1;
+            height: 32px;
+            background: #F3F4F6;
+            border-radius: 16px;
+            position: relative;
+            cursor: pointer;
+            overflow: visible;
+        }
+        
+        .survival-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FFB5A7 0%, #E07B67 100%);
+            border-radius: 16px;
+            width: 0%;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+        
+        .survival-handle {
+            position: absolute;
+            top: 50%;
+            left: 0%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            background: white;
+            border: 3px solid #E07B67;
+            border-radius: 50%;
+            cursor: grab;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+        }
+        
+        .survival-handle:hover {
+            transform: translate(-50%, -50%) scale(1.2);
+            box-shadow: 0 4px 12px rgba(224, 123, 103, 0.3);
+        }
+        
+        .survival-handle.dragging {
+            cursor: grabbing;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .survival-percentage {
+            font-size: 18px;
+            font-weight: 600;
+            color: #E07B67;
+            min-width: 50px;
+            text-align: right;
+        }
+        
+        /* Hover hint */
+        .survival-bar::before {
+            content: 'Drag to adjust';
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #9CA3AF;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        
+        .survival-bar:hover::before {
+            opacity: 1;
+        }
+        
+        /* Example row styling */
+        .example .scale-dot {
+            pointer-events: none;
+        }
+        
+        .example .scale-dot:nth-child(2) {
+            background: linear-gradient(135deg, #E07B67 0%, #FFB5A7 100%);
+        }
+        
+        .example .survival-fill {
+            width: 98%;
+        }
+        
+        .example .survival-handle {
+            left: 98%;
+        }
+        
+        /* Add button */
+        .add-fear-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 20px;
+            margin: 24px 0;
+            background: transparent;
+            border: 2px dashed rgba(224, 123, 103, 0.3);
+            border-radius: 12px;
+            color: #E07B67;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .add-fear-button:hover {
+            border-color: #E07B67;
+            background: rgba(255, 245, 243, 0.5);
+        }
+        
+        .plus-icon {
+            font-size: 24px;
+            font-weight: 300;
+        }
+        
+        /* Button container */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 48px;
+        }
+        
+        .primary-button {
+            background: linear-gradient(135deg, #E07B67 0%, #FFB5A7 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 17px;
+            font-weight: 500;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(224, 123, 103, 0.3);
+        }
+        
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(224, 123, 103, 0.4);
+        }
+        
+        /* Footer */
+        .footer {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 40px 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .back-link, .support-link {
+            text-decoration: none;
+            color: #6B7280;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            transition: color 0.2s ease;
+        }
+        
+        .back-link:hover {
+            color: #E07B67;
+        }
+        
+        .support-link {
+            color: #E07B67;
+        }
+        
+        .support-link:hover {
+            color: #D56552;
+        }
+        
+        @keyframes fadeInRow {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fear-row:nth-child(1) { animation-delay: 0.1s; }
+        .fear-row:nth-child(2) { animation-delay: 0.2s; }
+        .fear-row:nth-child(3) { animation-delay: 0.3s; }
+        .fear-row:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <!-- Progress Header -->
+    <div class="progress-header">
+        <div class="progress-labels">
+            <span class="progress-label">Power-Up</span>
+            <span class="progress-label active">Main Exercise</span>
+            <span class="progress-label">Reflection</span>
+        </div>
+        <div class="progress-bar-container">
+            <div class="progress-fill"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-card">
+            <h1>Reality Check</h1>
+            
+            <p class="intro-text">
+                Let's ground your fears in reality. Rate how likely each fear is to actually happen, 
+                and estimate your ability to survive if it did.
+            </p>
+            
+            <div class="fear-table">
+                <div class="table-headers">
+                    <div class="header-label">My Catastrophic Fear</div>
+                    <div class="header-label">Reality Scale</div>
+                    <div class="header-label">Survival Likelihood</div>
+                </div>
+                
+                <!-- Example Row -->
+                <div class="fear-row example">
+                    <div class="fear-text">Example: "I'll be homeless"</div>
+                    <div class="reality-scale">
+                        <div class="scale-dot" data-value="1"></div>
+                        <div class="scale-dot active" data-value="2"></div>
+                        <div class="scale-dot" data-value="3"></div>
+                        <div class="scale-dot" data-value="4"></div>
+                        <div class="scale-dot" data-value="5"></div>
+                        <div class="scale-dot" data-value="6"></div>
+                        <div class="scale-dot" data-value="7"></div>
+                        <div class="scale-dot" data-value="8"></div>
+                        <div class="scale-dot" data-value="9"></div>
+                        <div class="scale-dot" data-value="10"></div>
+                    </div>
+                    <div class="survival-container">
+                        <div class="survival-display">
+                            <div class="survival-bar">
+                                <div class="survival-fill"></div>
+                                <div class="survival-handle"></div>
+                            </div>
+                            <div class="survival-percentage">98%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- User's Fears (these would be populated dynamically) -->
+                <div class="fear-row">
+                    <div class="fear-text">Everyone will think I'm a failure</div>
+                    <div class="reality-scale">
+                        <div class="scale-dot" data-value="1" onclick="setScale(this)"></div>
+                        <div class="scale-dot" data-value="2" onclick="setScale(this)"></div>
+                        <div class="scale-dot" data-value="3" onclick="setScale(this)"></div>
+                        <div class="scale-dot" data-value="4" onclick="setScale(this)"></div>
+                        <div class="scale-dot" data-value="5" onclick="setScale(this)"></div>
+                        <div class="scale-dot" data-value="6" onclick="setScale(this)"></div>
+                        <div class="scale-dot" data-value="7" onclick="setScale(this)"></div>
+                        <div class="scale-dot" data-value="8" onclick="setScale(this)"></div>
+                        <div class="scale-dot" data-value="9" onclick="setScale(this)"></div>
+                        <div class="scale-dot" data-value="10" onclick="setScale(this)"></div>
+                    </div>
+                    <div class="survival-container">
+                        <div class="survival-display">
+                            <div class="survival-bar" onmousedown="startDrag(event, this)">
+                                <div class="survival-fill"></div>
+                                <div class="survival-handle"></div>
+                            </div>
+                            <div class="survival-percentage">0%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fear-row">
+                    <div class="fear-text">I'll never recover financially</div>
+                    <div class="reality-scale">
+                        <div class="scale-dot" data-value="1" onclick="setScale(this)"></div>
+                        <div class="scale-dot" data-value="2" onclick="setScale(this)"></div>
+                        <div class="scale-dot" data-value="3" onclick="setScale(this)"></div>
+                        <div class="scale-dot" data-value="4" onclick="setScale(this)"></div>
+                        <div class="scale-dot" data-value="5" onclick="setScale(this)"></div>
+                        <div class="scale-dot" data-value="6" onclick="setScale(this)"></div>
+                        <div class="scale-dot" data-value="7" onclick="setScale(this)"></div>
+                        <div class="scale-dot" data-value="8" onclick="setScale(this)"></div>
+                        <div class="scale-dot" data-value="9" onclick="setScale(this)"></div>
+                        <div class="scale-dot" data-value="10" onclick="setScale(this)"></div>
+                    </div>
+                    <div class="survival-container">
+                        <div class="survival-display">
+                            <div class="survival-bar" onclick="setSurvival(event, this)">
+                                <div class="survival-fill"></div>
+                            </div>
+                            <div class="survival-percentage">0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="add-fear-button">
+                <span class="plus-icon">+</span>
+                Add Another Fear
+            </button>
+            
+            <div class="button-container">
+                <button class="primary-button">Continue</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <a href="#" class="back-link">
+            <span style="margin-right: 8px;">←</span>
+            Back
+        </a>
+        <a href="#" class="support-link">
+            Need Support?
+        </a>
+    </div>
+    
+    <script>
+        function setScale(dot) {
+            // Clear all active dots in this row
+            const row = dot.closest('.reality-scale');
+            row.querySelectorAll('.scale-dot').forEach(d => d.classList.remove('active'));
+            
+            // Set this dot and all before it as active
+            dot.classList.add('active');
+        }
+        
+        let isDragging = false;
+        let currentBar = null;
+        
+        function startDrag(event, bar) {
+            isDragging = true;
+            currentBar = bar;
+            const handle = bar.querySelector('.survival-handle');
+            handle.classList.add('dragging');
+            
+            // Set initial position
+            updateSurvival(event, bar);
+            
+            // Add document-level listeners
+            document.addEventListener('mousemove', handleDrag);
+            document.addEventListener('mouseup', stopDrag);
+            
+            // Prevent text selection
+            event.preventDefault();
+        }
+        
+        function handleDrag(event) {
+            if (!isDragging || !currentBar) return;
+            updateSurvival(event, currentBar);
+        }
+        
+        function stopDrag() {
+            if (currentBar) {
+                const handle = currentBar.querySelector('.survival-handle');
+                handle.classList.remove('dragging');
+            }
+            
+            isDragging = false;
+            currentBar = null;
+            
+            // Remove document-level listeners
+            document.removeEventListener('mousemove', handleDrag);
+            document.removeEventListener('mouseup', stopDrag);
+        }
+        
+        function updateSurvival(event, bar) {
+            const rect = bar.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const percentage = Math.round((x / rect.width) * 100);
+            const clampedPercentage = Math.max(0, Math.min(100, percentage));
+            
+            const fill = bar.querySelector('.survival-fill');
+            const handle = bar.querySelector('.survival-handle');
+            const display = bar.parentElement.querySelector('.survival-percentage');
+            
+            fill.style.width = clampedPercentage + '%';
+            handle.style.left = clampedPercentage + '%';
+            display.textContent = clampedPercentage + '%';
+        }
+    </script>
+</body>
+</html>

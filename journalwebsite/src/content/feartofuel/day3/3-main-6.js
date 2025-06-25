@@ -1,164 +1,170 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { ArrowRight, MessageSquare, HelpCircle } from 'lucide-react';
+import React, { useState, useCallback } from 'react';
+import { useJourneyStore } from '../../../store/journeyStore';
+import { SECTION_TYPES } from '../../../constants/journeyConstants';
 import styles from '../../../app/feartofuel/styles/fear_to_fuel.module.css';
+import { ArrowRight, Plus, X } from 'lucide-react';
 
-// Component for guided reflection on Day 3 - Most Painful Failure
-export default function Day3Main6({
-  answers,
-  onChange,
-  onContinue,
-  aiResponse,
-  aiLoading,
-  aiError
-}) {
-  const [showPrompts, setShowPrompts] = useState(false);
-  const [showAIResponse, setShowAIResponse] = useState(false);
+export default function Day3Main6({ answers, onContinue, onChange }) {
+  // 1️⃣ Read Day 1 Fear Dump
+  const fearDump = useJourneyStore(state =>
+    state.userInputs?.[1]?.[SECTION_TYPES.MAIN_EXERCISE]?.fearDump
+  ) ?? [];
 
-  // Local buffer for user input, separate from committed answer
-  const [localReflection, setLocalReflection] = useState(
-    answers?.day3MostPainfulFailureReflection || ''
-  );
+  // 2️⃣ Initialize items from saved answers or fresh dump
+  const initialItems = answers?.realityCheck?.length > 0
+    ? answers.realityCheck
+    : fearDump.map(fear => ({ fear, reality: 0, survival: 0 }));
+  const [items, setItems] = useState(initialItems);
 
-  // Show existing AI response on mount or when aiResponse changes
-  useEffect(() => {
-    if (aiResponse) {
-      setShowAIResponse(true);
-    }
-  }, [aiResponse]);
+  // Helper to defer store write
+  const saveDeferred = useCallback((next) => {
+    setTimeout(() => onChange('realityCheck', next), 0);
+  }, [onChange]);
 
-  // Sync local buffer if external answers prop resets (but only before first AI shows)
-  useEffect(() => {
-    if (
-      answers?.day3MostPainfulFailureReflection !== undefined &&
-      !showAIResponse
-    ) {
-      setLocalReflection(answers.day3MostPainfulFailureReflection);
-    }
-  }, [answers?.day3MostPainfulFailureReflection, showAIResponse]);
-
-  // Track whether user has unsaved edits
-  const committed = answers?.day3MostPainfulFailureReflection || '';
-  const hasUnsavedChanges = localReflection !== committed;
-
-  const isUpdate = Boolean(aiResponse);
-  const buttonLabel = isUpdate ? "Update Coco's Insight" : "Get Coco's Insight";
-
-  const handleGetInsight = () => {
-    if (!localReflection.trim() || aiLoading) return;
-    // Commit the final reflection and trigger AI
-    onChange('day3MostPainfulFailureReflection', localReflection);
-    setShowAIResponse(true);
+  // 3️⃣ Reality-scale click handler
+  const handleReality = (index, value) => {
+    const next = items.map((it, i) =>
+      i === index ? { ...it, reality: value } : it
+    );
+    setItems(next);
+    saveDeferred(next);
   };
 
-  const handleContinue = () => {
+  // 4️⃣ Survival slider handler
+  const handleSurvival = (index, value) => {
+    const next = items.map((it, i) =>
+      i === index ? { ...it, survival: value } : it
+    );
+    setItems(next);
+    saveDeferred(next);
+  };
+
+  // 5️⃣ Add-new-fear handlers
+  const [showInput, setShowInput] = useState(false);
+  const [newFear, setNewFear] = useState('');
+
+  const addFear = () => {
+    const trimmed = newFear.trim();
+    if (!trimmed) return;
+    const next = [...items, { fear: trimmed, reality: 0, survival: 0 }];
+    setItems(next);
+    saveDeferred(next);
+    setNewFear('');
+    setShowInput(false);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') addFear();
+  };
+
+  // 6️⃣ Continue
+  const handleNext = () => {
+    // ensure final save
+    saveDeferred(items);
     onContinue();
   };
 
   return (
     <div className={styles.mainContent}>
-      <div className={styles.reflectionSection}>
-        <h2 className={styles.subTitle}>Most Painful Failure</h2>
-
-        <div>
-          <label htmlFor="mostPainfulFailure" className={styles.formLabel}>
-            Now let's look at what felt like your most painful career failure, what happened?
-          </label>
-
-          <textarea
-            id="mostPainfulFailure"
-            className={styles.textInput}
-            style={{
-              marginBottom: (showAIResponse && !hasUnsavedChanges) ? '0px' : '24px'
-            }}
-            value={localReflection}
-            onChange={e => setLocalReflection(e.target.value)}
-            placeholder="Think about the career failure that hurt the most emotionally..."
-            rows={6}
-            disabled={aiLoading}
-          />
-        </div>
+      <div style={{ marginBottom: '70px' }}>
+        <h1 className={styles.title} style={{ marginBottom: '40px' }}>
+          Reality Check
+        </h1>
+        <p className={styles.introduction}>
+          Let's ground your fears in reality. Rate how likely each fear is to actually
+          happen, <br />
+          and estimate your ability to survive if it did.
+        </p>
       </div>
 
-      {/* Prompt button & callout: only when no AI shown yet, or when editing */}
-      {(!showAIResponse || hasUnsavedChanges) && (
-        <>
-          <div className={styles.helperButtons}>
-            <button
-              type="button"
-              className={styles.textButton}
-              onClick={() => setShowPrompts(prev => !prev)}
-            >
-              <HelpCircle size={16} /> Need a prompt?
-            </button>
-          </div>
-
-          {showPrompts && (
-            <div className={styles.calloutBox} style={{ marginBottom: '20px' }}>
-              <h3 className={styles.promptsTitle}>Think about:</h3>
-              <p>
-                What made this failure feel more painful than others?<br/>
-                What were you hoping to achieve?<br/>
-                What was at stake for you personally?<br/>
-                How did this impact your sense of identity or self-worth?<br/><br/>
-                Focus on the failure that left the deepest emotional impact, not necessarily the biggest or most public one.
-              </p>
-            </div>
-          )}
-        </>
-      )}
-
-      {/* Primary button: only when not loading, and either before AI or after unsaved edits */}
-      {!aiLoading && (!showAIResponse || hasUnsavedChanges) && (
-        <div className={styles.actionButtons}>
-          <button
-            type="button"
-            onClick={handleGetInsight}
-            disabled={!localReflection.trim()}
-            className={`${styles.primaryButton} ${styles.withIcon}`}
-          >
-            {buttonLabel} <ArrowRight size={20} />
-          </button>
+      <div className={styles.fearTable}>
+        <div className={styles.tableHeaders}>
+          <div className={styles.headerLabel}>My Catastrophic Fear</div>
+          <div className={styles.headerLabel}>Reality Scale</div>
+          <div className={styles.headerLabel}>Survival Likelihood</div>
         </div>
-      )}
 
-      {/* AI Response Section */}
-      {showAIResponse && (
-       <div id="ai-response" style={{ marginTop: (!showAIResponse || hasUnsavedChanges) ? '40px' : '20px' }}>
-          {aiLoading && (
-            <div className={styles.aiLoading}>
-              <span>Coco is reflecting on your response</span>
-              <div className={styles.loadingDots}>
-                <div className={styles.loadingDot}></div>
-                <div className={styles.loadingDot}></div>
-                <div className={styles.loadingDot}></div>
-              </div>
-            </div>
-          )}
+        {items.map((item, idx) => (
+          <div key={idx} className={styles.fearRow}>
+            <div className={styles.fearText}>{item.fear}</div>
 
-          {aiError && <p className="text-red-500 mt-4">{aiError}</p>}
-
-          {!aiLoading && !aiError && aiResponse && (
-            <>
-              <div className={styles.calloutBox} style={{
-              marginBottom: '24px'}}>
-                <p className="whitespace-pre-wrap">{aiResponse}</p>
-              </div>
-
-              <div className={styles.actionButtons}>
+            <div className={styles.realityScale}>
+              {[...Array(10)].map((_, j) => (
                 <button
-                  type="button"
-                  onClick={handleContinue}
-                  className={`${hasUnsavedChanges ? styles.secondaryButton : styles.primaryButton} ${styles.withIcon}`}
-                >
-                  Continue to Next Question <ArrowRight size={20} />
-                </button>
+                  key={j}
+                  onClick={() => handleReality(idx, j + 1)}
+                  className={`${styles.scaleDot} ${
+                    item.reality >= j + 1 ? styles.scaleDotActive : ''
+                  }`}
+                />
+              ))}
+            </div>
+
+            <div className={styles.survivalContainer}>
+              <div className={styles.survivalDisplay}>
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  step={5}
+                  value={item.survival}
+                  onChange={e => handleSurvival(idx, Number(e.target.value))}
+                  className={styles.survivalBar}
+                  style={{ '--survival-percent': `${item.survival}%` }}
+                />
+                <div className={styles.survivalPercentage}>
+                  {item.survival}%
+                </div>
               </div>
-            </>
-          )}
-        </div>
-      )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className={styles.helperButtons}>
+        <button onClick={() => setShowInput(true)} className={styles.textButton}>
+          <Plus size={16} /> Add another fear
+        </button>
+
+        {showInput && (
+          <div className={styles.fearInput}>
+            <div className={styles.inputWithDelete}>
+              <input
+                type="text"
+                value={newFear}
+                onChange={e => setNewFear(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Enter your fear..."
+                className={styles.itemInput}
+                autoFocus
+              />
+              <button
+                onClick={addFear}
+                className={styles.deleteButton}
+                style={{ color: '#E07B67' }}
+                aria-label="Add fear"
+              >
+                <Plus size={20} />
+              </button>
+              <button
+                onClick={() => { setShowInput(false); setNewFear(''); }}
+                className={styles.deleteButton}
+                aria-label="Cancel"
+              >
+                <X size={20} />
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className={styles.actionButtons}>
+        <button className={styles.primaryButton} onClick={handleNext}>
+          Continue <ArrowRight size={20} />
+        </button>
+      </div>
     </div>
   );
-} 
+}

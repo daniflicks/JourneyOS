@@ -1,26 +1,25 @@
 'use client';
 
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import styles from '../../../app/feartofuel/styles/fear_to_fuel.module.css';
 import { ArrowRight, MessageSquare } from 'lucide-react';
 
-export default function Day2Main24({
-  answers,
-  onContinue,
-  aiResponse,
-  aiLoading,
-  aiError,
-}) {
-  const lessonsLearned = answers.lessonsFromMostPainfulMemory || '';
-  const handleNext = useCallback(() => onContinue(), [onContinue]);
+export default function Day3Reflection2({ answers, onContinue, aiResponse, aiLoading, aiError }) {
+  const reflection = answers.reflectionResponse || 'No reflection provided.';
+  const handleNext = useCallback(
+    () => onContinue(),
+    [onContinue]
+  );
 
   return (
     <div className={styles.mainContent}>
+      <h1 className={styles.title}>Your Reflection</h1>
+      <p className={styles.introduction}>
+        Thank you for sharing your thoughts.
+      </p>
+
       <div className={styles.calloutBox}>
-        <div className="whitespace-pre-wrap">
-          <strong>What you learned:</strong>
-          <p>{lessonsLearned || 'No reflection provided.'}</p>
-        </div>
+        {reflection}
       </div>
 
       {aiLoading && (
@@ -59,7 +58,7 @@ export default function Day2Main24({
           onClick={handleNext}
           disabled={aiLoading}
         >
-          Continue to Next Question <ArrowRight size={20} />
+          Continue to Complete Day 3 <ArrowRight size={20} />
         </button>
       </div>
     </div>

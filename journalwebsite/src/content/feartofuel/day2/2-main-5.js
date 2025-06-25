@@ -7,56 +7,32 @@ import { ArrowRight, HelpCircle } from 'lucide-react';
 export default function Day2Main5({ answers, onChange, onContinue }) {
   const [showPrompts, setShowPrompts] = useState(false);
   
-  // Get values from answers if available, otherwise empty string
-  const story = answers?.careerFailureStory || '';
-  const age = answers?.careerFailureAge || '';
+  // Get reflection from answers if available, otherwise empty string
+  const reflection = answers?.othersReactionReflection || '';
 
   const handleNext = () => {
-    // Save both the career failure story and age
-    onChange('careerFailureStory', story);
-    onChange('careerFailureAge', age);
+    // Save the others reaction reflection
+    onChange('othersReactionReflection', reflection);
     onContinue();
   };
 
   return (
       <div className={styles.mainContent}>
-        <div className={styles.header}>
-          <h1 className={styles.title}>Key Moments</h1>
-          <p className={styles.introductionMargin}>
-            Remember 3 significant moments when you faced failure focused in your career.
-          </p>
-        </div>
-
         <div className={styles.reflectionSection}>
-          <h2 className={styles.subTitle}>Your First Career Setback</h2>
-         
+          <h2 className={styles.subTitle}>Other's Reactions</h2>
+      
+
           <div>
-              <label htmlFor="careerFailure" className={styles.formLabel}>
-              What happened?
+              <label htmlFor="othersReaction" className={styles.formLabel}>
+              What did other's say or do?
               </label>
             <textarea
-              id="careerFailure"
+              id="othersReaction"
               className={styles.textInput}
-              value={story}
-              onChange={(e) => onChange('careerFailureStory', e.target.value)}
-              placeholder="Think of your first significant career failure - the one that really shook your confidence."
+              value={reflection}
+              onChange={(e) => onChange('othersReactionReflection', e.target.value)}
+              placeholder="Think about how people around you responded to your failure..."
               rows={6}
-            />
-          </div>
-
-          <div>
-              <label htmlFor="careerFailureAge" className={styles.formLabel}>
-              How old were you?
-              </label>
-            <input
-              id="careerFailureAge"
-              type="number"
-              className={styles.numberInput}
-              value={age}
-              onChange={(e) => onChange('careerFailureAge', e.target.value)}
-              placeholder="Age"
-              min="1"
-              max="100"
             />
           </div>
         </div>
@@ -74,11 +50,11 @@ export default function Day2Main5({ answers, onChange, onContinue }) {
           <div className={`${styles.calloutBox} `} style={{ marginBottom: '20px' }}>
             <h3 className={styles.promptsTitle}>Think about:</h3>
             <p>
-              What was the situation or project?<br/>
-              What went wrong and how did it feel?<br/>
-              How did others react to your failure?<br/>
-              What did you tell yourself about what happened?<br/><br/>
-              Focus on the failure that had the biggest impact on your confidence.
+              Were they supportive or critical?<br/>
+              Did they offer help or solutions?<br/>
+              What did they say or not say?<br/>
+              How did their reaction make you feel?<br/><br/>
+              Include family, friends, colleagues, or anyone else who knew about it.
             </p>
           </div>
         )}
@@ -87,7 +63,7 @@ export default function Day2Main5({ answers, onChange, onContinue }) {
           <button 
             className={`${styles.primaryButton} ${styles.withIcon}`}
             onClick={handleNext}
-            disabled={!story.trim() || !age.trim()}
+            disabled={!reflection.trim()}
           >
             Continue <ArrowRight size={20} />
           </button>

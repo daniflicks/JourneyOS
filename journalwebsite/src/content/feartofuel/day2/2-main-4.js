@@ -1,68 +1,97 @@
 'use client';
 
-import React, { useCallback } from 'react';
+import React, { useState } from 'react';
 import styles from '../../../app/feartofuel/styles/fear_to_fuel.module.css';
-import { ArrowRight, MessageSquare } from 'lucide-react';
+import { ArrowRight, HelpCircle } from 'lucide-react';
 
-export default function Day2Main4({
-  answers,
-  onContinue,
-  aiResponse,
-  aiLoading,
-  aiError,
-}) {
-  const adultFailureReflection = answers.adultFailureReflection || '';
-  const handleNext = useCallback(() => onContinue(), [onContinue]);
+export default function Day2Main4({ answers, onChange, onContinue }) {
+  const [showPrompts, setShowPrompts] = useState(false);
+  
+  // Get values from answers if available, otherwise empty string
+  const story = answers?.careerFailureStory || '';
+  const age = answers?.careerFailureAge || '';
+
+  const handleNext = () => {
+    // Save both the career failure story and age
+    onChange('careerFailureStory', story);
+    onChange('careerFailureAge', age);
+    onContinue();
+  };
 
   return (
-    <div className={styles.mainContent}>
-   
+      <div className={styles.mainContent}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>Key Moments</h1>
+          <p className={styles.introductionMargin}>
+            Remember 3 significant moments when you faced failure focused in your career.
+          </p>
+        </div>
 
-      <div className={styles.calloutBox}>
-        <p className="whitespace-pre-wrap">
-          {adultFailureReflection || 'No reflection provided.'}
-        </p>
-      </div>
+        <div className={styles.reflectionSection}>
+          <h2 className={styles.subTitle}>Your First Career Setback</h2>
+         
+          <div>
+              <label htmlFor="careerFailure" className={styles.formLabel}>
+              What happened?
+              </label>
+            <textarea
+              id="careerFailure"
+              className={styles.textInput}
+              value={story}
+              onChange={(e) => onChange('careerFailureStory', e.target.value)}
+              placeholder="Think of your first significant career failure - the one that really shook your confidence."
+              rows={6}
+            />
+          </div>
 
-      {aiLoading && (
-        <div className={styles.aiLoading}>
-          <span>Coco is reflecting on your response</span>
-          <div className={styles.loadingDots}>
-            <div className={styles.loadingDot}></div>
-            <div className={styles.loadingDot}></div>
-            <div className={styles.loadingDot}></div>
+          <div>
+              <label htmlFor="careerFailureAge" className={styles.formLabel}>
+              How old were you?
+              </label>
+            <input
+              id="careerFailureAge"
+              type="number"
+              className={styles.numberInput}
+              value={age}
+              onChange={(e) => onChange('careerFailureAge', e.target.value)}
+              placeholder="Age"
+              min="1"
+              max="100"
+            />
           </div>
         </div>
-      )}
-      {aiError && (
-        <p className="text-red-500 mt-4">{aiError}</p>
-      )}
-      {!aiLoading && !aiError && aiResponse && (
-        <div className={styles.aiAnalysisCard}>
-          <div className={styles.aiHeader}>
-            <div className={styles.aiIconContainer}>
-              <MessageSquare className={styles.aiIcon} />
-            </div>
-            <div className={styles.aiInfo}>
-              <h2 className={styles.aiName}>From Coco, your guide</h2>
-              <p className={styles.aiRole}>AI support companion</p>
-            </div>
-          </div>
-          <div className={styles.aiMessage}>
-            <p className="whitespace-pre-wrap">{aiResponse}</p>
-          </div>
-        </div>
-      )}
 
-      <div className={styles.actionButtons}>
-        <button
-          className={`${styles.primaryButton} ${styles.withIcon}`}
-          onClick={handleNext}
-          disabled={aiLoading}
-        >
-          Continue to Next Question <ArrowRight size={20} />
-        </button>
+        <div className={styles.helperButtons}>
+          <button
+            className={styles.textButton}
+            onClick={() => setShowPrompts(!showPrompts)}
+          >
+            <HelpCircle size={16} /> Need a prompt?
+          </button>
+        </div>
+
+        {showPrompts && (
+          <div className={`${styles.calloutBox} `} style={{ marginBottom: '20px' }}>
+            <h3 className={styles.promptsTitle}>Think about:</h3>
+            <p>
+              What was the situation or project?<br/>
+              What went wrong and how did it feel?<br/>
+              How did others react to your failure?<br/>
+              What did you tell yourself about what happened?<br/><br/>
+              Focus on the failure that had the biggest impact on your confidence.
+            </p>
+          </div>
+        )}
+
+        <div className={styles.actionButtons}>
+          <button 
+            className={`${styles.primaryButton} ${styles.withIcon}`}
+            onClick={handleNext}
+            disabled={!story.trim() || !age.trim()}
+          >
+            Continue <ArrowRight size={20} />
+          </button>
+        </div>
       </div>
-    </div>
   );
-}
+} 

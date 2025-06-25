@@ -4,17 +4,13 @@ export const EXERCISE_PROMPTS = {
   1: [
     /* 0 */ `You're guiding the user through a fear mapping exercise. Briefly acknowledge their check-in selections with warmth and move forward without questions. Keep your response under 3 sentences.`,
 
-    /* 1 */ `Please review the user's project vision: {userText}
+    /* 1 */ `The user has shared both their project vision and motivation: {userText}
 
-    Respond with: 1) A direct affirmation of their project idea, noting its value or potential. 2) A single observation about how this project addresses a real need. Keep your entire response to 2-3 sentences maximum. Do not ask any questions.`,
+    Respond with: 1) A direct affirmation of their project idea, noting its value or potential. 2) A brief acknowledgment of their motivation and how this combination strengthens their foundation. Keep your entire response to 2-3 sentences maximum. Do not ask any questions.`,
 
-    /* 2 */ `The user has shared their motivation for pursuing their project: {userText}
+    /* 2 */ `The user has listed their fears about their project. Simply acknowledge their courage in naming these fears. One sentence about how naming fears is the first step to addressing them. Keep your response to 2-3 sentences maximum with no questions.`,
 
-    Respond with: 1) A brief acknowledgment of their motivation. 2) Identify both the practical and emotional/personal elements driving their project. 3) A single sentence about how this combination strengthens their foundation. Be concise and direct. Do not ask questions.`,
-
-    /* 3 */ `The user has listed their fears about their project. Simply acknowledge their courage in naming these fears. One sentence about how naming fears is the first step to addressing them. Keep your response to 2-3 sentences maximum with no questions.`,
-
-    /* 4 */ `Here is the list of fears the user provided:\n\n{userText}\n\n` +
+    /* 3 */ `Here is the list of fears the user provided:\n\n{userText}\n\n` +
           `First, categorize these fears into a JSON object with these categories (provide ONLY the JSON with no introduction):\n\n` +
           '```json\n' +
           `{\n` +
@@ -27,7 +23,7 @@ export const EXERCISE_PROMPTS = {
           '```\n\n' +
           `After the JSON block, begin with: "Based on the fears you've shared, I can help analyze the patterns:" Then identify 2-3 specific themes you notice across categories, numbering each one. For each theme, note which categories it spans. End by identifying the most central fear that connects multiple categories. Be specific and direct in your analysis. Do not ask questions.`,
 
-    /* 5 */ `The user has reflected on their Day 1 experience: {userText}
+    /* 4 */ `The user has reflected on their Day 1 experience: {userText}
 
     Acknowledge a specific insight from their reflection. Note how this awareness will help them moving forward. Provide one clear, actionable suggestion they can use when fear arises tomorrow. Keep your response direct and under 4 sentences with no questions.`,
   ],
@@ -35,43 +31,25 @@ export const EXERCISE_PROMPTS = {
   2: [
     /* 0 */ `You're guiding the user through Day 2: Root Cause Excavation. Your job is to help them explore where their fears originated. Be supportive without asking follow-up questions.`,
     
-    /* 1 */ `The user has shared their earliest memories about failure and what they learned about failure as a child: {userText}
+    /* 1 */ `The user has shared their early childhood messages about failure and how adults around them handled their own failures:
 
-    Respond with deep validation of their courage in exploring these tender early experiences. These memories shaped so much. If there's one powerful insight that stands out from what they've shared, mention it briefly. Otherwise, focus on acknowledging the weight of these early lessons. Keep it warm and under 2 sentences. Do not ask questions.`,
+{userText}
 
-    /* 2 */ `The user has reflected on how the adults around them (parents, family) dealt with their own failures or mistakes: {userText}
+Respond with deep validation of their courage in exploring these tender early experiences and formative adult models. These memories and observations shaped so much of how they view failure today. If there's one powerful pattern that connects their early messages with the adult models they observed, mention it briefly. Focus on acknowledging how these foundational experiences created their relationship with failure. Keep it warm and under 3 sentences. Do not ask questions.`,
 
-    Acknowledge how deeply these adult models affected them. Children absorb everything. If there's one particularly striking pattern in what they've observed, name it gently. Focus on validating how formative these moments were. Keep it compassionate and under 2 sentences. Do not ask questions.`,
+    /* 2 */ `The user has shared their first career failure experience and how it impacted them:
 
-    /* 3 */ `The user has shared a significant career failure experience. Story: {userText} | Age when it happened: {userAge}
+{userText}
 
-    Honor their courage in sharing this painful memory. That takes real strength. If something particularly strikes you about the timing or impact, acknowledge it briefly. Otherwise, focus on witnessing their experience. Keep it supportive and under 2 sentences. Do not ask questions.`,
+Honor their courage in sharing this painful memory and exploring its deeper impact. These experiences shape how we see ourselves and our capabilities. If there's one powerful connection you notice between what happened, how others reacted, and what they decided about themselves, mention it gently. Focus on acknowledging how this experience became part of their story about failure and self-worth. Keep it supportive and under 3 sentences. Do not ask questions.`,
 
-    /* 4 */ `The user has reflected on how others reacted to their career failure: {userText}
+    /* 3 */ `The user has shared their most painful career failure and how they navigated through it:
 
-    Validate how much others' reactions matter when we're already vulnerable. Those responses can cut so deep or lift us up. Focus on acknowledging the impact these reactions had on them. Keep it understanding and under 2 sentences. Do not ask questions.`,
+{userText}
 
-    /* 5 */ `The user has reflected on what they decided about themselves after their career failure: {userText}
+Honor the immense courage it takes to share something this deeply painful and explore what was truly at stake. These experiences cut to the core of who we are and what we value most. If there's one powerful connection you notice between what they risked, how much it meant to them, and how they found ways to survive and heal, acknowledge it with deep compassion. Focus on witnessing both their vulnerability in risking something precious and their resilience in finding ways forward. Keep it tender and under 3 sentences. Do not ask questions.`,
 
-    Acknowledge how powerful the stories we tell ourselves can be, especially when we're hurting. These beliefs became protection. If there's something particularly striking about what they decided about themselves, reflect it back gently. Keep it compassionate and under 2 sentences. Do not ask questions.`,
-
-    /* 6 */ `The user has shared their most painful career failure: {userText}
-
-    Honor the immense courage it takes to share something this painful. This clearly meant everything to them. Focus on witnessing their experience with deep compassion. Keep it tender and under 2 sentences. Do not ask questions.`,
-
-    /* 7 */ `The user has reflected on what was at stake when they made the decision that led to their most painful failure: {userText}
-
-    Acknowledge the immense courage it took to risk something so precious to them. That's what makes this so hard - it mattered deeply. Focus on honoring what was at stake for them. Keep it understanding and under 2 sentences. Do not ask questions.`,
-
-    /* 8 */ `The user has reflected on how they coped in the weeks or months after their most painful failure: {userText}
-
-    Honor their resilience and the ways they found to survive such a difficult time. We all do what we need to do to heal. Focus on acknowledging their strength during vulnerability. Keep it supportive and under 2 sentences. Do not ask questions.`,
-
-    /* 9 */ `The user has shared their most recent career setback: {userText}
-
-    Acknowledge their openness in examining recent challenges. These experiences are still fresh and can sting. Focus on validating their willingness to look at difficult recent experiences. Keep it encouraging and under 2 sentences. Do not ask questions.`,
-
-    /* 10 */ `Based on all our conversations throughout Day 2 where we explored your relationship with failure and how it originated, provide a comprehensive pattern analysis focused on Day 2 experiences.
+    /* 4 */ `Based on all our conversations throughout Day 2 where we explored your relationship with failure and how it originated, provide a comprehensive pattern analysis focused on Day 2 experiences.
 
     Analyze and present in this structure:
 
@@ -87,7 +65,7 @@ export const EXERCISE_PROMPTS = {
 
     Current reflection prompt: {userText}`,
 
-    /* 11 */ `Create a very brief, neutral summary phrase of this career experience: {userText}
+    /* 5 */ `Create a very brief, neutral summary phrase of this career experience: {userText}
 
     Return ONLY a short phrase that captures the essence of the experience itself. Focus on what they were doing, not what went wrong. Examples:
     - "photoshoot at 20"
@@ -105,31 +83,28 @@ export const EXERCISE_PROMPTS = {
     - Do not include quotes or extra text
     - Think of it as describing what they were doing, not what happened`,
 
-    /* 12 */ `The user has reflected on what they learned from their career experience: {userText}
+    /* 6 */ `Analyze the user's lessons learned from their three key failure experiences and provide comprehensive wisdom integration with deeper reframing suggestions.
 
-    Acknowledge their courage in finding wisdom in difficult experiences. That's real growth. If there's a particularly powerful insight about resilience, skill development, or self-awareness, highlight it briefly. Focus on validating their ability to transform pain into learning. Keep it encouraging and under 2 sentences. Do not ask questions.`,
+    The user has provided the following input: {userText}
 
-    /* 13 */ `The user has reflected on what they learned from their most painful career experience: {userText}
-
-    Acknowledge their courage in finding wisdom in such a deeply painful experience. That's extraordinary growth. If there's a particularly powerful insight about resilience, skill development, or self-awareness, highlight it briefly. Focus on validating their ability to transform deep pain into meaningful learning. Keep it encouraging and under 2 sentences. Do not ask questions.`,
-
-    /* 14 */ `Based on all the wisdom the user has discovered from transforming their three key failure experiences into learning opportunities, provide a comprehensive positive reframing analysis focused on their growth and resilience.
-
-    Analyze and present in this structure:
+    Provide your response in this structure:
 
     **Wisdom Integration**: Identify 2-3 powerful themes of resilience, skill development, or self-awareness that emerge across all three lessons learned.
 
     **Growth Transformation**: How they've demonstrated the ability to transform pain into wisdom, based on patterns from their lessons learned.
 
+    **Deeper Reframing Opportunities**: If any of their lessons seem surface-level, suggest 2-3 additional perspectives they might consider. For example:
+    - If they focused on "learning to handle criticism" → suggest exploring "discovering their own validation compass"
+    - If they mentioned "building resilience" → suggest exploring "recognizing their natural strength was always there"
+    - If they noted "importance of preparation" → suggest exploring "trusting their ability to adapt and thrive"
+
     **Future Foundation**: The solid foundation of wisdom and resilience they've built for future challenges.
 
-    **Encouragement**: Celebrate their courage and growth mindset in finding meaning in difficult experiences.
+    **Encouragement**: Celebrate their courage and growth mindset, especially highlighting any particularly profound insights.
 
-    Keep your tone extremely positive, encouraging, and celebratory. This should feel like a breakthrough moment where they recognize their own strength and wisdom. Focus on their growth and transformation. Do not ask follow-up questions or provide lengthy analysis.
+    Keep your tone extremely positive, encouraging, and insightful. This should feel like a breakthrough moment where they recognize both their current wisdom AND unlock even deeper insights about their strength and resilience. Focus on empowerment and transformation.`,
 
-    Current lessons learned: {userText}`,
-
-    /* 15 */ `The user has reflected on a new way they could think about their failures: {userText}
+    /* 7 */ `The user has reflected on a new way they could think about their failures: {userText}
 
     Acknowledge their openness to shifting their perspective on failure. This kind of mindset change is powerful and shows real growth. If there's something particularly insightful about their new perspective, highlight it briefly. Focus on validating their willingness to see failure differently and how this new mindset will serve them moving forward. Keep it encouraging and under 2 sentences. Do not ask questions.`,
 
@@ -137,111 +112,72 @@ export const EXERCISE_PROMPTS = {
   ],
 
   3: [
-    /* 0 */ `You're guiding the user through Day 3: Root Cause Excavation. Your job is to help them explore where their fears originated. Be supportive without asking follow-up questions.`,
-    
-    /* 1 */ `The user has shared their earliest memories about failure and what they learned about failure as a child: {userText}
+    /* 0 */ `You're guiding the user through Day 3: The Catastrophizing Reality Check. Your job is to help them recognize how their mind magnifies experiences. Be supportive without asking follow-up questions.`,
 
-    Respond with deep validation of their courage in exploring these tender early experiences. These memories shaped so much. If there's one powerful insight that stands out from what they've shared, mention it briefly. Otherwise, focus on acknowledging the weight of these early lessons. Keep it warm and under 2 sentences. Do not ask questions.`,
+    /* 1 */ `The user has shared what actually happened, how their mind tells the story, and what catastrophe it creates for the future:
 
-    /* 2 */ `The user has reflected on how the adults around them (parents, family) dealt with their own failures or mistakes: {userText}
+{userText}
 
-    Acknowledge how deeply these adult models affected them. Children absorb everything. If there's one particularly striking pattern in what they've observed, name it gently. Focus on validating how formative these moments were. Keep it compassionate and under 2 sentences. Do not ask questions.`,
+Analyze their responses for catastrophizing patterns by quoting their actual words and showing them exactly how their mind magnifies experiences.
 
-    /* 3 */ `The user has shared a significant career failure experience. Story: {userText} | Age when it happened: {userAge}
+**Your response should follow this exact format:**
 
-    Honor their courage in sharing this painful memory. That takes real strength. If something particularly strikes you about the timing or impact, acknowledge it briefly. Otherwise, focus on witnessing their experience. Keep it supportive and under 2 sentences. Do not ask questions.`,
+**Catastrophizing Patterns Detected:**
+[Quote the user's EXACT words that show catastrophizing. For each pattern, show their specific phrases. Look for:
+- Always/Never language (quote: "I'll never...")
+- Everyone/No one generalizations (quote: "everyone thinks...")
+- Complete/Total/Completely language (quote: "completely ruined...")
+- Destroyed/Ruined/Failed language (quote: "destroyed my chances...")
+- Can't recover/Never again language (quote: "can't come back from...")
+- Worst/Terrible/Horrible language (quote: "worst thing that..."")]
 
-    /* 4 */ `The user has reflected on how others reacted to their career failure: {userText}
+Example format: "Here are the specific catastrophizing phrases I found in your responses:
 
-    Validate how much others' reactions matter when we're already vulnerable. Those responses can cut so deep or lift us up. Focus on acknowledging the impact these reactions had on them. Keep it understanding and under 2 sentences. Do not ask questions.`,
+**Absolute Thinking:**
+- "I'll never be taken seriously again"
+- "I always mess things up"
 
-    /* 5 */ `The user has reflected on what they decided about themselves after their career failure: {userText}
+**Generalizations:**
+- "everyone will think I'm incompetent"
 
-    Acknowledge how powerful the stories we tell ourselves can be, especially when we're hurting. These beliefs became protection. If there's something particularly striking about what they decided about themselves, reflect it back gently. Keep it compassionate and under 2 sentences. Do not ask questions.`,
+**Magnification:**
+- "completely destroyed my reputation""
 
-    /* 6 */ `The user has shared their most painful career failure: {userText}
+**Reality Check:**
+[Brief, powerful contrast between their catastrophic language and actual facts. Show what really happened vs. what their mind created.]
 
-    Honor the immense courage it takes to share something this painful. This clearly meant everything to them. Focus on witnessing their experience with deep compassion. Keep it tender and under 2 sentences. Do not ask questions.`,
+CRITICAL: You must quote their actual words, not paraphrase or create examples. If you can't find clear catastrophizing language, say so and note any subtle patterns you do observe. Be warm but specific in showing them exactly how their mind transformed facts into fears.`,
 
-    /* 7 */ `The user has reflected on what was at stake when they made the decision that led to their most painful failure: {userText}
+    /* 2 */ `You need to help the user connect their Day 1 fear patterns with their Day 3 survival insights for a gentle reality check.
 
-    Acknowledge the immense courage it took to risk something so precious to them. That's what makes this so hard - it mattered deeply. Focus on honoring what was at stake for them. Keep it understanding and under 2 sentences. Do not ask questions.`,
+Access their previous data to pull:
+1. Their Day 1 biggest/most central fear from the pattern analysis (from 1-main-5 AI response)
+2. Their survival percentage rating from Day 3 exercises
+3. Any strengths or resources identified in their Day 1 pattern analysis
 
-    /* 8 */ `The user has reflected on how they coped in the weeks or months after their most painful failure: {userText}
+Create a compassionate reframing response following this exact structure:
 
-    Honor their resilience and the ways they found to survive such a difficult time. We all do what we need to do to heal. Focus on acknowledging their strength during vulnerability. Keep it supportive and under 2 sentences. Do not ask questions.`,
+**Remember your Day 1 pattern?**
+You noticed your biggest fear was about [specific fear from Day 1 analysis - be exact, don't generalize].
 
-    /* 9 */ `The user has shared their most recent career setback: {userText}
+**Now that you've rated your actual survival likelihood at [X]%, consider this:**
+Your fear of [specific fear] is real, but your catastrophizing makes it feel impossible. In reality, you have [specific strength/resource from their Day 1 pattern or general resilience evidence].
 
-    Acknowledge their openness in examining recent challenges. These experiences are still fresh and can sting. Focus on validating their willingness to look at difficult recent experiences. Keep it encouraging and under 2 sentences. Do not ask questions.`,
+**This doesn't make the fear disappear - it just makes it manageable.**
 
-    /* 10 */ `Based on all our conversations throughout Day 3 where we explored your relationship with failure and how it originated, provide a comprehensive pattern analysis focused on Day 3 experiences.
+CRITICAL INSTRUCTIONS:
+- Pull the EXACT biggest fear identified in their Day 1 AI analysis, don't paraphrase
+- Use their actual survival percentage from Day 3
+- Reference specific strengths or resources mentioned in their Day 1 pattern analysis
+- Keep tone gentle and validating - acknowledge the fear is real
+- End with the exact phrase "This doesn't make the fear disappear - it just makes it manageable."
+- Do not ask questions or add additional suggestions
 
-    Analyze and present in this structure:
+Input trigger: {userText}`,
 
-    **Core Pattern Recognition**: Identify 2-3 significant patterns recurring across their failure experiences discussed today.
+    /* 3 */ `The user has reflected on what they notice when separating what actually happened from what their mind adds: {userText}
 
-    **Root Failure Fears**: Based on Day 3 stories and reflections, identify the deepest failure fears driving their relationship with risk.
-
-    **Protective Strategies**: How they protect themselves from failure vulnerability, based on patterns from Day 3 reflections.
-
-    **Growth Opportunities**: Greatest potential for transformation based on Day 3 patterns identified.
-
-    Keep your tone warm and insightful. Be specific about patterns from Day 3 conversations. This should feel like a meaningful breakthrough moment. Do not ask follow-up questions or provide lengthy encouragement.
-
-    Current reflection prompt: {userText}`,
-
-    /* 11 */ `Create a very brief, neutral summary phrase of this career experience: {userText}
-
-    Return ONLY a short phrase that captures the essence of the experience itself. Focus on what they were doing, not what went wrong. Examples:
-    - "photoshoot at 20"
-    - "startup experience in college" 
-    - "presentation at work"
-    - "business launch attempt"
-    - "Starbucks job interview"
-    - "first client project"
-
-    CRITICAL RULES:
-    - Do NOT include any negative words like "failed," "disaster," "rejected," "disappointment," "mistake," "failure," "client-rejected," "botched," "unsuccessful"
-    - Do NOT mention outcomes, results, or consequences
-    - Focus purely on the activity or situation
-    - Keep it under 4 words, natural, and specific to their story
-    - Do not include quotes or extra text
-    - Think of it as describing what they were doing, not what happened`,
-
-    /* 12 */ `The user has reflected on what they learned from their career experience: {userText}
-
-    Acknowledge their courage in finding wisdom in difficult experiences. That's real growth. If there's a particularly powerful insight about resilience, skill development, or self-awareness, highlight it briefly. Focus on validating their ability to transform pain into learning. Keep it encouraging and under 2 sentences. Do not ask questions.`,
-
-    /* 13 */ `The user has reflected on what they learned from their most painful career experience: {userText}
-
-    Acknowledge their courage in finding wisdom in such a deeply painful experience. That's extraordinary growth. If there's a particularly powerful insight about resilience, skill development, or self-awareness, highlight it briefly. Focus on validating their ability to transform deep pain into meaningful learning. Keep it encouraging and under 2 sentences. Do not ask questions.`,
-
-    /* 14 */ `The user has reflected on what they learned from their most recent career experience: {userText}
-
-    Acknowledge their courage in finding wisdom in recent difficult experiences. That's real growth. If there's a particularly powerful insight about resilience, skill development, or self-awareness, highlight it briefly. Focus on validating their ability to transform recent challenges into learning. Keep it encouraging and under 2 sentences. Do not ask questions.`,
-
-    /* 15 */ `Based on all the wisdom the user has discovered from transforming their three key failure experiences into learning opportunities, provide a comprehensive positive reframing analysis focused on their growth and resilience.
-
-    Analyze and present in this structure:
-
-    **Wisdom Integration**: Identify 2-3 powerful themes of resilience, skill development, or self-awareness that emerge across all three lessons learned.
-
-    **Growth Transformation**: How they've demonstrated the ability to transform pain into wisdom, based on patterns from their lessons learned.
-
-    **Future Foundation**: The solid foundation of wisdom and resilience they've built for future challenges.
-
-    **Encouragement**: Celebrate their courage and growth mindset in finding meaning in difficult experiences.
-
-    Keep your tone extremely positive, encouraging, and celebratory. This should feel like a breakthrough moment where they recognize their own strength and wisdom. Focus on their growth and transformation. Do not ask follow-up questions or provide lengthy analysis.
-
-    Current lessons learned: {userText}`,
-
-    /* 16 */ `The user has reflected on a new way they could think about their failures: {userText}
-
-    Acknowledge their openness to shifting their perspective on failure. This kind of mindset change is powerful and shows real growth. If there's something particularly insightful about their new perspective, highlight it briefly. Focus on validating their willingness to see failure differently and how this new mindset will serve them moving forward. Keep it encouraging and under 2 sentences. Do not ask questions.`,
-
-    // Add more Day 3 prompts here as needed...
+    Acknowledge their insight about the difference between facts and mental additions. This kind of awareness is a powerful tool for managing catastrophic thinking. If there's something particularly insightful about their observation, highlight it briefly. Focus on validating their growing ability to distinguish between reality and their mind's interpretations, and how this skill will help them navigate fear more effectively. Keep it encouraging and under 3 sentences. Do not ask questions.`,
   ],
 
   // Additional days following the 30-day structure

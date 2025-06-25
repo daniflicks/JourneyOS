@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Your Mind's Magnification</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #FFF5F3 0%, #FFEAEC 100%);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+            color: #3A3A3A;
+        }
+        
+        /* Progress Header */
+        .progress-header {
+            padding: 40px 40px 24px;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+        
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .progress-label {
+            font-size: 14px;
+            color: #9CA3AF;
+            transition: color 0.3s ease;
+        }
+        
+        .progress-label.active {
+            color: #E07B67;
+            font-weight: 500;
+        }
+        
+        .progress-bar-container {
+            height: 6px;
+            background: #F3F4F6;
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #E07B67 0%, #FFB5A7 100%);
+            border-radius: 3px;
+            width: 66.66%;
+            transition: width 0.5s ease;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        
+        .content-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 48px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+        
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 36px;
+            color: #2D2D2D;
+            margin-bottom: 32px;
+            line-height: 1.2;
+            text-align: center;
+        }
+        
+        .intro-text {
+            font-size: 17px;
+            line-height: 1.8;
+            color: #4B5563;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .concept-list {
+            margin-bottom: 48px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            position: relative;
+            padding: 40px 0;
+        }
+        
+        /* Connecting lines */
+        .concept-list::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 15%;
+            right: 15%;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 181, 167, 0.3) 20%, 
+                rgba(255, 181, 167, 0.3) 80%, 
+                transparent 100%
+            );
+            z-index: 0;
+        }
+        
+        .concept-item {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            flex: 0 0 auto;
+            width: 200px;
+        }
+        
+        .concept-circle {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 20px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .concept-item:hover .concept-circle {
+            transform: scale(1.1) translateY(-5px);
+        }
+        
+        /* Outer ring */
+        .circle-outer {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E07B67 0%, #FFB5A7 100%);
+            opacity: 0.1;
+            transition: all 0.4s ease;
+        }
+        
+        .concept-item:hover .circle-outer {
+            opacity: 0.2;
+            transform: scale(1.15);
+        }
+        
+        /* Middle ring */
+        .circle-middle {
+            position: absolute;
+            inset: 10px;
+            border-radius: 50%;
+            border: 2px solid rgba(224, 123, 103, 0.3);
+            transition: all 0.4s ease;
+        }
+        
+        .concept-item:hover .circle-middle {
+            border-color: rgba(224, 123, 103, 0.5);
+            transform: rotate(90deg);
+        }
+        
+        /* Inner circle */
+        .circle-inner {
+            position: absolute;
+            inset: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E07B67 0%, #FFB5A7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(224, 123, 103, 0.3);
+            transition: all 0.4s ease;
+        }
+        
+        .concept-item:hover .circle-inner {
+            box-shadow: 0 12px 32px rgba(224, 123, 103, 0.4);
+        }
+        
+        /* Icons */
+        .concept-icon {
+            font-size: 48px;
+            color: white;
+            font-weight: 300;
+            line-height: 1;
+        }
+        
+        /* Amplify icon - expanding arrows */
+        .icon-amplify::before {
+            content: '⟷';
+            display: block;
+            transform: scale(1.2);
+        }
+        
+        /* Generalize icon - dots spreading */
+        .icon-generalize::before {
+            content: '⋯';
+            display: block;
+            font-size: 56px;
+            letter-spacing: 8px;
+        }
+        
+        /* Project icon - forward arrow */
+        .icon-project::before {
+            content: '⟶';
+            display: block;
+            transform: scale(1.3);
+        }
+        
+        .concept-content {
+            padding: 0 10px;
+        }
+        
+        .concept-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2D2D2D;
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+        
+        .concept-item:hover .concept-title {
+            color: #E07B67;
+        }
+        
+        .concept-description {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #6B7280;
+            transition: color 0.3s ease;
+        }
+        
+        .concept-item:hover .concept-description {
+            color: #4B5563;
+        }
+        
+        /* Floating particles animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(180deg); }
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 181, 167, 0.6);
+            border-radius: 50%;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .concept-item:nth-child(1) .particle { 
+            top: 10px; 
+            left: 10px; 
+            animation-delay: 0s; 
+        }
+        
+        .concept-item:nth-child(2) .particle { 
+            top: 20px; 
+            right: 15px; 
+            animation-delay: 1s; 
+        }
+        
+        .concept-item:nth-child(3) .particle { 
+            bottom: 25px; 
+            left: 20px; 
+            animation-delay: 2s; 
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 680px) {
+            .concept-list {
+                gap: 30px;
+            }
+            
+            .concept-list::before {
+                display: none;
+            }
+            
+            .concept-circle {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .circle-inner {
+                inset: 15px;
+            }
+            
+            .concept-icon {
+                font-size: 40px;
+            }
+        }
+        
+        .reassurance-box {
+            background: #FFF0ED;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 48px;
+            text-align: center;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #6B7280;
+            border: 1px solid rgba(224, 123, 103, 0.2);
+        }
+        
+        .reassurance-box strong {
+            color: #E07B67;
+            font-weight: 500;
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .primary-button {
+            background: linear-gradient(135deg, #E07B67 0%, #FFB5A7 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 17px;
+            font-weight: 500;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(224, 123, 103, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(224, 123, 103, 0.4);
+        }
+        
+        .arrow {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .primary-button:hover .arrow {
+            transform: translateX(4px);
+        }
+        
+        /* Footer */
+        .footer {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 40px 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .back-link, .support-link {
+            text-decoration: none;
+            color: #6B7280;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            transition: color 0.2s ease;
+        }
+        
+        .back-link:hover {
+            color: #E07B67;
+        }
+        
+        .support-link {
+            color: #E07B67;
+        }
+        
+        .support-link:hover {
+            color: #D56552;
+        }
+        
+        /* Subtle animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes dropIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .content-card {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .concept-item {
+            opacity: 0;
+            animation: dropIn 0.6s ease-out forwards;
+        }
+        
+        .concept-item:nth-child(1) { animation-delay: 0.2s; }
+        .concept-item:nth-child(2) { animation-delay: 0.3s; }
+        .concept-item:nth-child(3) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <!-- Progress Header -->
+    <div class="progress-header">
+        <div class="progress-labels">
+            <span class="progress-label">Power-Up</span>
+            <span class="progress-label active">Main Exercise</span>
+            <span class="progress-label">Reflection</span>
+        </div>
+        <div class="progress-bar-container">
+            <div class="progress-fill"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-card">
+            <h1>Understanding Your Mind's Magnification</h1>
+            
+            <p class="intro-text">
+                When we experience something painful, our protective brain does three things:
+            </p>
+            
+            <div class="concept-list">
+                <div class="concept-item">
+                    <div class="concept-circle">
+                        <div class="circle-outer"></div>
+                        <div class="circle-middle"></div>
+                        <div class="circle-inner">
+                            <span class="concept-icon icon-amplify"></span>
+                        </div>
+                        <div class="particle"></div>
+                    </div>
+                    <div class="concept-content">
+                        <div class="concept-title">Amplifies</div>
+                        <div class="concept-description">Makes it seem bigger than it was</div>
+                    </div>
+                </div>
+                
+                <div class="concept-item">
+                    <div class="concept-circle">
+                        <div class="circle-outer"></div>
+                        <div class="circle-middle"></div>
+                        <div class="circle-inner">
+                            <span class="concept-icon icon-generalize"></span>
+                        </div>
+                        <div class="particle"></div>
+                    </div>
+                    <div class="concept-content">
+                        <div class="concept-title">Generalizes</div>
+                        <div class="concept-description">Assumes it will happen everywhere</div>
+                    </div>
+                </div>
+                
+                <div class="concept-item">
+                    <div class="concept-circle">
+                        <div class="circle-outer"></div>
+                        <div class="circle-middle"></div>
+                        <div class="circle-inner">
+                            <span class="concept-icon icon-project"></span>
+                        </div>
+                        <div class="particle"></div>
+                    </div>
+                    <div class="concept-content">
+                        <div class="concept-title">Projects</div>
+                        <div class="concept-description">Creates an even worse future version</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="reassurance-box">
+                <strong>This is normal.</strong> Your brain is trying to protect you.
+            </div>
+            
+            <div class="button-container">
+                <button class="primary-button">
+                    Continue
+                    <span class="arrow">→</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <a href="#" class="back-link">
+            <span style="margin-right: 8px;">←</span>
+            Back
+        </a>
+        <a href="#" class="support-link">
+            Need Support?
+        </a>
+    </div>
+</body>
+</html>

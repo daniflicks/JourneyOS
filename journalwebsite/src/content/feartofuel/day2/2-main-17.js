@@ -4,70 +4,76 @@ import React, { useState } from 'react';
 import styles from '../../../app/feartofuel/styles/fear_to_fuel.module.css';
 import { ArrowRight, HelpCircle } from 'lucide-react';
 
-export default function Day2Main17({ answers, onChange, onContinue }) {
+export default function Day2Main17({ 
+  answers, 
+  onChange, 
+  onContinue, 
+  aiResponse,
+  aiLoading,
+  aiError 
+}) {
+  const lessonsLearned = answers?.lessonsFromMostRecentMemory || '';
   const [showPrompts, setShowPrompts] = useState(false);
-  
-  // Get reflection from answers if available, otherwise empty string
-  const reflection = answers?.mostRecentFailureReflection || '';
 
+  // Use the aiResponse from pageMap (preloaded most recent failure summary)
+  const mostRecentSummary = aiResponse || '';
+  
   const handleNext = () => {
-    // Save the most recent failure reflection
-    onChange('mostRecentFailureReflection', reflection);
     onContinue();
   };
 
   return (
-      <div className={styles.mainContent}>
-        <div className={styles.reflectionSection}>
-          <h2 className={styles.subTitle}>Most Recent Failure</h2>
-      
-
-          <div>
-              <label htmlFor="mostRecentFailure" className={styles.formLabel}>
-              Let's look at your most recent career setback, what happened?
-              </label>
-            <textarea
-              id="mostRecentFailure"
-              className={styles.textInput}
-              value={reflection}
-              onChange={(e) => onChange('mostRecentFailureReflection', e.target.value)}
-              placeholder="Think about your most recent professional disappointment or setback..."
-              rows={6}
-            />
-          </div>
-        </div>
-
-        <div className={styles.helperButtons}>
-          <button
-            className={styles.textButton}
-            onClick={() => setShowPrompts(!showPrompts)}
-          >
-            <HelpCircle size={16} /> Need a prompt?
-          </button>
-        </div>
-
-        {showPrompts && (
-          <div className={`${styles.calloutBox} `} style={{ marginBottom: '20px' }}>
-            <h3 className={styles.promptsTitle}>Think about:</h3>
-            <p>
-              What was the situation or opportunity?<br/>
-              What went wrong or didn't work out?<br/>
-              How did you feel when it happened?<br/>
-              What did you learn about yourself from this experience?<br/><br/>
-              This could be anything from a job rejection to a project that failed, a promotion you didn't get, or a business idea that didn't work out.
-            </p>
-          </div>
-        )}
-
-        <div className={styles.actionButtons}>
-          <button 
-            className={`${styles.primaryButton} ${styles.withIcon}`}
-            onClick={handleNext}
-            disabled={!reflection.trim()}
-          >
-            Continue <ArrowRight size={20} />
-          </button>
-        </div>
+    <div className={styles.mainContent}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Finding the Lessons</h1>
+        <p className={styles.introductionMargin}>
+          Now let's look at these experiences through a different lens <br/> by taking each memory and finding the strength and wisdom you gained.
+        </p>
       </div>
+
+      <div className={styles.formSection}>
+        <label htmlFor="lessonsLearned" className={styles.formLabel}>
+          Finally, what did you learn from {mostRecentSummary || 'your most recent experience'}?
+        </label>
+        <textarea
+          id="lessonsLearned"
+          className={styles.textInput}
+          value={lessonsLearned}
+          onChange={(e) => onChange('lessonsFromMostRecentMemory', e.target.value)}
+          placeholder="Think about the strength, resilience, or wisdom you gained from this experience. What did it teach you about yourself, others, or life?"
+          rows={6}
+        />
+      </div>
+
+      <div className={styles.helperButtons}>
+        <button
+          className={styles.textButton}
+          onClick={() => setShowPrompts(!showPrompts)}
+        >
+          <HelpCircle size={16} /> Need a prompt?
+        </button>
+      </div>
+
+      {showPrompts && (
+        <div className={`${styles.calloutBox} `} style={{ marginBottom: '20px' }}>
+          <h3 className={styles.promptsTitle}>Think beyond just "I'm not as good as I thought." What practical skills, awareness, or resilience did you develop from this? For example:</h3>
+          <p>
+            How to handle difficult client feedback<br/>
+            The importance of setting clear expectations<br/>
+            That you could survive professional disappointment
+          </p>
+        </div>
+      )}
+
+      <div className={styles.actionButtons}>
+        <button 
+          className={`${styles.primaryButton} ${styles.withIcon}`}
+          onClick={handleNext}
+          disabled={!lessonsLearned.trim()}
+        >
+          Continue <ArrowRight size={20} />
+        </button>
+      </div>
+    </div>
   );
 } 

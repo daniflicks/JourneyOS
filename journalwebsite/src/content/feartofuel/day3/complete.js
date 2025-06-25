@@ -46,9 +46,9 @@ export default function Day3Complete() {
             </svg>
           </div>
           
-          <h1 className={styles.titleBloom}>Day 2 Complete!</h1>
+          <h1 className={styles.titleBloom}>Day {dayNum} Complete!</h1>
           <p className={styles.subtitleBloom}>
-            You&rsquo;ve discovered the wisdom hidden within your experiences.
+            You&rsquo;ve learned to separate reality from the stories your mind creates.
           </p>
         </div>
       </div>
@@ -64,35 +64,35 @@ export default function Day3Complete() {
             <div className={styles.achievementCheckWarm}>
               <Check size={12} strokeWidth={3} />
             </div>
-            <span className={styles.achievementText}>Explored your failure history and patterns</span>
+            <span className={styles.achievementText}>Identified your catastrophizing patterns</span>
           </div>
           
           <div className={styles.achievementItem}>
             <div className={styles.achievementCheckWarm}>
               <Check size={12} strokeWidth={3} />
             </div>
-            <span className={styles.achievementText}>Transformed three key experiences into wisdom</span>
+            <span className={styles.achievementText}>Practiced reality checking techniques</span>
           </div>
           
           <div className={styles.achievementItem}>
             <div className={styles.achievementCheckWarm}>
               <Check size={12} strokeWidth={3} />
             </div>
-            <span className={styles.achievementText}>Received comprehensive pattern analysis</span>
+            <span className={styles.achievementText}>Created your anti-catastrophizing toolkit</span>
           </div>
           
           <div className={styles.achievementItem}>
             <div className={styles.achievementCheckWarm}>
               <Check size={12} strokeWidth={3} />
             </div>
-            <span className={styles.achievementText}>Integrated your wisdom foundation</span>
+            <span className={styles.achievementText}>Connected Day 1 patterns with survival insights</span>
           </div>
           
           <div className={styles.achievementItem}>
             <div className={styles.achievementCheckWarm}>
               <Check size={12} strokeWidth={3} />
             </div>
-            <span className={styles.achievementText}>Developed a new perspective on failure</span>
+            <span className={styles.achievementText}>Developed awareness of facts vs. mental additions</span>
           </div>
         </div>
 
@@ -100,16 +100,16 @@ export default function Day3Complete() {
         <div className={styles.quoteCardWarm}>
           <p className={styles.quoteLabelWarm}>Remember</p>
           <p className={styles.quoteTextWarm}>
-            You&apos;ve shown incredible courage in excavating the roots of your fears and transforming them into wisdom. Each experience you&apos;ve examined today has become a building block for your future resilience and growth.
+          Now you know the game: your mind takes what happened, makes it worse, then projects it forward. But you're not playing anymore. You've seen behind the curtain. You've survived 100% of your worst days, and you're stronger than any story your brain can create.
           </p>
         </div>
 
         {/* Tomorrow's Preview - Soft Shadow Design */}
         <div className={styles.previewCardWarm}>
           <p className={styles.previewLabelWarm}>Tomorrow's Preview</p>
-          <h2 className={styles.previewTitleWarm}>Day 3: Fear Reframing</h2>
+          <h2 className={styles.previewTitleWarm}>Day {nextDay}: Inner Critic Study</h2>
           <p className={styles.previewDescriptionWarm}>
-          Tomorrow we'll compare these old stories about failure with reality, starting to separate fact from fear.
+          Tomorrow we'll listen closely to your inner critic and learn to distinguish its voice from reality.
           </p>
         </div>
 
@@ -144,7 +144,7 @@ export default function Day3Complete() {
             className={styles.primaryButtonWarm}
             onClick={() => router.push(`/feartofuel/${nextDay}/${nextFirstPage}`)}
           >
-            Start Day 3 Now →
+            Start Day {nextDay} Now →
           </button>
           
           <button className={styles.customTimeWarm}>

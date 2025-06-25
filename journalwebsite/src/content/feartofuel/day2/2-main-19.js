@@ -1,88 +1,65 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../../../app/feartofuel/styles/fear_to_fuel.module.css';
-import { ArrowRight, Plus, X, HelpCircle } from 'lucide-react';
+import { ArrowRight, HelpCircle } from 'lucide-react';
+import { SECTION_TYPES } from '../../../constants/journeyConstants';
 
-export default function Day2Main19({ answers, onChange, onContinue }) {
+export default function Day2Main17({ 
+  answers, 
+  onChange, 
+  onContinue, 
+  aiResponse,
+  aiLoading,
+  aiError 
+}) {
+  const lessonsLearned = answers?.lessonsFromMostRecentMemory || '';
+  const [mostRecentSummary, setMostRecentSummary] = useState('');
   const [showPrompts, setShowPrompts] = useState(false);
-  
-  // Get additional failures from answers, default to empty array for optional section
-  const failures = (answers.additionalFailures && answers.additionalFailures.length > 0)
-    ? answers.additionalFailures
-    : [''];
 
-  const handleFailureChange = useCallback((index, value) => {
-    const newFailures = [...failures];
-    newFailures[index] = value;
-    onChange('additionalFailures', newFailures);
-  }, [failures, onChange]);
-
-  const addNewFailure = useCallback(() => {
-    onChange('additionalFailures', [...failures, '']);
-  }, [failures, onChange]);
-
-  const removeFailure = useCallback((index) => {
-    const newFailures = failures.filter((_, i) => i !== index);
-    onChange('additionalFailures', newFailures.length ? newFailures : ['']);
-  }, [failures, onChange]);
-
-  const handleKeyDown = useCallback((e, index) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      if (failures[index].trim()) {
-        addNewFailure();
-        setTimeout(() => {
-          const inputs = document.querySelectorAll(`.${styles.itemInput}`);
-          if (inputs[inputs.length - 1]) inputs[inputs.length - 1].focus();
-        }, 0);
+  // Get preloaded most recent failure summary
+  useEffect(() => {
+    const mostRecentFailureStory = answers?.mostRecentFailureReflection || '';
+    
+    if (mostRecentFailureStory) {
+      const cacheKey = `claude-2-${SECTION_TYPES.MAIN_EXERCISE}-11-${encodeURIComponent(mostRecentFailureStory)}`;
+      
+      const cached = localStorage.getItem(cacheKey);
+      
+      if (cached) {
+        setMostRecentSummary(cached);
       }
     }
-  }, [failures, addNewFailure]);
-
-  const handleNext = useCallback(() => {
+  }, [answers?.mostRecentFailureReflection]);
+  
+  const handleNext = () => {
     onContinue();
-  }, [onContinue]);
+  };
 
   return (
     <div className={styles.mainContent}>
-      <div className={styles.reflectionSection}>
-        <h2 className={styles.subTitle}>Do you have any other significant failures or experiences that affected you?</h2>
-        <p className={styles.introduction}>
-          Think of any other professional setbacks, rejections, or experiences that shaped how you view risk and failure. This section is optional.
+      <div className={styles.header}>
+        <h1 className={styles.title}>Finding the Lessons</h1>
+        <p className={styles.introductionMargin}>
+          Now let's look at these experiences through a different lens <br/> by taking each memory and finding the strength and wisdom you gained.
         </p>
       </div>
 
-      <div className={styles.fearList}>
-        {failures.map((failure, index) => (
-          <div key={index} className={styles.fearInput}>
-            <div className={styles.inputWithDelete}>
-              <input
-                type="text"
-                value={failure}
-                onChange={(e) => handleFailureChange(index, e.target.value)}
-                onKeyDown={(e) => handleKeyDown(e, index)}
-                placeholder="Describe another significant experience..."
-                className={styles.itemInput}
-              />
-              {failures.length > 1 && (
-                <button
-                  onClick={() => removeFailure(index)}
-                  className={styles.deleteButton}
-                  aria-label="Remove experience"
-                >
-                  <X size={20} />
-                </button>
-              )}
-            </div>
-          </div>
-        ))}
+      <div className={styles.formSection}>
+        <label htmlFor="lessonsLearned" className={styles.formLabel}>
+          Finally, what did you learn from {mostRecentSummary || 'your most recent experience'}?
+        </label>
+        <textarea
+          id="lessonsLearned"
+          className={styles.textInput}
+          value={lessonsLearned}
+          onChange={(e) => onChange('lessonsFromMostRecentMemory', e.target.value)}
+          placeholder="Think about the strength, resilience, or wisdom you gained from this experience. What did it teach you about yourself, others, or life?"
+          rows={6}
+        />
       </div>
 
       <div className={styles.helperButtons}>
-        <button onClick={addNewFailure} className={styles.textButton}>
-          <Plus size={16} /> Add another experience
-        </button>
         <button
           className={styles.textButton}
           onClick={() => setShowPrompts(!showPrompts)}
@@ -93,24 +70,22 @@ export default function Day2Main19({ answers, onChange, onContinue }) {
 
       {showPrompts && (
         <div className={`${styles.calloutBox} `} style={{ marginBottom: '20px' }}>
-          <h3 className={styles.promptsTitle}>Consider:</h3>
+          <h3 className={styles.promptsTitle}>Think beyond just "I'm not as good as I thought." What practical skills, awareness, or resilience did you develop from this? For example:</h3>
           <p>
-            Times you were passed over for opportunities<br/>
-            Projects that didn't work out as planned<br/>
-            Moments when you felt like you weren't good enough<br/>
-            Experiences that made you question your abilities<br/>
-            Any professional disappointments that still affect you<br/><br/>
-            Include as many or as few as feel relevant to you.
+            How to handle difficult client feedback<br/>
+            The importance of setting clear expectations<br/>
+            That you could survive professional disappointment
           </p>
         </div>
       )}
 
       <div className={styles.actionButtons}>
-        <button
+        <button 
           className={`${styles.primaryButton} ${styles.withIcon}`}
           onClick={handleNext}
+          disabled={!lessonsLearned.trim()}
         >
-          Continue to Analysis <ArrowRight size={20} />
+          Continue <ArrowRight size={20} />
         </button>
       </div>
     </div>

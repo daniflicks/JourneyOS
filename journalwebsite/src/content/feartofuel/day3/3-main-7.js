@@ -1,164 +1,130 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { ArrowRight, MessageSquare, HelpCircle } from 'lucide-react';
+import React, { useState, useCallback } from 'react';
 import styles from '../../../app/feartofuel/styles/fear_to_fuel.module.css';
+import { ArrowRight, Plus, X } from 'lucide-react';
 
-// Component for guided reflection on Day 3 - What Was at Stake
-export default function Day3Main7({
-  answers,
-  onChange,
-  onContinue,
-  aiResponse,
-  aiLoading,
-  aiError
-}) {
-  const [showPrompts, setShowPrompts] = useState(false);
-  const [showAIResponse, setShowAIResponse] = useState(false);
+export default function Day3Main8({ answers, onChange, onContinue }) {
+  // Initialize as array of statements
+  const statements = (() => {
+    if (!answers.antiCatastrophe) return [''];
+    if (Array.isArray(answers.antiCatastrophe)) return answers.antiCatastrophe;
+    // If it's a string (from old format), convert to array
+    return [answers.antiCatastrophe];
+  })();
 
-  // Local buffer for user input, separate from committed answer
-  const [localReflection, setLocalReflection] = useState(
-    answers?.day3WhatWasAtStakeReflection || ''
-  );
+  const handleStatementChange = useCallback((index, value) => {
+    const newStatements = [...statements];
+    newStatements[index] = value;
+    onChange('antiCatastrophe', newStatements);
+  }, [statements, onChange]);
 
-  // Show existing AI response on mount or when aiResponse changes
-  useEffect(() => {
-    if (aiResponse) {
-      setShowAIResponse(true);
+  const addNewStatement = useCallback(() => {
+    // Only add if the last statement has content
+    const lastStatement = statements[statements.length - 1];
+    if (lastStatement && lastStatement.trim()) {
+      onChange('antiCatastrophe', [...statements, '']);
     }
-  }, [aiResponse]);
+  }, [statements, onChange]);
 
-  // Sync local buffer if external answers prop resets (but only before first AI shows)
-  useEffect(() => {
-    if (
-      answers?.day3WhatWasAtStakeReflection !== undefined &&
-      !showAIResponse
-    ) {
-      setLocalReflection(answers.day3WhatWasAtStakeReflection);
+  const removeStatement = useCallback((index) => {
+    const newStatements = statements.filter((_, i) => i !== index);
+    onChange('antiCatastrophe', newStatements.length ? newStatements : ['']);
+  }, [statements, onChange]);
+
+  const handleKeyDown = useCallback((e, index) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (statements[index].trim()) {
+        addNewStatement();
+        setTimeout(() => {
+          const textareas = document.querySelectorAll('textarea[id^="antiCatastrophe"]');
+          if (textareas[textareas.length - 1]) textareas[textareas.length - 1].focus();
+        }, 0);
+      }
     }
-  }, [answers?.day3WhatWasAtStakeReflection, showAIResponse]);
+  }, [statements, addNewStatement]);
 
-  // Track whether user has unsaved edits
-  const committed = answers?.day3WhatWasAtStakeReflection || '';
-  const hasUnsavedChanges = localReflection !== committed;
-
-  const isUpdate = Boolean(aiResponse);
-  const buttonLabel = isUpdate ? "Update Coco's Insight" : "Get Coco's Insight";
-
-  const handleGetInsight = () => {
-    if (!localReflection.trim() || aiLoading) return;
-    // Commit the final reflection and trigger AI
-    onChange('day3WhatWasAtStakeReflection', localReflection);
-    setShowAIResponse(true);
-  };
-
-  const handleContinue = () => {
+  const handleNext = useCallback(() => {
+    onChange('antiCatastrophe', statements);
     onContinue();
-  };
+  }, [statements, onChange, onContinue]);
 
   return (
     <div className={styles.mainContent}>
-      <div className={styles.reflectionSection}>
-        <h2 className={styles.subTitle}>What Was at Stake</h2>
+      <h1 className={styles.title} style={{ marginBottom: '40px' }}>
+        Your Anti-Catastrophizing Tool
+      </h1>
 
-        <div>
-          <label htmlFor="whatWasAtStake" className={styles.formLabel}>
-            What was at stake for you when you made that decision?
-          </label>
+      <label htmlFor="antiCatastrophe" className={styles.formLabel} style={{ marginBottom: '30px' }}>
+        Complete this statement:
+        </label>
 
-          <textarea
-            id="whatWasAtStake"
-            className={styles.textInput}
-            style={{
-              marginBottom: (showAIResponse && !hasUnsavedChanges) ? '0px' : '24px'
-            }}
-            value={localReflection}
-            onChange={e => setLocalReflection(e.target.value)}
-            placeholder="Think about what you hoped to gain or were afraid to lose..."
-            rows={6}
-            disabled={aiLoading}
-          />
+      <h2 className={styles.formLablel}>
+        "Even if _________ happens, I will _________"
+      </h2>
+
+      <div className={styles.formSection}>
+        <label htmlFor="antiCatastrophe" className={styles.formLabel} style={{ marginTop: '-.5rem', marginBottom: '-1rem' }} >
+        Now it’s your turn:
+        </label>
+        <div className={styles.fearList} style={{ gap: '0rem' }}>
+          {statements.map((statement, index) => (
+            <div key={index} className={styles.fearInput}>
+              <div className={styles.inputWithDelete}>
+                <textarea
+                  id={`antiCatastrophe-${index}`}
+                  className={styles.textInput}
+                  value={statement}
+                  onChange={(e) => handleStatementChange(index, e.target.value)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                  placeholder='Example: "Even if my project fails, I will learn valuable lessons and try again."'
+                  style={{ minHeight: '60px', resize: 'vertical' }}
+                />
+                {statements.length > 1 && (
+                  <button
+                    onClick={() => removeStatement(index)}
+                    className={styles.deleteButton}
+                    aria-label="Remove statement"
+                  >
+                    <X size={20} />
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Prompt button & callout: only when no AI shown yet, or when editing */}
-      {(!showAIResponse || hasUnsavedChanges) && (
-        <>
-          <div className={styles.helperButtons}>
-            <button
-              type="button"
-              className={styles.textButton}
-              onClick={() => setShowPrompts(prev => !prev)}
-            >
-              <HelpCircle size={16} /> Need a prompt?
-            </button>
-          </div>
+      <div className={styles.helperButtons} style={{ marginTop: '-2rem' }}>
+        <button 
+          onClick={addNewStatement} 
+          className={styles.textButton}
+          disabled={!statements[statements.length - 1]?.trim()}
+          style={{
+            opacity: !statements[statements.length - 1]?.trim() ? 0.5 : 1,
+            cursor: !statements[statements.length - 1]?.trim() ? 'not-allowed' : 'pointer'
+          }}
+        >
+          <Plus size={16} /> Add another statement
+        </button>
+      </div>
 
-          {showPrompts && (
-            <div className={styles.calloutBox} style={{ marginBottom: '20px' }}>
-              <h3 className={styles.promptsTitle}>Think about:</h3>
-              <p>
-                What were you hoping to prove or achieve?<br/>
-                What would success have meant to you personally?<br/>
-                What were you afraid of losing if you didn't try?<br/>
-                How did this connect to your deeper values or dreams?<br/><br/>
-                Consider both the practical stakes (money, career) and emotional ones (identity, belonging, self-worth).
-              </p>
-            </div>
-          )}
-        </>
-      )}
+      <div style={{ marginBottom: '40px' }}>
+        <p className={styles.formLabel} style={{ fontStyle: 'italic' }}>
+          Screenshot or write this down. You'll need it when fear visits.
+        </p>
+      </div>
 
-      {/* Primary button: only when not loading, and either before AI or after unsaved edits */}
-      {!aiLoading && (!showAIResponse || hasUnsavedChanges) && (
-        <div className={styles.actionButtons}>
-          <button
-            type="button"
-            onClick={handleGetInsight}
-            disabled={!localReflection.trim()}
-            className={`${styles.primaryButton} ${styles.withIcon}`}
-          >
-            {buttonLabel} <ArrowRight size={20} />
-          </button>
-        </div>
-      )}
-
-      {/* AI Response Section */}
-      {showAIResponse && (
-       <div id="ai-response" style={{ marginTop: (!showAIResponse || hasUnsavedChanges) ? '40px' : '20px' }}>
-          {aiLoading && (
-            <div className={styles.aiLoading}>
-              <span>Coco is reflecting on your response</span>
-              <div className={styles.loadingDots}>
-                <div className={styles.loadingDot}></div>
-                <div className={styles.loadingDot}></div>
-                <div className={styles.loadingDot}></div>
-              </div>
-            </div>
-          )}
-
-          {aiError && <p className="text-red-500 mt-4">{aiError}</p>}
-
-          {!aiLoading && !aiError && aiResponse && (
-            <>
-              <div className={styles.calloutBox} style={{
-              marginBottom: '24px'}}>
-                <p className="whitespace-pre-wrap">{aiResponse}</p>
-              </div>
-
-              <div className={styles.actionButtons}>
-                <button
-                  type="button"
-                  onClick={handleContinue}
-                  className={`${hasUnsavedChanges ? styles.secondaryButton : styles.primaryButton} ${styles.withIcon}`}
-                >
-                  Continue to Next Question <ArrowRight size={20} />
-                </button>
-              </div>
-            </>
-          )}
-        </div>
-      )}
+      <div className={styles.actionButtons}>
+        <button 
+          className={styles.primaryButton} 
+          onClick={handleNext}
+          disabled={!statements.some(s => s.trim())}
+        >
+          Continue <ArrowRight size={20} />
+        </button>
+      </div>
     </div>
   );
 } 

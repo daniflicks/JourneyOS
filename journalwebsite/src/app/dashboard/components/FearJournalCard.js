@@ -42,8 +42,8 @@ export default function FearJournalCard({ hydrated = false }) {
 
   // Find the current day's task description
   const getCurrentDayDescription = () => {
-    for (const module of programModules) {
-      const task = module.tasks.find(task => task.day === currentDay);
+    for (const programModule of programModules) {
+      const task = programModule.tasks.find(task => task.day === currentDay);
       if (task) {
         return task.description;
       }

@@ -8,30 +8,30 @@ export default function Day2Main9({ answers, onChange, onContinue }) {
   const [showPrompts, setShowPrompts] = useState(false);
   
   // Get reflection from answers if available, otherwise empty string
-  const reflection = answers?.selfDecisionReflection || '';
+  const reflection = answers?.whatWasAtStakeReflection || '';
 
   const handleNext = () => {
-    // Save the self decision reflection
-    onChange('selfDecisionReflection', reflection);
+    // Save the what was at stake reflection
+    onChange('whatWasAtStakeReflection', reflection);
     onContinue();
   };
 
   return (
       <div className={styles.mainContent}>
         <div className={styles.reflectionSection}>
-          <h2 className={styles.subTitle}>Internal Narrative</h2>
+          <h2 className={styles.subTitle}>What Was at Stake</h2>
       
 
           <div>
-              <label htmlFor="selfDecision" className={styles.formLabel}>
-              What did you decide about yourself after this happened?
+              <label htmlFor="whatWasAtStake" className={styles.formLabel}>
+              What was at stake for you when you made that decision?
               </label>
             <textarea
-              id="selfDecision"
+              id="whatWasAtStake"
               className={styles.textInput}
               value={reflection}
-              onChange={(e) => onChange('selfDecisionReflection', e.target.value)}
-              placeholder="What conclusions did you draw about yourself, your abilities, or your worth..."
+              onChange={(e) => onChange('whatWasAtStakeReflection', e.target.value)}
+              placeholder="Think about what you hoped to gain or were afraid to lose..."
               rows={6}
             />
           </div>
@@ -50,11 +50,11 @@ export default function Day2Main9({ answers, onChange, onContinue }) {
           <div className={`${styles.calloutBox} `} style={{ marginBottom: '20px' }}>
             <h3 className={styles.promptsTitle}>Think about:</h3>
             <p>
-              What did you tell yourself about your abilities?<br/>
-              Did you decide you weren't capable of certain things?<br/>
-              What beliefs about yourself did this create or reinforce?<br/>
-              How did this change how you saw your potential?<br/><br/>
-              Focus on the story you told yourself about what this failure meant about you as a person.
+              What were you hoping to prove or achieve?<br/>
+              What would success have meant to you personally?<br/>
+              What were you afraid of losing if you didn't try?<br/>
+              How did this connect to your deeper values or dreams?<br/><br/>
+              Consider both the practical stakes (money, career) and emotional ones (identity, belonging, self-worth).
             </p>
           </div>
         )}

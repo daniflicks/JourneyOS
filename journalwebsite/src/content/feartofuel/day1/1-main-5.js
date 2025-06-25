@@ -1,121 +1,177 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styles from '../../../app/feartofuel/styles/fear_to_fuel.module.css';
-import { ArrowRight, Plus, X, HelpCircle } from 'lucide-react';
+import {
+  ArrowRight,
+  Star,
+  Clock,
+  Heart,
+  Coins,
+  User,
+  Eye,
+  Loader2,
+  MessageSquare,
+} from 'lucide-react';
 
-export default function Day1Main5({ answers, onChange, onContinue }) {
-  const [showPrompts, setShowPrompts] = useState(false);
-  // now using answers.fearDump
-  const fears = (answers.fearDump && answers.fearDump.length > 0)
-    ? answers.fearDump
-    : [''];
 
-  const handleFearChange = useCallback((index, value) => {
-    const newFears = [...fears];
-    newFears[index] = value;
-    onChange('fearDump', newFears);            // ← write to fearDump
-  }, [fears, onChange]);
+export default function Day1Main5({
+  answers,
+  onContinue,
+  aiResponse,
+  aiLoading,
+  aiError,
+}) {
+  const [showAnalysis, setShowAnalysis] = useState(false);
+  const [categories, setCategories] = useState(null);
+  const [analysisText, setAnalysisText] = useState('');
 
-  const addNewFear = useCallback(() => {
-    onChange('fearDump', [...fears, '']);       // ← fix: use key, value pattern
-  }, [fears, onChange]);
+  // Parse AI response into categories & analysis text whenever response changes
+  useEffect(() => {
+    if (!aiResponse) return;
 
-  const removeFear = useCallback((index) => {
-    const newFears = fears.filter((_, i) => i !== index);
-    onChange('fearDump', newFears.length ? newFears : ['']);  // ← fix: use key, value pattern
-  }, [fears, onChange]);
+    const text = aiResponse.trim();
+    const fenceRegex = /^```(?:json)?\s*([\s\S]*?)```/i;
+    let jsonString = '';
+    let remainder = text;
+    const fenceMatch = fenceRegex.exec(text);
 
-  const handleKeyDown = useCallback((e, index) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      if (fears[index].trim()) {
-        addNewFear();
-        setTimeout(() => {
-          const inputs = document.querySelectorAll(`.${styles.textInput}`);
-          if (inputs[inputs.length - 1]) inputs[inputs.length - 1].focus();
-        }, 0);
+    if (fenceMatch) {
+      jsonString = fenceMatch[1].trim();
+      remainder = text.slice(fenceMatch[0].length).trim();
+    } else {
+      const analysisStart = text.indexOf('Based on the fears');
+      if (analysisStart !== -1) {
+        jsonString = text.slice(0, analysisStart).trim();
+        remainder = text.slice(analysisStart).trim();
+      } else {
+        jsonString = text;
+        remainder = '';
       }
     }
-  }, [fears, addNewFear]);
 
-  const handleNext = useCallback(() => {
-    onContinue();
-  }, [onContinue]);
+    let parsed = null;
+    try {
+      parsed = JSON.parse(jsonString);
+    } catch (err) {
+      console.error('Failed to parse AI JSON:', err, jsonString);
+    }
 
-  const prompts = [
-    "I'm afraid I won't be able to…",
-    "I worry that others will…",
-    "I fear I might not have…",
-    "What if I can't…",
-    "I'm concerned about my ability to…"
+    setCategories(parsed);
+    setAnalysisText(remainder);
+  }, [aiResponse]);
+
+  const handleNext = useCallback(() => onContinue(), [onContinue]);
+
+  // Loading state
+  if (aiLoading) {
+    return (
+      <div className={styles.mainContent}>
+        <div className={styles.flowerContainer}>
+          <div className={styles.petal} style={{ '--rotation': '0deg' }}></div>
+          <div className={styles.petal} style={{ '--rotation': '45deg' }}></div>
+          <div className={styles.petal} style={{ '--rotation': '90deg' }}></div>
+          <div className={styles.petal} style={{ '--rotation': '135deg' }}></div>
+          <div className={styles.petal} style={{ '--rotation': '180deg' }}></div>
+          <div className={styles.petal} style={{ '--rotation': '225deg' }}></div>
+          <div className={styles.petal} style={{ '--rotation': '270deg' }}></div>
+          <div className={styles.petal} style={{ '--rotation': '315deg' }}></div>
+        </div>
+        <h2 className={styles.title}>Analyzing Your Fears</h2>
+        <p className={styles.introduction}>
+          I'm processing your fears to create a meaningful fear map. This will help us understand patterns in your thinking.
+        </p>
+      </div>
+    );
+  }
+
+  // Error state
+  if (aiError) {
+    return (
+      <div className={styles.mainContent}>
+        <p className="text-red-500 mt-4">{aiError}</p>
+      </div>
+    );
+  }
+
+  // Category definitions
+  const categoryInfo = [
+    { key: 'Core Fears', icon: Star, title: 'Core Fears (The "I AM" Fears)' },
+    { key: 'Project-Specific Fears', icon: Clock, title: 'Project-Specific Fears' },
+    { key: 'External Fears', icon: Heart, title: 'External Fears' },
+    { key: 'Resource Fears', icon: Coins, title: 'Resource Fears' },
+    { key: 'Identity Fears', icon: User, title: 'Identity Fears' },
   ];
 
   return (
     <div className={styles.mainContent}>
       <div className={styles.header}>
-        <h1 className={styles.title}>Fear Dump</h1>
+        <h1 className={styles.title}>Your Fear Map</h1>
         <p className={styles.introduction}>
-          List every fear that begins with "I'm afraid that…". No judging—just collect them.
+          I've organized your fears into categories to help identify patterns.
         </p>
       </div>
 
-      <div className={styles.fearList}>
-        {fears.map((fear, index) => (
-          <div key={index} className={styles.fearInput}>
-            <div className={styles.inputWithDelete}>
-              <input
-                type="text"
-                value={fear}
-                onChange={(e) => handleFearChange(index, e.target.value)}
-                onKeyDown={(e) => handleKeyDown(e, index)}
-                placeholder="I'm afraid that…"
-                className={styles.itemInput}
-              />
-              {fears.length > 1 && (
-                <button
-                  onClick={() => removeFear(index)}
-                  className={styles.deleteButton}
-                  aria-label="Remove fear"
-                >
-                  <X size={20} />
-                </button>
+      {/* Categories grid */}
+      <div className={styles.fearCategories}>
+        {categoryInfo.map(({ key, icon: Icon, title }) => (
+          <div key={key} className={styles.fearCard}>
+            <div className={styles.fearCardHeader}>
+              <Icon className={styles.fearCardIcon} />
+              <h2 className={styles.fearCardTitle}>{title}</h2>
+            </div>
+            <div className={styles.fearExamples}>
+              {categories && Array.isArray(categories[key]) && categories[key].length > 0 ? (
+                categories[key].map((fear, i) => <p key={i}>"{fear}"</p>)
+              ) : (
+                <p>No fears categorized here.</p>
               )}
             </div>
           </div>
         ))}
       </div>
 
-      <div className={styles.helperButtons}>
-        <button onClick={addNewFear} className={styles.textButton}>
-          <Plus size={16} /> Add another fear
-        </button>
-        <button
-          className={styles.textButton}
-          onClick={() => setShowPrompts(!showPrompts)}
-        >
-          <HelpCircle size={16} /> Need a prompt?
-        </button>
-      </div>
-
-      {showPrompts && (
-        <div className={`${styles.calloutBox} `} style={{ marginBottom: '20px' }}>
-          <h3 className={styles.promptsTitle}>Try starting with:</h3>
-          <ul className={styles.formLabelList}>
-            {prompts.map((p, i) => <li key={i}>{p}</li>)}
-          </ul>
+      {/* Reveal Pattern Analysis */}
+      {!showAnalysis && (
+        <div className={styles.revealButtonContainer}>
+          <button
+            className={`${styles.primaryButton} ${styles.withIcon}`}
+            onClick={() => setShowAnalysis(true)}
+          >
+            Reveal Pattern Analysis <Eye size={20} />
+          </button>
         </div>
       )}
 
-      <div className={styles.actionButtons}>
-        <button
-          className={`${styles.primaryButton} ${styles.withIcon}`}
-          onClick={handleNext}
-          disabled={!fears.some(f => f.trim())}
-        >
-          Continue to Categorization <ArrowRight size={20} />
-        </button>
-      </div>
+      {/* Analysis & Next */}
+      {showAnalysis && (
+        <>
+          <div className={`${styles.analysisContainer} ${styles.visible}`}>
+            <div className={styles.aiAnalysisCard}>
+              <div className={styles.aiHeader}>
+                <div className={styles.aiIconContainer}>
+                  <MessageSquare className={styles.aiIcon} />
+                </div>
+                <div className={styles.aiInfo}>
+                  <h2 className={styles.aiName}>AI Pattern Analysis</h2>
+                  <p className={styles.aiRole}>From Coco, your guide</p>
+                </div>
+              </div>
+              <div className={styles.aiMessage}>
+                <div style={{ whiteSpace: 'pre-line' }}>{analysisText}</div>
+              </div>
+            </div>
+          </div>
+          <div className={styles.actionButtons}>
+            <button
+              className={`${styles.primaryButton} ${styles.withIcon}`}
+              onClick={handleNext}
+            >
+              Continue to Final Reflection <ArrowRight size={20} />
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }

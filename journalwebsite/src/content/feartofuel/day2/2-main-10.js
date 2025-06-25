@@ -1,68 +1,73 @@
 'use client';
 
-import React, { useCallback } from 'react';
+import React, { useState } from 'react';
 import styles from '../../../app/feartofuel/styles/fear_to_fuel.module.css';
-import { ArrowRight, MessageSquare } from 'lucide-react';
+import { ArrowRight, HelpCircle } from 'lucide-react';
 
-export default function Day2Main10({
-  answers,
-  onContinue,
-  aiResponse,
-  aiLoading,
-  aiError,
-}) {
-  const selfDecisionReflection = answers.selfDecisionReflection || '';
-  const handleNext = useCallback(() => onContinue(), [onContinue]);
+export default function Day2Main10({ answers, onChange, onContinue }) {
+  const [showPrompts, setShowPrompts] = useState(false);
+  
+  // Get reflection from answers if available, otherwise empty string
+  const reflection = answers?.copingMechanismsReflection || '';
+
+  const handleNext = () => {
+    // Save the coping mechanisms reflection
+    onChange('copingMechanismsReflection', reflection);
+    onContinue();
+  };
 
   return (
-    <div className={styles.mainContent}>
-   
+      <div className={styles.mainContent}>
+        <div className={styles.reflectionSection}>
+          <h2 className={styles.subTitle}>Coping Strategies</h2>
+      
 
-      <div className={styles.calloutBox}>
-        <p className="whitespace-pre-wrap">
-          {selfDecisionReflection || 'No reflection provided.'}
-        </p>
-      </div>
-
-      {aiLoading && (
-        <div className={styles.aiLoading}>
-          <span>Coco is reflecting on your response</span>
-          <div className={styles.loadingDots}>
-            <div className={styles.loadingDot}></div>
-            <div className={styles.loadingDot}></div>
-            <div className={styles.loadingDot}></div>
+          <div>
+              <label htmlFor="copingMechanisms" className={styles.formLabel}>
+              How did you cope in the weeks or months after?
+              </label>
+            <textarea
+              id="copingMechanisms"
+              className={styles.textInput}
+              value={reflection}
+              onChange={(e) => onChange('copingMechanismsReflection', e.target.value)}
+              placeholder="Think about how you handled the aftermath of this failure..."
+              rows={6}
+            />
           </div>
         </div>
-      )}
-      {aiError && (
-        <p className="text-red-500 mt-4">{aiError}</p>
-      )}
-      {!aiLoading && !aiError && aiResponse && (
-        <div className={styles.aiAnalysisCard}>
-          <div className={styles.aiHeader}>
-            <div className={styles.aiIconContainer}>
-              <MessageSquare className={styles.aiIcon} />
-            </div>
-            <div className={styles.aiInfo}>
-              <h2 className={styles.aiName}>From Coco, your guide</h2>
-              <p className={styles.aiRole}>AI support companion</p>
-            </div>
-          </div>
-          <div className={styles.aiMessage}>
-            <p className="whitespace-pre-wrap">{aiResponse}</p>
-          </div>
-        </div>
-      )}
 
-      <div className={styles.actionButtons}>
-        <button
-          className={`${styles.primaryButton} ${styles.withIcon}`}
-          onClick={handleNext}
-          disabled={aiLoading}
-        >
-          Continue to Next Question <ArrowRight size={20} />
-        </button>
+        <div className={styles.helperButtons}>
+          <button
+            className={styles.textButton}
+            onClick={() => setShowPrompts(!showPrompts)}
+          >
+            <HelpCircle size={16} /> Need a prompt?
+          </button>
+        </div>
+
+        {showPrompts && (
+          <div className={`${styles.calloutBox} `} style={{ marginBottom: '20px' }}>
+            <h3 className={styles.promptsTitle}>Think about:</h3>
+            <p>
+              Did you withdraw or reach out to others?<br/>
+              What activities or behaviors helped you feel better?<br/>
+              Did you try to learn from it or avoid thinking about it?<br/>
+              How did you rebuild your confidence?<br/><br/>
+              Include both healthy and unhealthy coping strategies you used during that time.
+            </p>
+          </div>
+        )}
+
+        <div className={styles.actionButtons}>
+          <button 
+            className={`${styles.primaryButton} ${styles.withIcon}`}
+            onClick={handleNext}
+            disabled={!reflection.trim()}
+          >
+            Continue <ArrowRight size={20} />
+          </button>
+        </div>
       </div>
-    </div>
   );
 } 

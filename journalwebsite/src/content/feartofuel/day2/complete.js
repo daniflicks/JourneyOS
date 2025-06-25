@@ -100,7 +100,7 @@ export default function Day2Complete() {
         <div className={styles.quoteCardWarm}>
           <p className={styles.quoteLabelWarm}>Remember</p>
           <p className={styles.quoteTextWarm}>
-            You&apos;ve shown incredible courage in excavating the roots of your fears and transforming them into wisdom. Each experience you&apos;ve examined today has become a building block for your future resilience and growth.
+          You just took back your power. Every story you reframed, every pattern you identified, every lesson you extracted - that's you reclaiming control from fear. The experiences that once held you back are now the foundation of your strength.
           </p>
         </div>
 

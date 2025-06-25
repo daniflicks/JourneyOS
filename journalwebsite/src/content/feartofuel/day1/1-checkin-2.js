@@ -5,11 +5,9 @@ import styles      from '../../../app/feartofuel/styles/fear_to_fuel.module.css'
 
 // Static content data for Day 1 check‑in
 const checkInItems = [
-  { id: 'resistance1', label: 'Finding reasons to delay starting this exercise' },
-  { id: 'resistance2', label: 'Feeling like you should be "beyond" fear' },
-  { id: 'resistance3', label: 'Wanting to skip to "practical" steps' },
-  { id: 'resistance4', label: 'Thinking about other tasks you could do instead' },
-  { id: 'resistance5', label: 'Feeling physical tension when thinking about your project' },
+  { id: 'resistance1', label: 'Finding reasons to delay starting' },
+  { id: 'resistance2', label: 'Thinking about other tasks instead' },
+  { id: 'resistance3', label: 'Feeling physical tension about this project' },
 ];
 
 /**
