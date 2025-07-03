@@ -604,8 +604,8 @@
 
 .helperButtons {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
   gap: 0.75rem;
   margin-bottom: 2rem;
 }
@@ -1787,4 +1787,96 @@
   color: #E07B67;
   min-width: 50px;
   text-align: right;
+}
+
+/* Added compact helper button for prompt section */
+.helperButton2 {
+  background: #fff;
+  border: 2px solid rgba(255, 181, 167, 0.3);
+  border-radius: 12px;
+  padding: 6px 12px; /* compact padding */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px; /* space between icon and text */
+  color: var(--primary-coral);
+  font-size: 14px;
+  font-weight: 400;
+  width: auto;  /* shrink to content */
+  margin: 0;    /* no auto margin */
+}
+
+.helperButton2:hover {
+  border-color: #FFB5A7;
+  background: rgba(255, 245, 243, 0.5);
+}
+
+/* Selection Card Styles for Day 5 Belief Selection */
+.selectionCard {
+  background: #FFFBFA;
+  border: 2px solid #FFE8E3;
+  border-radius: 16px;
+  padding: 24px 32px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.selectionCard:hover {
+  transform: translateX(8px);
+  background: #FFF5F3;
+  border-color: #FFDCD5;
+  box-shadow: 0 6px 20px rgba(255, 181, 167, 0.25);
+}
+
+.selectionCardSelected {
+  background: linear-gradient(135deg, var(--coral-light) 0%, #FFE8E3 100%);
+  border-color: var(--primary-coral);
+  box-shadow: 0 8px 24px rgba(224, 123, 103, 0.2);
+  transform: translateX(8px);
+}
+
+.beliefList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+  margin-bottom: 32px;
+}
+
+.radioCircle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #FFD4CC;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+  transition: all 0.3s ease;
+  color: #fff;
+  font-size: 12px;
+}
+
+.radioCircleSelected {
+  border-color: var(--primary-coral);
+  background: var(--primary-coral);
+}
+
+.beliefText {
+  font-size: 17px;
+  line-height: 1.6;
+  color: #3A3A3A;
+  flex: 1;
+}
+
+/* Generic bullet list inside cards */
+.bulletList {
+  padding-left: 24px;
+  margin: 10px 0;
+  list-style-type: disc;
 } 

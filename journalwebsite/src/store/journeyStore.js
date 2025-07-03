@@ -42,6 +42,7 @@ const initialState = {
   streak: 0,
   lastCompletedDate: null,
   userMemory: '',
+  memoryRev: 0,
 };
 
 export const useJourneyStore = create(
@@ -55,7 +56,10 @@ export const useJourneyStore = create(
         setCurrentPage: (pageId) => set({ currentPage: pageId }),
 
         /** Memory Actions **/
-        updateUserMemory: (memory) => set({ userMemory: memory }),
+        updateUserMemory: (memory) => set((state) => ({
+          userMemory: memory,
+          memoryRev: (state.memoryRev || 0) + 1,
+        })),
 
         /** User Input **/
         saveUserInput: (day, section, data) =>
@@ -138,7 +142,21 @@ export const useJourneyStore = create(
           const highestCompleted = Math.max(...completed);
           return Math.min(highestCompleted + 1, TOTAL_DAYS); // Next day or cap at total days
         },
-        getResumePage: () => get().currentPage,
+        getResumePage: () => {
+          const currentPage = get().currentPage;
+          const actualCurrentDay = get().getActualCurrentDay();
+          
+          // If we have a currentPage and it belongs to the actual current day, return it
+          if (currentPage) {
+            const dayFromPageId = parseInt(currentPage.split('-')[0]);
+            if (dayFromPageId === actualCurrentDay) {
+              return currentPage;
+            }
+          }
+          
+          // Otherwise, return null so we start from the beginning of the current day
+          return null;
+        },
         isSectionComplete: (day = get().currentDay, section) =>
           !!get().completedSections[day]?.[section],
         getJourneyPercent: () => {

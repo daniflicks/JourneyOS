@@ -85,6 +85,11 @@ export default async function handler(req, res) {
       aiText = responseText.replace(/^#.*\r?\n+/, '').trim();
     }
     
+    // 🛡️ Fallback: if we still have an empty string, use fullResponse so the UI never shows blank
+    if (!aiText) {
+      aiText = fullResponse.trim();
+    }
+    
     let updatedMemory = responseParts[1]?.trim() || userMemory;
 
     return res.status(200).json({ aiText, updatedMemory });

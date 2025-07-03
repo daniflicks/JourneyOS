@@ -232,7 +232,128 @@ const PAGE_MAP = {
     },
   ],
 
-  // …repeat for days 4 through 30, each as an array of { id, ai? } objects
+  4: [
+    // Check-in
+    { id: '4-checkin-1',  section: SECTION_TYPES.CHECK_IN },
+    { id: '4-checkin-2',  section: SECTION_TYPES.CHECK_IN },
+    { id: '4-checkin-3',  section: SECTION_TYPES.CHECK_IN },
+
+    // Main exercise
+    { id: '4-main-1',      section: SECTION_TYPES.MAIN_EXERCISE },
+    {
+      id: '4-main-2',
+      section: SECTION_TYPES.MAIN_EXERCISE,
+      ai: {
+        promptIndex: 1,
+        inputKey:    'fear1',
+        feedbackKey: 'cocoHelpFeedback',
+      },
+    },
+    { id: '4-main-3',      section: SECTION_TYPES.MAIN_EXERCISE },
+    { id: '4-main-4',      section: SECTION_TYPES.MAIN_EXERCISE },
+    {
+      id: '4-main-5',
+      section: SECTION_TYPES.MAIN_EXERCISE,
+      ai: {
+        promptIndex: 3,
+        inputKey:    'hiddenPatternTrigger',
+        feedbackKey: 'hiddenPatternAnalysisFeedback',
+      },
+    },
+    { id: '4-main-6',      section: SECTION_TYPES.MAIN_EXERCISE },
+    { id: '4-main-7',      section: SECTION_TYPES.MAIN_EXERCISE },
+    { id: '4-main-8',      section: SECTION_TYPES.MAIN_EXERCISE },
+    {
+      id: '4-main-9',
+      section: SECTION_TYPES.MAIN_EXERCISE,
+      ai: {
+        promptIndex: 6,
+        inputKey:    'reframeTrigger',
+        feedbackKey: 'reframeFeedback',
+      },
+    },
+    { id: '4-reflection-1', section: SECTION_TYPES.REFLECTION },
+    {
+      id: '4-reflection-2',
+      section: SECTION_TYPES.REFLECTION,
+      ai: {
+        promptIndex: 7,
+        inputKey:    'reflectionResponse',
+        feedbackKey: 'reflectionFeedback',
+      },
+    },
+    { id: 'complete', section: SECTION_TYPES.COMPLETE, isCompletionPage: true },
+    // Add other Day 4 steps here as they are created
+  ],
+
+  5: [
+    // Check-in
+    { id: '5-checkin-1', section: SECTION_TYPES.CHECK_IN },
+    { id: '5-checkin-2', section: SECTION_TYPES.CHECK_IN },
+    { id: '5-checkin-3', section: SECTION_TYPES.CHECK_IN },
+    // Main exercise
+    {
+      id: '5-main-1',
+      section: SECTION_TYPES.MAIN_EXERCISE,
+      ai: {
+        promptIndex: 1,
+        inputKey: 'beliefAnalysisTrigger',
+        feedbackKey: 'beliefAnalysisFeedback',
+      },
+    },
+    {
+      id: '5-main-2',
+      section: SECTION_TYPES.MAIN_EXERCISE,
+      ai: {
+        promptIndex: 1,
+        inputKey: 'beliefAnalysisTrigger',
+        feedbackKey: 'beliefAnalysisFeedback',
+      },
+    },
+    {
+      id: '5-main-3',
+      section: SECTION_TYPES.MAIN_EXERCISE,
+    },
+    {
+      id: '5-main-4',
+      section: SECTION_TYPES.MAIN_EXERCISE,
+    },
+    {
+      id: '5-main-5',
+      section: SECTION_TYPES.MAIN_EXERCISE,
+    },
+    {
+      id: '5-main-6',
+      section: SECTION_TYPES.MAIN_EXERCISE,
+    },
+    {
+      id: '5-main-7',
+      section: SECTION_TYPES.MAIN_EXERCISE,
+      ai: {
+        promptIndex: 2,
+        inputKey: 'reframeTrigger',
+        feedbackKey: 'beliefReframeFeedback',
+      },
+    },
+    {
+      id: '5-main-8',
+      section: SECTION_TYPES.MAIN_EXERCISE,
+    },
+    { id: '5-reflection-1', section: SECTION_TYPES.REFLECTION },
+    {
+      id: '5-reflection-2',
+      section: SECTION_TYPES.REFLECTION,
+      ai: {
+        promptIndex: 5,
+        inputKey: 'reflectionResponse',
+        feedbackKey: 'reflectionFeedback',
+      },
+    },
+    { id: 'complete', section: SECTION_TYPES.COMPLETE, isCompletionPage: true },
+    // Continue adding Day 5 pages as they are created
+  ],
+
+  // …repeat for days 6 through 30, each as an array of { id, ai? } objects
 };
 
 export default PAGE_MAP;

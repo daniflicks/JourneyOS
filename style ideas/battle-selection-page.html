@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Battles</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #FFF5F3 0%, #FFEAEC 100%);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+            color: #3A3A3A;
+        }
+        
+        /* Progress Header */
+        .progress-header {
+            padding: 40px 40px 24px;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+        
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .progress-label {
+            font-size: 14px;
+            color: #DDB5A6;
+            transition: color 0.3s ease;
+        }
+        
+        .progress-label.active {
+            color: #E07B67;
+            font-weight: 500;
+        }
+        
+        .progress-bar-container {
+            height: 6px;
+            background: #FFF0ED;
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #E07B67 0%, #FFB5A7 100%);
+            border-radius: 3px;
+            width: 66.66%;
+            transition: width 0.5s ease;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        
+        /* White content card - the main background */
+        .content-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 48px;
+            box-shadow: 0 4px 20px rgba(224, 123, 103, 0.08);
+        }
+        
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 48px;
+            color: #2D2D2D;
+            margin-bottom: 24px;
+            line-height: 1.2;
+            text-align: center;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            color: #6B7280;
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        /* Selection Cards - warm tones only */
+        .selection-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+        
+        .selection-card {
+            background: #FFFBFA;
+            border: 2px solid #FFE8E3;
+            border-radius: 16px;
+            padding: 24px 32px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Decorative element */
+        .selection-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 181, 167, 0.15) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        
+        /* Hover state */
+        .selection-card:hover {
+            transform: translateX(8px);
+            background: #FFF5F3;
+            border-color: #FFDCD5;
+            box-shadow: 0 6px 20px rgba(255, 181, 167, 0.25);
+        }
+        
+        .selection-card:hover::after {
+            opacity: 1;
+        }
+        
+        /* Selected state - coral accent */
+        .selection-card.selected {
+            background: linear-gradient(135deg, #FFF0ED 0%, #FFE8E3 100%);
+            border-color: #E07B67;
+            box-shadow: 0 8px 24px rgba(224, 123, 103, 0.2);
+            transform: translateX(8px);
+        }
+        
+        /* Radio button indicator */
+        .radio-indicator {
+            position: absolute;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid #FFD4CC;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+        
+        .selection-card:hover .radio-indicator {
+            border-color: #FFB5A7;
+            background: #FFF5F3;
+        }
+        
+        .selection-card.selected .radio-indicator {
+            border-color: #E07B67;
+            background: #E07B67;
+        }
+        
+        .selection-card.selected .radio-indicator::after {
+            content: '✓';
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .selection-text {
+            font-size: 17px;
+            line-height: 1.6;
+            color: #3A3A3A;
+            padding-left: 40px;
+            display: block;
+        }
+        
+        .selection-card:hover .selection-text {
+            color: #2D2D2D;
+        }
+        
+        .selection-card.selected .selection-text {
+            color: #2D2D2D;
+            font-weight: 500;
+        }
+        
+        .helper-text {
+            text-align: center;
+            font-size: 16px;
+            color: #6B7280;
+            margin-bottom: 48px;
+            font-style: italic;
+        }
+        
+        /* Continue Button */
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .primary-button {
+            background: linear-gradient(135deg, #E07B67 0%, #FFB5A7 100%);
+            color: white;
+            border: none;
+            padding: 18px 48px;
+            font-size: 17px;
+            font-weight: 500;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(224, 123, 103, 0.3);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        .primary-button.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .primary-button.active:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(224, 123, 103, 0.4);
+        }
+        
+        /* Footer */
+        .footer {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 40px 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .back-link, .support-link {
+            text-decoration: none;
+            color: #A67B6B;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            transition: color 0.2s ease;
+        }
+        
+        .back-link:hover {
+            color: #E07B67;
+        }
+        
+        .support-link {
+            color: #E07B67;
+        }
+        
+        .support-link:hover {
+            color: #D56552;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .content-card {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Header -->
+    <div class="progress-header">
+        <div class="progress-labels">
+            <span class="progress-label">Power-Up</span>
+            <span class="progress-label active">Main Exercise</span>
+            <span class="progress-label">Reflection</span>
+        </div>
+        <div class="progress-bar-container">
+            <div class="progress-fill"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- White content card background -->
+        <div class="content-card">
+            <h1>Choose Your Battles</h1>
+            <p class="subtitle">Which belief feels the strongest right now?</p>
+            
+            <div class="selection-container">
+                <div class="selection-card" onclick="selectCard(this)">
+                    <div class="radio-indicator"></div>
+                    <span class="selection-text">"My worth as a parent is measured by my perfect financial provision for Alya"</span>
+                </div>
+                
+                <div class="selection-card" onclick="selectCard(this)">
+                    <div class="radio-indicator"></div>
+                    <span class="selection-text">"I must have all the answers and complete control to succeed in business"</span>
+                </div>
+                
+                <div class="selection-card" onclick="selectCard(this)">
+                    <div class="radio-indicator"></div>
+                    <span class="selection-text">"My success is only valid if it exceeds or matches others' achievements"</span>
+                </div>
+            </div>
+            
+            <p class="helper-text">This is the one we'll transform today.</p>
+            
+            <div class="button-container">
+                <button class="primary-button" id="continueBtn">
+                    Continue →
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <a href="#" class="back-link">
+            <span style="margin-right: 8px;">←</span>
+            Back
+        </a>
+        <a href="#" class="support-link">
+            Need Support?
+        </a>
+    </div>
+    
+    <script>
+        function selectCard(card) {
+            // Remove selected class from all cards
+            const allCards = document.querySelectorAll('.selection-card');
+            allCards.forEach(c => c.classList.remove('selected'));
+            
+            // Add selected class to clicked card
+            card.classList.add('selected');
+            
+            // Enable continue button
+            const continueBtn = document.getElementById('continueBtn');
+            continueBtn.classList.add('active');
+        }
+    </script>
+</body>
+</html>

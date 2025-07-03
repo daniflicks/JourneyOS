@@ -33,24 +33,24 @@ export const programModules = [
       {
         day: 2,
         title: 'Root Cause Excavation',
-        description: 'Guided meditation and journaling to uncover past experiences with failure',
+        description: 'Guided journaling to uncover past experiences with failure',
         status: 'upcoming'
       },
       {
         day: 3,
-        title: 'Fear vs Reality Check',
+        title: 'The Catastrophizing Reality Check',
         description: 'Analyze past \'failures\' and their actual outcomes',
         status: 'upcoming'
       },
       {
         day: 4,
-        title: 'Inner Critic Study',
+        title: 'The Fear Flip',
         description: 'Record your negative self-talk for a day',
         status: 'upcoming'
       },
       {
         day: 5,
-        title: 'Limiting Beliefs Inventory',
+        title: 'Your Invisible Rules',
         description: 'Identify and document self-imposed limitations',
         status: 'upcoming'
       },

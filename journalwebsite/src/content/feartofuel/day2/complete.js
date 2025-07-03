@@ -107,9 +107,9 @@ export default function Day2Complete() {
         {/* Tomorrow's Preview - Soft Shadow Design */}
         <div className={styles.previewCardWarm}>
           <p className={styles.previewLabelWarm}>Tomorrow's Preview</p>
-          <h2 className={styles.previewTitleWarm}>Day {nextDay}: Fear Reframing</h2>
+          <h2 className={styles.previewTitleWarm}>Day {nextDay}: Catastrophizing Reality Check</h2>
           <p className={styles.previewDescriptionWarm}>
-          Tomorrow we'll compare these old stories about failure with reality, starting to separate fact from fear.
+          Tomorrow you'll learn to gently separate your actual experiences from what your mind adds to the story, helping you see your true resilience.
           </p>
         </div>
 
