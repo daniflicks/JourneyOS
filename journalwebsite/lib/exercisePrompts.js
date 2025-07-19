@@ -344,11 +344,11 @@ Respond with ONE sentence in this exact format:
 
     /* 3 */ `The user's limiting belief is: {belief}
 
-Provide three possible empowered completions for the sentence below that gently flip the belief into a supportive truth. Each completion must be under 12 words.
+Provide two possible empowered completions for the sentence below that gently flip the belief into a supportive truth. Each completion must be under 12 words.
 
 "I'm allowed to ___ because ___"
 
-CRITICAL: Return ONLY the three completed sentences, each on its own line. Do NOT add any headings, numbering, or extra text.`,
+CRITICAL: Return ONLY the two completed sentences, each on its own line. Do NOT add any headings, numbering, or extra text.`,
 
     /* 4 */ `The user's limiting belief is: {belief}
 
@@ -364,6 +364,21 @@ CRITICAL: Respond with ONLY two standalone sentences. No headings, numbering, ex
     2. Note a specific strength you hear in their reflection.
     
     Keep it warm and inspiring, maximum 3 sentences, no questions.`,
+
+    /* 6 */ `The user has provided updated limiting-belief inputs after further exploration:
+
+{userText}
+
+Re-analyze ONLY these new inputs to identify their TOP 3 refined limiting beliefs.
+
+Follow ALL the same rules as the original Day 5 analysis prompt (index 1):
+• Balanced across themes (capability, failure/success, worthiness)
+• Format each belief exactly as:
+  "[Belief statement]"
+  - Spotted in: [specific phrase]
+  - Protects them from: [what they avoid]
+
+Return ONLY the 3 refined beliefs in that numbered format starting with "1." and ending after the third belief's "Protects them from" line. Do NOT reference earlier analyses or add any extra text.`,
   ],
 
   // Additional days following the 30-day structure

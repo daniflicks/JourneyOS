@@ -21,16 +21,10 @@ export default function Day5Main6({ answers, onChange, onContinue }) {
       <div className={styles.header}>
         <h1 className={styles.title}>Exception Finding</h1>
         <p className={styles.introduction} style={{ marginBottom: '32px' }}>
-          Tell me about <strong>one</strong> time this belief wasn&apos;t completely true.
+          Tell me about <strong>one</strong> time &quot;{selectedBelief}&quot; wasn&apos;t completely true.
         </p>
       </div>
 
-      {selectedBelief && (
-        <div className={styles.calloutBox} style={{ marginBottom: '24px' }}>
-          <h3 className={styles.formLabelBold}>Your belief:</h3>
-          <p>&quot;{selectedBelief}&quot;</p>
-        </div>
-      )}
 
       {/* Guidance card */}
       <div className={styles.fearCard} style={{ marginBottom: '30px' }}>

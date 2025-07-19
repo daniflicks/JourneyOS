@@ -289,27 +289,36 @@ const PAGE_MAP = {
   5: [
     // Check-in
     { id: '5-checkin-1', section: SECTION_TYPES.CHECK_IN },
-    { id: '5-checkin-2', section: SECTION_TYPES.CHECK_IN },
+    {
+      id: '5-checkin-2',
+      section: SECTION_TYPES.CHECK_IN,
+      ai: {
+        promptIndex: 1,
+        inputKey:    'beliefAnalysisTrigger',
+        feedbackKey: 'beliefAnalysisFeedback',
+      },
+    },
     { id: '5-checkin-3', section: SECTION_TYPES.CHECK_IN },
     // Main exercise
+    { id: '5-main-1', section: SECTION_TYPES.MAIN_EXERCISE },
     {
-      id: '5-main-1',
+      id: '5-main-1-explore',
       section: SECTION_TYPES.MAIN_EXERCISE,
-      ai: {
-        promptIndex: 1,
-        inputKey: 'beliefAnalysisTrigger',
-        feedbackKey: 'beliefAnalysisFeedback',
-      },
     },
     {
-      id: '5-main-2',
+      id: '5-main-1-explore-2',
+      section: SECTION_TYPES.MAIN_EXERCISE,
+    },
+    {
+      id: '5-main-1-explore-3',
       section: SECTION_TYPES.MAIN_EXERCISE,
       ai: {
-        promptIndex: 1,
-        inputKey: 'beliefAnalysisTrigger',
-        feedbackKey: 'beliefAnalysisFeedback',
+        promptIndex: 6,
+        inputKey:    'beliefExplorationCombined',
+        feedbackKey: 'refinedBeliefAnalysisFeedback',
       },
     },
+    { id: '5-main-2', section: SECTION_TYPES.MAIN_EXERCISE },
     {
       id: '5-main-3',
       section: SECTION_TYPES.MAIN_EXERCISE,

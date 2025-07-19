@@ -1,49 +1,24 @@
 'use client';
 
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styles from '../../../app/feartofuel/styles/fear_to_fuel.module.css';
 import { ArrowRight } from 'lucide-react';
 import { useJourneyStore } from '../../../store/journeyStore';
-import { SECTION_TYPES } from '../../../constants/journeyConstants';
 
 export default function Day5Main1({ answers, onChange, onContinue, aiResponse, aiLoading, aiError }) {
   const [showAnalysis, setShowAnalysis] = useState(false);
-  const userInputs  = useJourneyStore((s) => s.userInputs);
-  const userMemory  = useJourneyStore((s) => s.userMemory);
 
-  // Pull rich fields from previous days -------------------------------------------------
-  const fearDump              = userInputs[1]?.[SECTION_TYPES.MAIN_EXERCISE]?.fearDump || [];
-  const patternText           = userInputs[4]?.[SECTION_TYPES.MAIN_EXERCISE]?.hiddenPatternTrigger || '';
-  const earlyMsgs             = userInputs[2]?.[SECTION_TYPES.MAIN_EXERCISE]?.combinedEarlyMessages || '';
-  const firstFailure          = userInputs[2]?.[SECTION_TYPES.MAIN_EXERCISE]?.combinedCareerFailure || '';
-  const painfulFailure        = userInputs[2]?.[SECTION_TYPES.MAIN_EXERCISE]?.combinedMostPainfulFailure || '';
-  const recentFailure         = userInputs[2]?.[SECTION_TYPES.MAIN_EXERCISE]?.mostRecentFailureReflection || '';
-  const lessonsLearned        = userInputs[2]?.[SECTION_TYPES.MAIN_EXERCISE]?.lessonsReframingAnalysis || '';
-
-  // Aggregate into one payload for Claude ----------------------------------------------
-  useEffect(() => {
-    const sections = [
-      fearDump.length ? `Fear Dump:\n${fearDump.filter(Boolean).join('\n')}` : '',
-      patternText ? `Pattern Insight:\n${patternText}` : '',
-      earlyMsgs ? `Early Messages:\n${earlyMsgs}` : '',
-      firstFailure ? `First Failure:\n${firstFailure}` : '',
-      painfulFailure ? `Most Painful Failure:\n${painfulFailure}` : '',
-      recentFailure ? `Most Recent Failure:\n${recentFailure}` : '',
-      lessonsLearned ? `Lessons Learned:\n${lessonsLearned}` : '',
-      userMemory ? `Prior Insights:\n${userMemory}` : '',
-    ].filter(Boolean).join('\n\n');
-
-    if (sections && sections !== answers.beliefAnalysisTrigger) {
-      onChange('beliefAnalysisTrigger', sections);
-    }
-  }, [fearDump, patternText, earlyMsgs, firstFailure, painfulFailure, recentFailure, lessonsLearned, userMemory, answers.beliefAnalysisTrigger, onChange]);
+  // Prefer latest refined draft if available; fallback to original AI feedback
+  const analysisText = aiResponse || answers?.beliefAnalysisDraft || answers?.beliefAnalysisFeedback || '';
 
   // ─── UI STATES ──────────────────────────────────────────────────────────────
-  const hasContent   = aiResponse && aiResponse.trim().length > 0;
+  const hasContent   = analysisText && analysisText.trim().length > 0;
   const isProcessing = aiLoading || (!aiError && !hasContent);
 
   // Continue handler matching Day 4 pattern
   const handleNext = useCallback(() => onContinue(), [onContinue]);
+  // Navigate to optional belief-exploration page when user isn't satisfied
+  const handleRefine = useCallback(() => onContinue('5-main-1-explore'), [onContinue]);
 
   if (isProcessing) {
     return (
@@ -87,7 +62,7 @@ export default function Day5Main1({ answers, onChange, onContinue, aiResponse, a
       {!aiLoading && hasContent && showAnalysis && (
         <div className={styles.fearCategories}>
           {(() => {
-            const lines = aiResponse.split(/\r?\n/).filter(l => l.trim());
+            const lines = analysisText.split(/\r?\n/).filter(l => l.trim());
             const cards = [];
             let current = [];
             lines.forEach(line => {
@@ -112,7 +87,7 @@ export default function Day5Main1({ answers, onChange, onContinue, aiResponse, a
                   const cleaned = (idx === 0
                     ? text.replace(/^\d+\.\s*/, '') // drop list index like "1. "
                     : text
-                  ).replace(/["“”]/g, '');
+                  ).replace(/[\"“”]/g, '');
 
                   // Bold the primary belief line for emphasis
                   return (
@@ -142,6 +117,7 @@ export default function Day5Main1({ answers, onChange, onContinue, aiResponse, a
             <button
               className={styles.secondaryButton}
               style={{ flex: 1 }}
+              onClick={handleRefine}
             >
               Not quite
             </button>

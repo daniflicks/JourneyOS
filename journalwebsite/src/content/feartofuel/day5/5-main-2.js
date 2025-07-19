@@ -5,10 +5,12 @@ import styles from '../../../app/feartofuel/styles/fear_to_fuel.module.css';
 import { ArrowRight } from 'lucide-react';
 
 export default function Day5Main2({ answers, onChange, onContinue, aiResponse, aiLoading, aiError }) {
+  // Prefer AI response prop, fall back to store-saved feedback
+  const analysisText = aiResponse || answers?.beliefAnalysisFeedback || '';
   // Extract only the first-level numbered beliefs (e.g. "1. …")
   const beliefLines = useMemo(() => {
-    if (!aiResponse) return [];
-    return aiResponse
+    if (!analysisText) return [];
+    return analysisText
       .split(/\r?\n/)
       .filter((line) => /^\d+\.\s*/.test(line)) // keep "1. …" lines
       .slice(0, 3) // just the first three
@@ -18,7 +20,7 @@ export default function Day5Main2({ answers, onChange, onContinue, aiResponse, a
           .replace(/[\"“”]/g, '')      // strip straight or curly quotes
           .trim()
       );
-  }, [aiResponse]);
+  }, [analysisText]);
 
   // Persist selected belief
   const [selected, setSelected] = useState(answers?.selectedBelief || '');
@@ -35,7 +37,7 @@ export default function Day5Main2({ answers, onChange, onContinue, aiResponse, a
   }, [selected, onContinue]);
 
   // Show loader until we have the AI text (or an error)
-  if (aiLoading || (!aiError && !aiResponse)) {
+  if (aiLoading || (!aiError && !analysisText)) {
     return (
       <div className={styles.mainContent}>
         <div className={styles.flowerContainer}>
